@@ -1,0 +1,6 @@
+
+props:
+
+  resource: 
+    path: src/main/resources/
+    

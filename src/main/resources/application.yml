@@ -1,0 +1,35 @@
+
+app:
+
+  mappings:
+    vendor: vendor-mapping-ws.txt
+    
+  workbooks:
+    auditIn:
+      name: Audit In
+      nameStartsWith: ISO-Audit
+      sheets:
+        installedApps:
+          name: Installed Apps      
+          columnMappings:
+            description: 1
+            identifyingNumber: 2
+            installDate: 3
+            name: 4
+            productId: 5
+            regCompany: 6
+            regOwner: 7
+            vendor: 8
+            version: 9
+          
+        
+    
+    
+#    auditWorkbookName = Installed Software
+
+
+
+#Sheets
+#shtInstalledApps = Installed Apps
+#shtSystemInfo = System Info
+#shtVendorNotFound = Vendor Not Found
