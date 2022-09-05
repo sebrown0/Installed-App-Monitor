@@ -1,6 +1,18 @@
 
+logging:
+  file:
+    name: app.log
+  pattern:
+    dateformat: dd-MM-yyyy hh:mm:ss    
+  level:
+    root: WARN
+    com.sebrown.app: INFO
+
 app:
 
+  resource: 
+    path: .
+    
   mappings:
     vendor: vendor-mapping-ws.txt
     
@@ -21,15 +33,19 @@ app:
             regOwner: 7
             vendor: 8
             version: 9
-          
-        
+        systemInfo:
+          name: System Info
     
-    
-#    auditWorkbookName = Installed Software
-
-
-
-#Sheets
-#shtInstalledApps = Installed Apps
-#shtSystemInfo = System Info
-#shtVendorNotFound = Vendor Not Found
+    auditOut:
+      name: Installed Software.xlsx
+      nameStartsWith: 
+      sheets:
+        vendorNotFound:
+          name: Vendor Not Found      
+          columnMappings:
+            id: 1
+            name: 2
+            identifyingNumber: 3
+            version: 4
+            installedAssetIDs: 5
+                  

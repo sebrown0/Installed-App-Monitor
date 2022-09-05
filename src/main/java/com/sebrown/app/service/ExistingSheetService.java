@@ -1,4 +1,7 @@
-package com.sebrown.app.updater;
+/**
+ * 
+ */
+package com.sebrown.app.service;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -6,36 +9,48 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-import com.sebrown.app.service.InstalledWbPathService;
 import com.sebrown.app.worksheet.WorksheetCloser;
 
-@Component
-public class AuditWbIn {
-	
+/**
+ * @author SteveBrown
+ *
+ */
+@Service
+public class ExistingSheetService {
+
 	private XSSFWorkbook wbAuditIn;		
 	private FileInputStream fileIn;
 	private final List<XSSFSheet> existingWorksheets = new ArrayList<>();
 	
-	private final InstalledWbPathService installedWbPathServ;	
-		
-	public AuditWbIn(InstalledWbPathService installedWbPathServ) {		
-		this.installedWbPathServ = installedWbPathServ;
-		
-		setWorkbook();
-		getExistingSheets();
-	}
+	private final InstalledWbPathService installedWbPathServ;
 	
-	//MAKE PRIVATE
-	public AuditWbIn setWorkbook() {
+	public ExistingSheetService(InstalledWbPathService installedWbPathServ) {	
+		this.installedWbPathServ = installedWbPathServ;
+	}
+
+	public List<XSSFSheet> getExistingSheets() {
+		setWorkbook();
+		
+		wbAuditIn
+			.sheetIterator()
+			.forEachRemaining(s -> existingWorksheets.add((XSSFSheet) s));
+		
+		return existingWorksheets;
+	}	
+		
+	private ExistingSheetService setWorkbook() {
 		try {					
+			var path = installedWbPathServ.getWbPath();
+			
+	System.out.println(">>>>>>PATH=" + path);
+	
 			fileIn =	new FileInputStream(
-					new File(installedWbPathServ.getWbPath()));
+					new File(path));
 			wbAuditIn = new XSSFWorkbook(fileIn);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -47,28 +62,8 @@ public class AuditWbIn {
 		}					
 		return this;
 	}
-	//MAKE PRIVATE	
-	public void getExistingSheets() {
-		wbAuditIn
-			.sheetIterator()
-			.forEachRemaining(s -> existingWorksheets.add((XSSFSheet) s));		
-	}	
 	
-	public Optional<XSSFSheet> containsWs(String wsName) {
-		return 
-			existingWorksheets.stream()
-				.filter(s -> s.getSheetName().equals(wsName))
-				.findFirst();
-	}
-	
-	public XSSFSheet addWs(String shtName) {
-		var sht = wbAuditIn.createSheet(shtName);
-		existingWorksheets.add(sht);
-		
-		return sht;
-	}
-
-	public void closeWb() {
+	private void closeWb() {
 		try {
 			fileIn.close();			
 			WorksheetCloser.writeAndCloseWb(wbAuditIn, installedWbPathServ.getWbPath());			
@@ -77,5 +72,4 @@ public class AuditWbIn {
 			e.printStackTrace();
 		}
 	}
-		
 }

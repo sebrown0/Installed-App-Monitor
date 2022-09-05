@@ -3,11 +3,12 @@
  */
 package com.sebrown.app.config;
 
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 /**
  * @author SteveBrown
@@ -15,9 +16,38 @@ import org.springframework.context.annotation.Configuration;
  */
 
 @Configuration
+@ComponentScan(basePackages = "com.sebrown.app")
 @ConfigurationProperties(prefix = "app")
-public class AppConfig implements AppProperties, MappingProperties, WorkbookProperties {
+@EnableAspectJAutoProxy
+public class AppConfig implements 
+	AppProperties, MappingProperties, 
+	WorkbookProperties, ResourceProperties {
 	
+	//rESOURCE
+	private ResourcePropGetter resourceProps;	
+
+	public void setResource(ResourceProps resourceProps) {
+		this.resourceProps = resourceProps;
+	}
+	
+	@Override
+	public ResourcePropGetter getProps() {
+		return resourceProps;
+	}
+
+	public static class ResourceProps implements ResourcePropGetter {
+		private String path;
+
+		public void setPath(String path) {
+			this.path = path;
+		}
+		
+		@Override
+		public String getPath() {
+			return path;
+		}
+	}
+	//-------------------------------------
 	private Map<String, String> mappings;
 	private Map<String, Workbook> workbooks;
 

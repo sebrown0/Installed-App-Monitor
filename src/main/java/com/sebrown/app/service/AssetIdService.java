@@ -12,7 +12,6 @@ import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 /**
@@ -26,14 +25,17 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class AssetIdService {
-
-	@Value("${shtSystemInfo}")
-	private String shtSystemInfo;
+		
+	private final SheetService shtServ;
 	
 	private XSSFSheet shtSystem;
 	private XSSFWorkbook wb;
 	private String wbName;
-	
+		
+	public AssetIdService(SheetService shtServ) {		
+		this.shtServ = shtServ;
+	}
+
 	public String getAssetId(Path wbPath) {		
 		if(Objects.nonNull(wbPath)) {			
 			setSheetAndName(wbPath);
@@ -55,10 +57,10 @@ public class AssetIdService {
 	private void setSheet(Path wbPath) {
 		try (var fileIn =	new FileInputStream(new File(wbPath.toString()))){
 			wb = new XSSFWorkbook(fileIn);
-			shtSystem = wb.getSheet(shtSystemInfo);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			shtSystem = wb.getSheet(shtServ.getSheet("auditIn", "systemInfo").getName());
+		} catch (IOException | IllegalArgumentException e) {
+			//TODO - LOG
+			//DO NOTHING - NO ID WILL BE RETURNED
 		}
 	}
 	

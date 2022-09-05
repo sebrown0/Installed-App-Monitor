@@ -1,4 +1,4 @@
-package com.sebrown.app.workbook;
+package com.sebrown.app.service;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -8,7 +8,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 
 @Service
-public class WorkbookService {
+public class XSSFWorkbookService {
 	
 	public XSSFWorkbook getWorkbook(final String fileLocation) throws IOException  {
     

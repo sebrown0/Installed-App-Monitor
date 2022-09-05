@@ -5,6 +5,7 @@ import java.io.IOException;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Component;
 
+import com.sebrown.app.service.XSSFWorkbookService;
 import com.sebrown.app.utils.FilePath;
 
 /**
@@ -16,9 +17,9 @@ import com.sebrown.app.utils.FilePath;
 @Component
 public final class WorkbookInAppDir implements WorkbookGetter {
 		
-	private final WorkbookService wbService;	
+	private final XSSFWorkbookService wbService;	
 
-	public WorkbookInAppDir(WorkbookService wbService) {	
+	public WorkbookInAppDir(XSSFWorkbookService wbService) {	
 		this.wbService = wbService;
 	}
 

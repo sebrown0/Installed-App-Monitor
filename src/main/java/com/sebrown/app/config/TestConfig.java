@@ -19,19 +19,8 @@ public class TestConfig implements TestConfigProperties {
 
 	private TestProps testProps;
 
-	private final ResourcePropGetter resourceProps;
-	
-	public TestConfig(ResourcePropGetter resourceProps) {	
-		this.resourceProps = resourceProps;
-	}
-
 	public void setTest(TestProps testProps) {
 		this.testProps = testProps;
-	}
-
-	@Override
-	public ResourcePropGetter getResourcePropGetter() {
-		return resourceProps;		
 	}
 	
 	@Override

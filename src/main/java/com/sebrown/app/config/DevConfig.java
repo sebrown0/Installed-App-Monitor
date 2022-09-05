@@ -11,8 +11,8 @@ import org.springframework.context.annotation.Configuration;
  *
  */
 
-@Configuration
-@ConfigurationProperties(prefix = "props")
+//@Configuration
+//@ConfigurationProperties(prefix = "props")
 public class DevConfig implements DevConfigProperties {
 	
 	private final ResourcePropGetter resourceProps;

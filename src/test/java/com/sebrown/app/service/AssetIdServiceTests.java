@@ -9,17 +9,15 @@ import java.nio.file.Path;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import com.sebrown.app.config.TestConfigProperties;
 
 @SpringBootTest
 class AssetIdServiceTests {
-
-	@Value("${testPath}")
-	private String testPath;
 	
-	@Value("${testWorkbook}")
-	private String testWorkbook;
+	@Autowired
+	TestConfigProperties testProps;
 	
 	@Autowired
 	AssetIdService idServ;
@@ -37,7 +35,11 @@ class AssetIdServiceTests {
 	
 	@Test
 	void getAssetId() throws IOException {
-		String id = idServ.getAssetId(Path.of(testPath+testWorkbook));		
+		var utProps = testProps.getUnitProps(); 
+		String id = idServ.getAssetId(
+				Path.of(
+						utProps.get("wbpath") + 
+						utProps.get("wbname") ));	
 		assertEquals("Test-BOARDROOM-4TH", id);
 	}
 	

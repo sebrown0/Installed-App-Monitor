@@ -11,17 +11,19 @@ import org.springframework.context.annotation.Configuration;
  *
  */
 
-@Configuration
-@ConfigurationProperties(prefix = "props")
-public class ResourceConfig implements ResourcePropGetter {
+//@Configuration
+//@ConfigurationProperties(prefix = "props")
+public class ResourceConfig {//implements ResourcePropGetter {
 
+	//MAKE THIS PART OF THE AppConfig AND REMOVE IF WORKS!
+	//----------------------------------------------------
 	private ResourceProps resourceProps;	
 
 	public void setResource(ResourceProps resourceProps) {
 		this.resourceProps = resourceProps;
 	}
 
-	@Override
+//	@Override
 	public String getPath() {
 		return resourceProps.getPath();
 	}

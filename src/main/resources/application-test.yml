@@ -1,8 +1,15 @@
+logging:
+  file:
+    name: test.log
+  pattern:
+    dateformat: dd-MM-yyyy hh:mm:ss    
+  level:
+    root: DEBUG
 
 props:
 
   resource: 
-    path: src/test/resources/
+    path: src/test/resources
     
   test:
     
