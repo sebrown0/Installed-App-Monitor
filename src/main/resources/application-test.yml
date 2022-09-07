@@ -4,20 +4,21 @@ logging:
   pattern:
     dateformat: dd-MM-yyyy hh:mm:ss    
   level:
-    root: DEBUG
-
-props:
-
-  resource: 
+    root: INFO
+    com.sebrown.app: DEBUG
+   
+resource: 
     path: src/test/resources
+     
+props:
     
   test:
     
     unit:
-      wbpath: src/test/resources/
+      wbpath: src/test/resources
       wbname: ISO-Audit-Test-26-08-22_08-47-37.xlsm
-      auditworkbookpath: ./src/test/resources/Installed Software.xlsx
-      auditedworkbookpath: src/test/resources/
+      auditworkbookpath: ${wbpath}/Installed Software.xlsx
+      auditedworkbookpath: ${wbpath}
       
     integration:
-      resource: src/test/resources/integration
+      resource: ${wbpath}/integration

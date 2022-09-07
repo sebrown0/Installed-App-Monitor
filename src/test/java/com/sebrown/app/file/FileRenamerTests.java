@@ -12,8 +12,10 @@ import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
-//@SpringBootTest
+@SpringBootTest
 class FileRenamerTests {
 
 	private static final String testFile = 
@@ -21,6 +23,9 @@ class FileRenamerTests {
 	
 	private static final String expectedFile = 
 			"./src/test/resources/xRenameMe.txt";
+	
+	@Autowired
+	private FileRenamer fileRenamer;
 	
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
@@ -31,7 +36,7 @@ class FileRenamerTests {
 
 	@Test
 	void test() {
-		FileRenamer.prependCharAndRename('x', testFile);
+		fileRenamer.prependCharAndRename('x', testFile);
 		assertTrue(Files.exists(Path.of(expectedFile)));
 		assertFalse(Files.exists(Path.of(testFile)));
 	}

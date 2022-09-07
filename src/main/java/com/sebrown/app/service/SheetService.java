@@ -7,7 +7,7 @@ import java.util.Objects;
 
 import org.springframework.stereotype.Service;
 
-import com.sebrown.app.aspects.LogWorkbookComponent;
+import com.sebrown.app.annotations.LogWorkbookComponent;
 import com.sebrown.app.config.AppConfig.Sheet;
 
 /**
@@ -24,6 +24,17 @@ public class SheetService {
 		this.wbServ = wbServ;
 	}
 
+	public Sheet getInstalledApps() {
+		return getSheet("auditIn", "installedApps");
+	}
+	public Sheet getSystemInfo() {
+		return getSheet("auditIn", "systemInfo");
+	}
+	
+	public Sheet getVendorNotFound() {
+		return getSheet("auditOut", "vendorNotFound");
+	}
+	
 	@LogWorkbookComponent
 	public Sheet getSheet(String wbName, String shtName) throws IllegalArgumentException {		
 		Sheet sht = null;

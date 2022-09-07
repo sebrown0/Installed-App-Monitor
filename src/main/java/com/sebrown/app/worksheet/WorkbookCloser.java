@@ -14,9 +14,9 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  * @author SteveBrown
  *
  */
-public class WorksheetCloser {
+public class WorkbookCloser {
 	
-	public static void writeAndCloseWb(final XSSFWorkbook wb, final String path) {
+	public static void writeAndCloseWb(XSSFWorkbook wb, String path) {
 		OutputStream fileOut;  
 		try {
 			fileOut = new FileOutputStream(new File(path));
@@ -24,9 +24,7 @@ public class WorksheetCloser {
 			wb.close();
 			fileOut.close();
 		} catch (IOException e) {
-			// TODO - Log
-			// Log that (or handle) the fact that the Audited-SOftware file could be open.
-			e.printStackTrace();
+			//ErrorLoggingAspect
 		}		
 	}
 	

@@ -9,30 +9,35 @@ import java.util.List;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Profile;
 
+import com.sebrown.app.config.UTConfigProperties;
 import com.sebrown.app.dto.InstalledAppRowData;
 import com.sebrown.app.dto.RowData;
+import com.sebrown.app.service.SheetService;
 import com.sebrown.app.workbook.InstalledAppRowMapper;
 import com.sebrown.app.workbook.SheetParser;
 import com.sebrown.app.workbook.WorkbookGetter;
 
 @SpringBootTest
+@Profile("TEST")
 class ParseSheetTests {
-	
-	@Value("${testPath}")
-	private String testPath;
-
-	@Value("${testWorkbook}")
-	private String testWorkbook;
-	
-	@Value("${shtInstalledApps}")
-	private String shtName;
 	
 	@Autowired
 	private WorkbookGetter wbGetter;
-		
+
+	private final String testPath;
+	private final String testWorkbook;
+	private final String shtName;
+	
+	@Autowired
+	public ParseSheetTests(UTConfigProperties testProps, SheetService shtServ) {
+		testPath = testProps.getWbPath();
+		testWorkbook = testProps.getWbInName();
+		shtName = shtServ.getInstalledApps().getName();
+	}
+
 	@Test
 	void getSheetParser_shouldReturnInstance_forValidWbAndSht() throws IOException {
 		SheetParser sp = new SheetParser();
@@ -41,8 +46,8 @@ class ParseSheetTests {
 	}
 
 	@Test
-	void mapRowsToListOfRowData_checkFirstRow() throws IOException {
-		XSSFWorkbook wb = wbGetter.getWorkbook(testPath + testWorkbook);
+	void mapRowsToListOfRowData_checkFirstRow() throws IOException {		
+		XSSFWorkbook wb = wbGetter.getWorkbook(testPath + "/" + testWorkbook);
 		SheetParser sp = new SheetParser();
 		
 		List<RowData> rowData = sp

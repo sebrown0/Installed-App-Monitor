@@ -15,23 +15,46 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @ConfigurationProperties(prefix = "props")
-public class TestConfig implements TestConfigProperties {
-
+public class TestConfig implements 
+	TestConfigProperties, UTConfigProperties {
+	
 	private TestProps testProps;
 
 	public void setTest(TestProps testProps) {
 		this.testProps = testProps;
 	}
 	
-	@Override
+	@Override //TestConfigProperties
 	public Map<String, String> getUnitProps() {
 		return testProps.unit;
 	}
-	@Override
+	@Override //TestConfigProperties
 	public Map<String, String> getIntegrationProps() {
 		return testProps.integration;
 	}
-		
+
+	@Override //UTConfigProperties
+	public String getWbPath() {
+		return 
+			testProps.unit
+				.getOrDefault("wbpath", "src/test/resources");
+	}
+
+	@Override //UTConfigProperties
+	public String getWbInName() {
+		return 
+			testProps.unit
+				.getOrDefault("wbname", "ISO-Audit-Test-26-08-22_08-47-37.xlsm");
+	}
+
+	@Override //UTConfigProperties
+	public String getWbOutName() {
+		return 
+				testProps.unit
+					.getOrDefault("auditworkbookpath", 
+							getWbPath() + "/Installed Software.xlsx");
+	}
+	
 	public static class TestProps {
 		private Map<String, String> unit;
 		private Map<String, String> integration;		

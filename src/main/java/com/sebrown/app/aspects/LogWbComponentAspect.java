@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-//import org.slf4j.Logger;
+
 
 /**
  * @author SteveBrown
@@ -18,11 +18,11 @@ import org.aspectj.lang.annotation.Aspect;
  */
 @Aspect
 @Component
-public class LoggingAspect {
+public class LogWbComponentAspect {
 	
 	private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 
-	@Around("@annotation(LogWorkbookComponent)")
+	@Around("@annotation(com.sebrown.app.annotations.LogWorkbookComponent)")
 	public Object log(ProceedingJoinPoint jp) {
 		var signature = jp.getSignature();
 		Object returnVal = null;

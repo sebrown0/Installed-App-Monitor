@@ -1,18 +1,20 @@
 package com.sebrown.app;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Profile;
 
 import com.sebrown.app.config.MappingProperties;
-import com.sebrown.app.config.ResourceProperties;
 import com.sebrown.app.config.WorkbookProperties;
+import com.sebrown.app.service.ResourceService;
 import com.sebrown.app.service.SheetService;
 
 @SpringBootTest
+@Profile("TEST")
 class AppConfigTests {
 
 	@Autowired
@@ -20,6 +22,9 @@ class AppConfigTests {
 	
 	@Autowired
 	SheetService shtServ;
+	
+	@Autowired
+	ResourceService resServ;
 	
 	@Test
 	void getInstance() {
@@ -52,21 +57,10 @@ class AppConfigTests {
 				wbProps.getWorkbooks().get("auditOut")
 				.getSheets().get("vendorNotFound").getColumnMappings().get("version"));
 	}
-	
-	@Test
-	void workbookSheetAuditOut_throwIllegalArgEx() {
-		WorkbookProperties wbProps = (WorkbookProperties) mapProps;
 		
-//		assertThrows(IllegalArgumentException.class, () -> {
-//			wbProps.getSheet("auditIn", "null");	
-//		});		
-	}
-	
 	@Test
 	void getResourcePath() {
-		ResourceProperties resProps = (ResourceProperties) mapProps;
-		assertEquals(".", resProps.getProps().getPath());
+		assertEquals("src/test/resources", resServ.getPath());
 	}
 	
-
 }

@@ -5,7 +5,6 @@ package com.sebrown.app.file;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Path;
 import java.util.Optional;
 
 import org.apache.commons.io.FileUtils;
@@ -21,31 +20,31 @@ import com.sebrown.app.error.RaisedError;
  *
  */
 @Component
-public class FileRenamer {
-
-	private final RaisedError errHandler;		
-	
-	public FileRenamer(RaisedError errHandler) {	
-		this.errHandler = errHandler;	
-	}
-	
-	@HandleErr
-	public Optional<ErrorHandler> prependCharAndRename(char c, String srcPath) {		
+public class DefaultFileCopier {
 		
-		Path fPath = Path.of(srcPath);			
-		String fName = c + fPath.getFileName().toString();
-		String destPath = fPath.getParent().toString() + "/" + fName;
+	private final RaisedError errHandler;		
+	private final FilePathConstructor pathCnstr;
 	
-		try {
-			FileUtils.copyFile(new File(srcPath), new File(destPath));
-			FileUtils.forceDelete(new File(srcPath));
+	public DefaultFileCopier(RaisedError errHandler, FilePathConstructor pathCnstr) {	
+		this.errHandler = errHandler;
+		this.pathCnstr = pathCnstr;
+	}
+
+	@HandleErr
+	public Optional<ErrorHandler> copyFile(String srcPath) {				
+		String destPath = pathCnstr.getDefaultCopyPath(srcPath);
+		
+		try {			
+			FileUtils.copyFile(new File(srcPath), new File(destPath));			
 		} catch (IOException e) {
+			
 			return Optional.of(
 					errHandler
-						.setMsg("Failed to rename file")
+						.setMsg("Failed to copy file")
 						.setSeverity(ErrorSeverity.CRITICAL));
+			
 		}
 		return Optional.ofNullable(null);
 	}
-	
+
 }

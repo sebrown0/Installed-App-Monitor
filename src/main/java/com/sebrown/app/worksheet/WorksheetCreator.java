@@ -18,13 +18,7 @@ import com.sebrown.app.updater.AuditWbIn;
 @Component
 public class WorksheetCreator {
 	
-	private final AuditWbIn wbIn;
-	
-	public WorksheetCreator(AuditWbIn wbIn) {
-		this.wbIn = wbIn;
-	}
-
-	public XSSFSheet addWs(final String wsName, final ColumnHeading headings) {
+	public XSSFSheet addWs(String wsName, ColumnHeading headings, AuditWbIn wbIn) {
 		Optional<XSSFSheet> ws = wbIn.containsWs(wsName);
 		XSSFSheet wsReturn = null;
 		

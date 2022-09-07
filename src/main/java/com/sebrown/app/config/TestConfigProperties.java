@@ -11,5 +11,5 @@ import java.util.Map;
  */
 public interface TestConfigProperties {
 	Map<String, String> getIntegrationProps();
-	Map<String, String> getUnitProps();
+	Map<String, String> getUnitProps();	
 }

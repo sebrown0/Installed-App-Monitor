@@ -8,10 +8,13 @@ logging:
     root: WARN
     com.sebrown.app: INFO
 
+resource: 
+    path: .
+    
 app:
 
-  resource: 
-    path: .
+#  resource: 
+#    path: .
     
   mappings:
     vendor: vendor-mapping-ws.txt

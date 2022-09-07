@@ -15,7 +15,7 @@ import com.sebrown.app.utils.FilePath;
  * Get a workbook instance of a WB in the App's directory.
  */
 @Component
-public final class WorkbookInAppDir implements WorkbookGetter {
+public class WorkbookInAppDir implements WorkbookGetter {
 		
 	private final XSSFWorkbookService wbService;	
 
@@ -29,6 +29,6 @@ public final class WorkbookInAppDir implements WorkbookGetter {
     		wbService.getWorkbook(FilePath.getFullPathFromApp(pathAndName));
    
 		return workbook;
-	}
+	} 
 
 }

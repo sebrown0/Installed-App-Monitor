@@ -20,34 +20,8 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 @ConfigurationProperties(prefix = "app")
 @EnableAspectJAutoProxy
 public class AppConfig implements 
-	AppProperties, MappingProperties, 
-	WorkbookProperties, ResourceProperties {
+	AppProperties, MappingProperties,	WorkbookProperties {
 	
-	//rESOURCE
-	private ResourcePropGetter resourceProps;	
-
-	public void setResource(ResourceProps resourceProps) {
-		this.resourceProps = resourceProps;
-	}
-	
-	@Override
-	public ResourcePropGetter getProps() {
-		return resourceProps;
-	}
-
-	public static class ResourceProps implements ResourcePropGetter {
-		private String path;
-
-		public void setPath(String path) {
-			this.path = path;
-		}
-		
-		@Override
-		public String getPath() {
-			return path;
-		}
-	}
-	//-------------------------------------
 	private Map<String, String> mappings;
 	private Map<String, Workbook> workbooks;
 
@@ -73,8 +47,7 @@ public class AppConfig implements
 		return () -> mappings;
 	}	
 	
-	//Workbooks
-		
+	//Workbooks		
 	public static class Workbook {
 		private String name;
 		private String nameStartsWith;
@@ -101,6 +74,7 @@ public class AppConfig implements
 						
 	}
 	
+	//Sheets
 	public static class Sheet {
 		private String name;
 		private Map<String, String> columnMappings;
@@ -117,7 +91,6 @@ public class AppConfig implements
 		public Map<String, String> getColumnMappings() {
 			return columnMappings;
 		}		
-		
 	}
-	
+		
 }
