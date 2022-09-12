@@ -26,7 +26,7 @@ public class WorkbookInAppDir implements WorkbookGetter {
 	@Override
 	public XSSFWorkbook getWorkbook(final String pathAndName) throws IOException  {
     XSSFWorkbook workbook = 
-    		wbService.getWorkbook(FilePath.getFullPathFromApp(pathAndName));
+    		wbService.setWorkBookPath(FilePath.getFullPathFromApp(pathAndName)).getWorkbook();
    
 		return workbook;
 	} 

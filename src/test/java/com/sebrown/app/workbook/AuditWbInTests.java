@@ -31,7 +31,7 @@ class AuditWbInTests {
 		
 	@Autowired
 	private ExistingSheetService shtServ;
-	
+		
 	@Test
 	void containsSystemInfoSheet() throws IOException {
 		//Get the WBs on the resource path that start
@@ -43,10 +43,12 @@ class AuditWbInTests {
 		String fromLoc = paths.get(0).toString();
 		
 		try (AuditWbIn auditWbIn = 
-				new AuditWbIn(shtServ, fromLoc);) {
+				new AuditWbIn(shtServ);) {
 			
 			Optional<XSSFSheet> shtSysInfo = 
-					auditWbIn.containsWs("System Info");
+				auditWbIn
+					.setInputWorkbook(fromLoc)
+					.containsWs("System Info");
 			
 			assertTrue(shtSysInfo.isPresent());
 			

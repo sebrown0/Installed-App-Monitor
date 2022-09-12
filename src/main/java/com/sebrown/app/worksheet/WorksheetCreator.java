@@ -17,7 +17,22 @@ import com.sebrown.app.updater.AuditWbIn;
  */
 @Component
 public class WorksheetCreator {
-	
+		
+//	public XSSFSheet addWs(String wsName, ColumnHeading headings, XSSFWorkbookService wbServ) {
+//		XSSFWorkbook wb = wbServ.getWorkbook();
+//		//check for null
+//		XSSFSheet sht = wb.getSheet(wsName);
+//		if(Objects.isNull(sht)) {
+//			sht = wb.createSheet(wsName);
+//			//Headings
+//			if(Objects.nonNull(headings)) {
+//				headings.createHeadings(sht);
+//				wbServ.flushWorkbook();
+//			}
+//		}			
+//		return sht;
+//	}
+		
 	public XSSFSheet addWs(String wsName, ColumnHeading headings, AuditWbIn wbIn) {
 		Optional<XSSFSheet> ws = wbIn.containsWs(wsName);
 		XSSFSheet wsReturn = null;
@@ -38,5 +53,26 @@ public class WorksheetCreator {
 		}		
 		return wsReturn;
 	}
+	
+//	public XSSFSheet addWs(String wsName, ColumnHeading headings, AuditWbIn wbIn) {	
+//		Optional<XSSFSheet> ws = wbIn.containsWs(wsName);
+//		XSSFSheet wsReturn = null;
+//		
+//		if(!ws.isPresent()) {
+//			try {
+//				XSSFSheet wsNew = wbIn.addWs(wsName);
+//				if(Objects.nonNull(headings)) {
+//					headings.createHeadings(wsNew);
+//				}
+//				wsReturn = wsNew;
+//			} catch (IllegalArgumentException e) {
+//				//TODO - Log
+//				// The WB already has the sheet.
+//			}							
+//		}else {
+//			wsReturn = ws.get();
+//		}		
+//		return wsReturn;
+//	}
 	
 }

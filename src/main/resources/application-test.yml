@@ -17,8 +17,8 @@ props:
     unit:
       wbpath: src/test/resources
       wbname: ISO-Audit-Test-26-08-22_08-47-37.xlsm
-      auditworkbookpath: ${wbpath}/Installed Software.xlsx
-      auditedworkbookpath: ${wbpath}
+      auditworkbookpath: src/test/resources/Installed Software.xlsx
+      auditedworkbookpath: src/test/resources
       
     integration:
-      resource: ${wbpath}/integration
+      resource: src/test/resources/integration

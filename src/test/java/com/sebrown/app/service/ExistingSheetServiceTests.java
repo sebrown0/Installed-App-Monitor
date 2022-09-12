@@ -47,7 +47,7 @@ class ExistingSheetServiceTests {
 		//with the Audit In prefix.
 		String fromLoc = paths.get(0).toString();
 		
-		XSSFWorkbook wb = xssfWbServ.getWorkbook(fromLoc);		
+		XSSFWorkbook wb = xssfWbServ.setWorkBookPath(fromLoc).getWorkbook();		
 		XSSFSheet sheet = shtServ.getExistingSheets(wb).get(0);
 		
 		assertEquals("System Info", sheet.getSheetName());

@@ -16,31 +16,28 @@ import com.sebrown.app.service.ExistingSheetService;
 /**
  * 
  * @author SteveBrown
+ * 
+ * A workbook with the audit info from a device.
+ * Use to transfer the info to the 'Installed Software' WB.
  *
  */
 public class AuditWbIn implements AutoCloseable {
 	
-	private XSSFWorkbook wbAuditIn;		
+	private XSSFWorkbook wbAuditOut;		
 	private FileInputStream fileIn;
 	private List<XSSFSheet> existingWorksheets;
 		
 	private final ExistingSheetService shtServ;		
-	
-	public AuditWbIn(
-		ExistingSheetService shtServ,		
-		String wbInPath) {
 		
-		this.shtServ = shtServ;
-		
-		setWorkbook(wbInPath);
+	public AuditWbIn(ExistingSheetService shtServ) {		
+		this.shtServ = shtServ;		
 	}
 
-	private AuditWbIn setWorkbook(String wbPath) {
-				
+	public AuditWbIn setInputWorkbook(String wbPath) {
 		try {					
 			fileIn =	new FileInputStream(
 					new File(wbPath));
-			wbAuditIn = new XSSFWorkbook(fileIn);
+			wbAuditOut = new XSSFWorkbook(fileIn);
 		} catch (FileNotFoundException e) {
 		} catch (IOException e) { 
 			closeWb(); 
@@ -50,7 +47,7 @@ public class AuditWbIn implements AutoCloseable {
 		
 	private List<XSSFSheet> getExistingWorksheets(){
 		return (Objects.isNull(existingWorksheets)) ? 
-				shtServ.getExistingSheets(wbAuditIn) : existingWorksheets;
+				shtServ.getExistingSheets(wbAuditOut) : existingWorksheets;
 	}
 	
 	public Optional<XSSFSheet> containsWs(String wsName) {
@@ -61,7 +58,7 @@ public class AuditWbIn implements AutoCloseable {
 	}
 	
 	public XSSFSheet addWs(String shtName) {
-		var sht = wbAuditIn.createSheet(shtName);
+		var sht = wbAuditOut.createSheet(shtName);
 		existingWorksheets.add(sht);
 		
 		return sht;
@@ -82,5 +79,148 @@ public class AuditWbIn implements AutoCloseable {
 	public void close() throws Exception {
 		closeWb();
 	}
-			
 }
+
+//@Component
+//public class AuditWbIn implements AutoCloseable {
+//	
+//	private XSSFWorkbook wbAuditIn;		
+//	private FileInputStream fileIn;
+//	private List<XSSFSheet> existingWorksheets;
+//		
+//	private final ExistingSheetService shtServ;
+//	private final WorkbookPathService wbPathServ;
+//		
+////	public AuditWbIn(
+////		ExistingSheetService shtServ,		
+////		String wbPath) {
+////		
+////		this.shtServ = shtServ;
+////		
+////		setWorkbook(wbPath);
+////	}
+//
+//	public AuditWbIn(ExistingSheetService shtServ, WorkbookPathService wbPathServ) {
+//		this.shtServ = shtServ;
+//		this.wbPathServ = wbPathServ;
+//		
+//		setWorkbook();
+//		getExistingWorksheets();
+//	}
+//
+////	public AuditWbIn setWorkbook(String wbPath) {
+//	private AuditWbIn setWorkbook() {
+//		try {					
+//			fileIn =	new FileInputStream(
+//					new File(wbPathServ.getAuditOutFullPath()));
+//			wbAuditIn = new XSSFWorkbook(fileIn);
+//		} catch (FileNotFoundException e) {
+//		} catch (IOException e) { 
+//			closeWb(); 
+//		}					
+//		return this;
+//	}
+//		
+//	private List<XSSFSheet> getExistingWorksheets(){
+//		return (Objects.isNull(existingWorksheets)) ? 
+//				shtServ.getExistingSheets(wbAuditIn) : existingWorksheets;
+//	}
+//	
+//	public Optional<XSSFSheet> containsWs(String wsName) {
+//		return 
+//				getExistingWorksheets().stream()
+//				.filter(s -> s.getSheetName().equals(wsName))
+//				.findFirst();
+//	}
+//	
+//	public XSSFSheet addWs(String shtName) {
+//		var sht = wbAuditIn.createSheet(shtName);
+//		existingWorksheets.add(sht);
+//		
+//		return sht;
+//	}
+//
+//	public void closeWb() {
+//		try {
+//			fileIn.close();			
+//			System.out.println("+++CLOCSING WB");
+////			WorkbookCloser.writeAndCloseWb(
+////					wbAuditIn, wbPathServ.getAuditOutFullPath());			
+//		} catch (IOException e) { 
+//			//ErrorLoggingAspect			
+//		}
+//	}
+//
+//	@Override
+//	public void close() throws Exception {
+//		closeWb();
+//	}
+//			
+//}
+
+//public class AuditWbIn implements AutoCloseable {
+//	
+//	private XSSFWorkbook wbAuditIn;		
+//	private FileInputStream fileIn;
+//	private List<XSSFSheet> existingWorksheets;
+//		
+//	private final ExistingSheetService shtServ;		
+//	
+//	public AuditWbIn(
+//		ExistingSheetService shtServ,		
+//		String wbInPath) {
+//		
+//		this.shtServ = shtServ;
+//		
+//		setWorkbook(wbInPath);
+//	}
+//
+//	private AuditWbIn setWorkbook(String wbPath) {
+//				
+//		try {					
+//			fileIn =	new FileInputStream(
+//					new File(wbPath));
+//			wbAuditIn = new XSSFWorkbook(fileIn);
+//		} catch (FileNotFoundException e) {
+//		} catch (IOException e) { 
+//			closeWb(); 
+//		}					
+//		return this;
+//	}
+//		
+//	private List<XSSFSheet> getExistingWorksheets(){
+//		return (Objects.isNull(existingWorksheets)) ? 
+//				shtServ.getExistingSheets(wbAuditIn) : existingWorksheets;
+//	}
+//	
+//	public Optional<XSSFSheet> containsWs(String wsName) {
+//		return 
+//				getExistingWorksheets().stream()
+//				.filter(s -> s.getSheetName().equals(wsName))
+//				.findFirst();
+//	}
+//	
+//	public XSSFSheet addWs(String shtName) {
+//		var sht = wbAuditIn.createSheet(shtName);
+//		existingWorksheets.add(sht);
+//		
+//		return sht;
+//	}
+//
+//	public void closeWb() {
+//		try {
+//			fileIn.close();			
+//			System.out.println("+++CLOCSING WB");
+////			WorkbookCloser.writeAndCloseWb(
+////					wbAuditIn, wbPathServ.getAuditOutFullPath());			
+//		} catch (IOException e) { 
+//			//ErrorLoggingAspect			
+//		}
+//	}
+//
+//	@Override
+//	public void close() throws Exception {
+//		closeWb();
+//	}
+//			
+//}

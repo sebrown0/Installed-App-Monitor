@@ -1,34 +1,43 @@
 package com.sebrown.app;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.fail;
 
-import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.sebrown.app.config.UTConfigProperties;
 import com.sebrown.app.file.AuditFileGetter;
 import com.sebrown.app.file.FileOpenChecker;
+import com.sebrown.app.service.AuditInPathService;
 import com.sebrown.app.updater.AuditUpdater;
 
 @SpringBootTest
 class AuditUpdaterTests {
 
-	@Value("${auditWorkbookPath}")
+//	@Value("${auditWorkbookPath}")
 	private String auditWorkbookPath;
 	
 	@Autowired
-	AuditUpdater updater;
+	private UTConfigProperties testProps;
+	
+	@Autowired
+	private AuditInPathService pathService;
+	
+	@Autowired
+	private AuditUpdater updater;
 	
 	@Autowired
 	private FileOpenChecker checker;
 	
 	@Test
 	void test() {
+
+		auditWorkbookPath = testProps.getWbOutName();
+		
 		if(Files.exists(Path.of(auditWorkbookPath))) {
 			if(true == checker.isFileOpen(auditWorkbookPath)) {
 				//exit
@@ -36,11 +45,11 @@ class AuditUpdaterTests {
 			}	
 		}
 					
-		AuditFileGetter fileGetter = 
-				new AuditFileGetter(
-						auditWorkbookPath,"Vendor Not Found");
-		
-		fileGetter.getFile();
+//		AuditFileGetter fileGetter = 
+//				new AuditFileGetter(
+//						auditWorkbookPath,"Vendor Not Found");
+//		
+//		fileGetter.getFile();
 				
 		updater.updateWorkbook();	
 				
