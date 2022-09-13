@@ -30,8 +30,12 @@ public class LogMesssageAspect {
 		this.msg = msg;
 	}	
 	
+//	@Pointcut("execution(* com.sebrown.app.*.*(..))")
+//	public void anyMethodInApp() {		
+//	}
+	
 	@Around("@annotation(defMsg)")
-	public Object lDebugMessage(
+	public Object logDebugMsg(
 		ProceedingJoinPoint pjp, LogDefaultDebugMessage defMsg) throws Throwable {
 		
 		LOG.debug(msg.getMsgFromJoinPoint(pjp));		
@@ -42,10 +46,5 @@ public class LogMesssageAspect {
 	public void logInfoMsg(LogInfoMessage logInfoMsg) {
 		LOG.info(logInfoMsg.msg());
 	}
-	
-//	@Before("@annotation(logDebugMsg)")
-//	public void logDebugMsg(LogDebugMsg logDebugMsg) {
-//		LOG.debug(logDebugMsg.msg());
-//	}
-		
+			
 }

@@ -14,6 +14,7 @@ import com.sebrown.app.config.WorkbookProperties;
 /**
  * @author SteveBrown
  *
+ * Get work book data for either the in or out WBs.
  */
 @Service
 public class WorkbookService {
@@ -45,10 +46,12 @@ public class WorkbookService {
 	private String getResourcePath() {
 		return String.format("%s/", resServ.getPath());		
 	}
+	
 	private String getFullPathOfWb(String wbName) {
 		return String.format("%s%s", 
 				getResourcePath(), wbName);
 	}
+	
 	@LogWorkbookComponent
 	public Workbook getWorkbook(String wbName) throws IllegalArgumentException {
 		var workbooks = wbProps.getWorkbooks();		

@@ -34,3 +34,8 @@ build/
 
 *.log
 *.gz
+
+/*.xlsm
+/*.xlsx
+# src/test/resources/*.xlsx
+# src/test/resources/*.xlsm

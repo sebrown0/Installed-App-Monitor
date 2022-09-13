@@ -11,7 +11,8 @@ import com.sebrown.app.dto.RowData;
 
 /**
  * @author SteveBrown
- *
+ * 
+ * Create a row in the WS.
  */
 public interface RowCreator {
 	void createRow(XSSFSheet ws, RowData rowData, Path wbAuditted);

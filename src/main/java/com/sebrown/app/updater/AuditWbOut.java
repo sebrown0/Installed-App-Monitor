@@ -2,7 +2,6 @@ package com.sebrown.app.updater;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
@@ -12,7 +11,11 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Component;
 
-import com.sebrown.app.annotations.HandleErr;
+import com.sebrown.app.error.ErrorHandler;
+import com.sebrown.app.error.ErrorToHandle;
+import com.sebrown.app.error.ErrorToHandle.ErrorSeverity;
+import com.sebrown.app.error.LogAndHandleError;
+import com.sebrown.app.error.RaisedError;
 import com.sebrown.app.service.ExistingSheetService;
 import com.sebrown.app.service.WorkbookService;
 import com.sebrown.app.worksheet.WorkbookCloser;
@@ -21,8 +24,7 @@ import com.sebrown.app.worksheet.WorkbookCloser;
  * 
  * @author SteveBrown
  * 
- * A workbook with the audit info from a device.
- * Use to transfer the info to the 'Installed Software' WB.
+ * 'Installed Software' WB.
  *
  */
 @Component
@@ -37,19 +39,22 @@ public class AuditWbOut implements AutoCloseable {
 	
 	public AuditWbOut(ExistingSheetService shtServ, WorkbookService wbServ) {		
 		this.shtServ = shtServ;
-		this.wbOutPath = "./" + wbServ.getWbAuditOutFullPath();
-		
-		setOutputWorkbook();
+		this.wbOutPath = "./" + wbServ.getWbAuditOutFullPath();		
 	}
 
-	private void setOutputWorkbook() {
+//	NOT WORKING !!!!
+//	@HandleErr
+//	@LogInfoMessage(msg = "Opening audit out WB") 
+	protected Optional<ErrorHandler> setOutputWorkbook() {		
 		try {					
 			fis =	new FileInputStream(new File(wbOutPath));
-			wbAuditOut = new XSSFWorkbook(fis);
-		} catch (FileNotFoundException e) {
-		} catch (IOException e) { 
-			closeWb(); 
-		}					
+			wbAuditOut = new XSSFWorkbook(fis);			
+		} catch (IOException e) {
+			RaisedError err = new ErrorToHandle(new LogAndHandleError());
+			return Optional.of(err.setSeverity(ErrorSeverity.CRITICAL));
+		}	
+		
+		return Optional.empty();
 	}
 		
 	private List<XSSFSheet> getExistingWorksheets(){
@@ -66,12 +71,12 @@ public class AuditWbOut implements AutoCloseable {
 	
 	public XSSFSheet addWs(String shtName) {
 		var sht = wbAuditOut.createSheet(shtName);
-		existingWorksheets.add(sht);
+		getExistingWorksheets().add(sht);
 		
 		return sht;
 	}
 
-	@HandleErr
+//	@HandleErr
 	private void closeWb() {
 		try {
 			fis.close();

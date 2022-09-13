@@ -9,6 +9,7 @@ import java.lang.annotation.Target;
 /**
  * @author SteveBrown
  *
+ * Log to INFO the annotation parameter.
  */
 @Retention(RUNTIME)
 @Target(METHOD)

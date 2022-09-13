@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Profile;
 import com.sebrown.app.config.UTConfigProperties;
 import com.sebrown.app.dto.InstalledAppRowData;
 import com.sebrown.app.dto.RowData;
-import com.sebrown.app.service.SheetService;
+import com.sebrown.app.service.WorksheetInService;
 import com.sebrown.app.workbook.InstalledAppRowMapper;
 import com.sebrown.app.workbook.SheetParser;
 import com.sebrown.app.workbook.WorkbookGetter;
@@ -32,7 +32,7 @@ class ParseSheetTests {
 	private final String shtName;
 	
 	@Autowired
-	public ParseSheetTests(UTConfigProperties testProps, SheetService shtServ) {
+	public ParseSheetTests(UTConfigProperties testProps, WorksheetInService shtServ) {
 		testPath = testProps.getWbPath();
 		testWorkbook = testProps.getWbInName();
 		shtName = shtServ.getInstalledApps().getName();

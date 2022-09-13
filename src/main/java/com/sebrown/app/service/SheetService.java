@@ -19,22 +19,10 @@ public class SheetService {
 	
 	private final WorkbookService wbServ;
 	
-	public SheetService(WorkbookService wbServ) {
-		super();
+	public SheetService(WorkbookService wbServ) {		
 		this.wbServ = wbServ;
 	}
-
-	public Sheet getInstalledApps() {
-		return getSheet("auditIn", "installedApps");
-	}
-	public Sheet getSystemInfo() {
-		return getSheet("auditIn", "systemInfo");
-	}
-	
-	public Sheet getVendorNotFound() {
-		return getSheet("auditOut", "vendorNotFound");
-	}
-	
+		
 	@LogWorkbookComponent
 	public Sheet getSheet(String wbName, String shtName) throws IllegalArgumentException {		
 		Sheet sht = null;
@@ -51,5 +39,5 @@ public class SheetService {
 				String.format("Workbook: %s, Sheet: %s", wbName, shtName));
 		
 	}
-
+	
 }

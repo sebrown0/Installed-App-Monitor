@@ -21,16 +21,20 @@ import com.sebrown.app.worksheet.ColumnHeading;
 /**
  * @author SteveBrown
  *
+ * Create new audit out file (WB).
+ * 
+ * If there is an existing file rename it
+ * before creating a new file.
+ * 
  */
-public class AuditFileGetter {
+public class AuditOutFileGetter {
 	//TODO re-factor whole class
 	//--------------------------
 	
 	private final String path;
 	private final String defaultSheetName;
 	
-	public AuditFileGetter(String path, String defaultSheetName) {
-		super();
+	public AuditOutFileGetter(String path, String defaultSheetName) {		
 		this.path = path;
 		this.defaultSheetName = defaultSheetName;
 	}

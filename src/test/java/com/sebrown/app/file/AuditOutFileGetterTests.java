@@ -4,12 +4,12 @@ package com.sebrown.app.file;
 
 import org.junit.jupiter.api.Test;
 
-class AuditFileGetterTests {
+class AuditOutFileGetterTests {
 
 	@Test
 	void test() {
-		AuditFileGetter fileGetter = 
-				new AuditFileGetter("./src/test/resources/new-file.xlsx","Vendor Not Found");
+		AuditOutFileGetter fileGetter = 
+				new AuditOutFileGetter("./src/test/resources/new-file.xlsx","Vendor Not Found");
 		fileGetter.getFile();
 //		fail("Not yet implemented");
 	}

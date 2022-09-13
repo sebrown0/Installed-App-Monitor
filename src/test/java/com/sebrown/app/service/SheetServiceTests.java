@@ -3,7 +3,8 @@
  */
 package com.sebrown.app.service;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,17 +26,11 @@ class SheetServiceTests {
 	void getInstanceOfSheetService() {
 		assertNotNull(shtServ);
 	}
-	
-	@Test
-	void getVendorNotFoundName() {
-		Sheet vendorNotFound = shtServ.getSheet("auditOut", "vendorNotFound");
-		assertEquals("Vendor Not Found", vendorNotFound.getName());
-	}
-	
+		
 	@Test
 	void invalidSheetName_returnsNullObj() {
 		Sheet sht = shtServ.getSheet("auditOut","XvendorNotFoundX"); 
 		assertNull(sht);
 	}
-
+	
 }
