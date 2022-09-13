@@ -14,11 +14,11 @@ props:
     
   test:
     
-    unit:
-      wbpath: src/test/resources
-      wbname: ISO-Audit-Test-26-08-22_08-47-37.xlsm
-      auditworkbookpath: src/test/resources/Installed Software.xlsx
-      auditedworkbookpath: src/test/resources
+    auditOutWb: Installed Software.xlsx
       
+    unit:
+      wbpath: ${resource[path]} 
+      wbname: ISO-Audit-Test-26-08-22_08-47-37.xlsm
+            
     integration:
-      resource: src/test/resources/integration
+      wbpath: ${resource[path]}/integration

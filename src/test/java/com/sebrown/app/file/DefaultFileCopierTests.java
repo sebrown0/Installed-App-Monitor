@@ -18,7 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Profile;
 
-import com.sebrown.app.config.UTConfigProperties;
+import com.sebrown.app.config.UnitTestProps;
 import com.sebrown.app.error.ErrorHandler;
 
 /**
@@ -30,7 +30,7 @@ import com.sebrown.app.error.ErrorHandler;
 class DefaultFileCopierTests {
 
 	@Autowired
-	private UTConfigProperties utProps;
+	private UnitTestProps utProps;
 	
 	@Autowired 
 	private FilePathConstructor pathCnstr;
@@ -52,7 +52,7 @@ class DefaultFileCopierTests {
 	
 	@Test
 	void copyFile_fromValidPath_returnsEmptyError() {
-		String loc = utProps.getWbPath();
+		String loc = utProps.getUTResourcePath();
 		String fName = utProps.getWbInName();
 		String path = loc + "/" + fName;		
 
@@ -62,7 +62,7 @@ class DefaultFileCopierTests {
 	
 	@Test
 	void copyFile_fromValidPath_checkFileExists() throws IOException {
-		String loc = utProps.getWbPath();
+		String loc = utProps.getUTResourcePath();
 		String fName = utProps.getWbInName();
 		String path = loc + "/" + fName;
 		

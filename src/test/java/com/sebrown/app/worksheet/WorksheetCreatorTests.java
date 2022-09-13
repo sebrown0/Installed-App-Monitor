@@ -10,12 +10,11 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.sebrown.app.config.UTConfigProperties;
+import com.sebrown.app.config.UnitTestProps;
 import com.sebrown.app.file.FileOpenChecker;
 import com.sebrown.app.service.XSSFWorkbookService;
 
@@ -30,7 +29,7 @@ class WorksheetCreatorTests {
 	private FileOpenChecker checker;
 	
 	@Autowired
-	private UTConfigProperties testProps;
+	private UnitTestProps testProps;
 	
 	@Autowired
 	WorksheetCreator wsCreator;
@@ -45,7 +44,7 @@ class WorksheetCreatorTests {
 	
 	@Test
 	void test() throws IOException {
-		String auditWorkbookPath = testProps.getWbOutName();
+		String auditWorkbookPath = testProps.getAuditOutFullPath();
 		
 		if(Files.exists(Path.of(auditWorkbookPath))) {
 			if(true == checker.isFileOpen(auditWorkbookPath)) {
@@ -53,7 +52,7 @@ class WorksheetCreatorTests {
 			}	
 		}
 		
-		XSSFWorkbook wb = wbServ.setWorkBookPath(auditWorkbookPath).getWorkbook();
+//		XSSFWorkbook wb = wbServ.setWorkBookPath(auditWorkbookPath).getWorkbook();
 //		wsCreator.addWs("New WS", new AuditHeadings(), wbServ.setWorkBookPath(auditWorkbookPath));
 	}
 

@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Profile;
 
-import com.sebrown.app.config.UTConfigProperties;
+import com.sebrown.app.config.UnitTestProps;
 import com.sebrown.app.dto.InstalledAppRowData;
 import com.sebrown.app.dto.RowData;
 import com.sebrown.app.service.WorksheetInService;
@@ -32,8 +32,8 @@ class ParseSheetTests {
 	private final String shtName;
 	
 	@Autowired
-	public ParseSheetTests(UTConfigProperties testProps, WorksheetInService shtServ) {
-		testPath = testProps.getWbPath();
+	public ParseSheetTests(UnitTestProps testProps, WorksheetInService shtServ) {
+		testPath = testProps.getUTResourcePath();
 		testWorkbook = testProps.getWbInName();
 		shtName = shtServ.getInstalledApps().getName();
 	}

@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.sebrown.app.config.UTConfigProperties;
+import com.sebrown.app.config.UnitTestProps;
 import com.sebrown.app.file.AuditOutFileGetter;
 import com.sebrown.app.updater.AuditUpdater;
 
@@ -15,7 +15,7 @@ class AuditUpdaterTests {
 	private String auditWorkbookPath;
 	
 	@Autowired
-	private UTConfigProperties testProps;
+	private UnitTestProps testProps;
 	
 //	@Autowired
 //	private AuditInPathService pathService;
@@ -27,18 +27,17 @@ class AuditUpdaterTests {
 //	private FileOpenChecker checker;
 	
 	@Test
-	void test() {
+	void test() {	
 
-		//Reinstate
-		auditWorkbookPath = "./" + testProps.getWbOutName();
-//		
 //		if(Files.exists(Path.of(auditWorkbookPath))) {
 //			if(true == checker.isFileOpen(auditWorkbookPath)) {
 //				//exit
 //				fail("File Open: " + auditWorkbookPath + ": Cannot continue");
 //			}	
 //		}
-				
+
+		auditWorkbookPath = testProps.getAuditOutFullPath();
+		
 		//Create the audit out WB if doesn't exist.
 		//An existing file will be 'moved' so if 
 		//we don't want that to happen we'll 
@@ -50,7 +49,7 @@ class AuditUpdaterTests {
 		fileGetter.getFile();
 				
 		//Update audit out.
-		updater.updateWorkbook();	
+//		updater.updateWorkbook();	
 				
 				
 	}		

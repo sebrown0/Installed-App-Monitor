@@ -4,6 +4,7 @@
 package com.sebrown.app.config;
 
 import java.util.Map;
+import java.util.Objects;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
@@ -15,8 +16,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @ConfigurationProperties(prefix = "props")
-public class TestConfig implements 
-	TestConfigProperties, UTConfigProperties {
+public class TestConfig implements UTConfig, ITConfig {
 	
 	private TestProps testProps;
 
@@ -24,41 +24,30 @@ public class TestConfig implements
 		this.testProps = testProps;
 	}
 	
-	@Override //TestConfigProperties
+	@Override //UTConfig, ITConfig
+	public String getAuditOutWbName() { 
+		String name = testProps.auditOutWb; 
+		return (Objects.nonNull(name)) ? name : "Installed Software.xlxs";
+	}
+	
+	@Override //UTConfig
 	public Map<String, String> getUnitProps() {
 		return testProps.unit;
 	}
-	@Override //TestConfigProperties
+	
+	@Override //ITConfig
 	public Map<String, String> getIntegrationProps() {
 		return testProps.integration;
 	}
-
-	@Override //UTConfigProperties
-	public String getWbPath() {
-		return 
-			testProps.unit
-				.getOrDefault("wbpath", "src/test/resources");
-	}
-
-	@Override //UTConfigProperties
-	public String getWbInName() {
-		return 
-			testProps.unit
-				.getOrDefault("wbname", "ISO-Audit-Test-26-08-22_08-47-37.xlsm");
-	}
-
-	@Override //UTConfigProperties
-	public String getWbOutName() {
-		return 
-				testProps.unit
-					.getOrDefault("auditworkbookpath", 
-							getWbPath() + "/Installed Software.xlsx");
-	}
 	
 	public static class TestProps {
+		private String auditOutWb;		
 		private Map<String, String> unit;
 		private Map<String, String> integration;		
 		
+		public void setAuditOutWb(String auditOutWb) {
+			this.auditOutWb = auditOutWb;
+		}
 		public void setIntegration(Map<String, String> integration) {
 			this.integration = integration;
 		}	

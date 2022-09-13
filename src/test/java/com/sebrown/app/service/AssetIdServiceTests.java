@@ -11,13 +11,13 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.sebrown.app.config.TestConfigProperties;
+import com.sebrown.app.config.UTConfig;
 
 @SpringBootTest
 class AssetIdServiceTests {
 	
 	@Autowired
-	TestConfigProperties testProps;
+	UTConfig testProps;
 	
 	@Autowired
 	AssetIdService idServ;
