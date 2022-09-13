@@ -10,33 +10,19 @@ import com.sebrown.app.updater.AuditUpdater;
 
 @SpringBootTest
 class AuditUpdaterTests {
-
-//	@Value("${auditWorkbookPath}")
-	private String auditWorkbookPath;
-	
-	@Autowired
-	private UnitTestProps testProps;
-	
-//	@Autowired
-//	private AuditInPathService pathService;
 	
 	@Autowired
 	private AuditUpdater updater;
 	
-//	@Autowired
-//	private FileOpenChecker checker;
-	
+	@Autowired
+	UnitTestProps props;
+
+	/*
+	 * JUST UPDATES THE WBs.
+	 * HAVE TO ADD VALIDATION.
+	 */
 	@Test
 	void test() {	
-
-//		if(Files.exists(Path.of(auditWorkbookPath))) {
-//			if(true == checker.isFileOpen(auditWorkbookPath)) {
-//				//exit
-//				fail("File Open: " + auditWorkbookPath + ": Cannot continue");
-//			}	
-//		}
-
-		auditWorkbookPath = testProps.getAuditOutFullPath();
 		
 		//Create the audit out WB if doesn't exist.
 		//An existing file will be 'moved' so if 
@@ -44,12 +30,12 @@ class AuditUpdaterTests {
 		//have to amend this.
 		AuditOutFileGetter fileGetter = 
 				new AuditOutFileGetter(
-						auditWorkbookPath,"Vendor Not Found");
+						props,"Vendor Not Found");
 		
 		fileGetter.getFile();
 				
 		//Update audit out.
-//		updater.updateWorkbook();	
+		updater.updateWorkbook(props);	
 				
 				
 	}		

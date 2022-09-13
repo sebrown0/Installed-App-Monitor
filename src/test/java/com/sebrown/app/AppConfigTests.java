@@ -18,13 +18,13 @@ import com.sebrown.app.service.SheetService;
 class AppConfigTests {
 
 	@Autowired
-	MappingProperties mapProps;
+	private MappingProperties mapProps;
 	
-	@Autowired
-	SheetService shtServ;
+//	@Autowired
+//	private SheetService shtServ;
 	
-	@Autowired
-	ResourceService resServ;
+//	@Autowired
+//	ResourceService resServ;
 	
 	@Test
 	void getInstance() {
@@ -58,9 +58,5 @@ class AppConfigTests {
 				.getSheets().get("vendorNotFound").getColumnMappings().get("version"));
 	}
 		
-	@Test
-	void getResourcePath() {
-		assertEquals("src/test/resources", resServ.getPath());
-	}
 	
 }

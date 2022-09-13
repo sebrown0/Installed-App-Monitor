@@ -16,26 +16,23 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @ConfigurationProperties(prefix = "props")
-public class TestConfig implements UTConfig, ITConfig {
+public class TestConfig {
 	
 	private TestProps testProps;
 
 	public void setTest(TestProps testProps) {
 		this.testProps = testProps;
 	}
-	
-	@Override //UTConfig, ITConfig
+
 	public String getAuditOutWbName() { 
 		String name = testProps.auditOutWb; 
 		return (Objects.nonNull(name)) ? name : "Installed Software.xlxs";
 	}
 	
-	@Override //UTConfig
 	public Map<String, String> getUnitProps() {
 		return testProps.unit;
 	}
-	
-	@Override //ITConfig
+		
 	public Map<String, String> getIntegrationProps() {
 		return testProps.integration;
 	}

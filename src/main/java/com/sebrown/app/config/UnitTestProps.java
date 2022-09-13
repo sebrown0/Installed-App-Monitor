@@ -11,27 +11,31 @@ import org.springframework.stereotype.Component;
  *
  */
 @Component
-public class UnitTestProps {
-
+public class UnitTestProps implements UTConfig {
+	
 	@Autowired
-	UTConfig config;
+	TestConfig config;
 
-	public String getUTResourcePath() {
+	@Override
+	public String getResourcePath() {
 		return config
 				.getUnitProps()
 				.getOrDefault("wbpath", "src/test/resources");
 	}
 
+	@Override
 	public String getAuditOutFullPath() {
 		return 
-			getUTResourcePath() + 
+			getResourcePath() + 
 			"/" + 
 			config.getAuditOutWbName();				
 	}	
-	
+
+	@Override
 	public String getWbInName() {
 		return 
-			config.getUnitProps()
+			config
+				.getUnitProps()
 				.getOrDefault("wbname", "ISO-Audit-Test-26-08-22_08-47-37.xlsm");
 	}
 	

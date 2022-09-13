@@ -13,6 +13,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 /**
  * @author SteveBrown
  *
+ * The config properties from application.yml
  */
 
 @Configuration

@@ -8,9 +8,9 @@ class AuditOutFileGetterTests {
 
 	@Test
 	void test() {
-		AuditOutFileGetter fileGetter = 
-				new AuditOutFileGetter("./src/test/resources/new-file.xlsx","Vendor Not Found");
-		fileGetter.getFile();
+//		AuditOutFileGetter fileGetter = 
+//				new AuditOutFileGetter("./src/test/resources/new-file.xlsx","Vendor Not Found");
+//		fileGetter.getFile();
 //		fail("Not yet implemented");
 	}
 

@@ -33,7 +33,7 @@ class ParseSheetTests {
 	
 	@Autowired
 	public ParseSheetTests(UnitTestProps testProps, WorksheetInService shtServ) {
-		testPath = testProps.getUTResourcePath();
+		testPath = testProps.getResourcePath();
 		testWorkbook = testProps.getWbInName();
 		shtName = shtServ.getInstalledApps().getName();
 	}

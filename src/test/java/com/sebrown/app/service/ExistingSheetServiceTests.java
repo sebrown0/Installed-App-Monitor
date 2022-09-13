@@ -16,6 +16,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.sebrown.app.config.UnitTestProps;
+
 /**
  * @author SteveBrown
  *
@@ -23,6 +25,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class ExistingSheetServiceTests {
 
+	@Autowired
+	private UnitTestProps props;
+	
 	@Autowired
 	private ExistingSheetService shtServ;
 	
@@ -41,7 +46,7 @@ class ExistingSheetServiceTests {
 	void getFirstSheet_fromTestAuditIn_shouldBeSystemInfo() throws IOException {
 		//Get the WBs on the resource path that start
 		//with the Audit In prefix, i.e., ISO-Audit.
-		List<Path> paths = pathService.getPaths();
+		List<Path> paths = pathService.getPaths(props);
 		
 		//Should only be one WB on in test resources that starts
 		//with the Audit In prefix.

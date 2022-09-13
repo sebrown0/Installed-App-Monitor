@@ -35,7 +35,7 @@ class TestPropsTests {
 	//Unit Tests
 	@Test
 	void getUTResourcePath() {		
-		String res = utProps.getUTResourcePath();		
+		String res = utProps.getResourcePath();		
 		assertEquals("src/test/resources", res);
 	}
 	
@@ -48,7 +48,7 @@ class TestPropsTests {
 	//Integration Tests
 	@Test
 	void getIntegrationResourcePath() {		
-		String res = itProps.getITResourcePath();		
+		String res = itProps.getResourcePath();		
 		assertEquals("src/test/resources/integration", res);
 	}
 	

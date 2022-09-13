@@ -35,11 +35,11 @@ class AssetIdServiceTests {
 	
 	@Test
 	void getAssetId() throws IOException {
-		var utProps = testProps.getUnitProps(); 
+	 
 		String id = idServ.getAssetId(
 				Path.of(
-						utProps.get("wbpath") + 
-						utProps.get("wbname") ));	
+						testProps.getResourcePath() + "/" +
+						testProps.getWbInName() ));	
 		assertEquals("Test-BOARDROOM-4TH", id);
 	}
 	

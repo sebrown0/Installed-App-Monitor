@@ -9,6 +9,7 @@ import java.util.Objects;
 
 import org.springframework.stereotype.Service;
 
+import com.sebrown.app.config.Config;
 import com.sebrown.app.workbook.WorkbookWalker;
 
 /**
@@ -32,13 +33,13 @@ public class AuditInPathService {
 		this.wbServ = wbServ;
 	}
 
-	public List<Path> getPaths(){
+	public List<Path> getPaths(Config props){
 		if(Objects.isNull(paths)) {
 			paths = wbw.getPathsOfWorkbooks(
 					wbServ.getWbAuditIn().getNameStartsWith(), 
-					wbServ.getWbAuditInPath());	
+					props.getResourcePath());	
 		}
 		return paths;
 	}
-
+	
 }

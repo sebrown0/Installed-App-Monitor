@@ -52,7 +52,7 @@ class DefaultFileCopierTests {
 	
 	@Test
 	void copyFile_fromValidPath_returnsEmptyError() {
-		String loc = utProps.getUTResourcePath();
+		String loc = utProps.getResourcePath();
 		String fName = utProps.getWbInName();
 		String path = loc + "/" + fName;		
 
@@ -62,7 +62,7 @@ class DefaultFileCopierTests {
 	
 	@Test
 	void copyFile_fromValidPath_checkFileExists() throws IOException {
-		String loc = utProps.getUTResourcePath();
+		String loc = utProps.getResourcePath();
 		String fName = utProps.getWbInName();
 		String path = loc + "/" + fName;
 		

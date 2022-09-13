@@ -9,22 +9,25 @@ import org.springframework.stereotype.Component;
 /**
  * @author SteveBrown
  *
+ * Properties for integration tests.
  */
 @Component
-public class IntegrationTestProps {
+public class IntegrationTestProps implements Config {
 
 	@Autowired
-	ITConfig config;
+	TestConfig config;
 
-	public String getITResourcePath() {
+	@Override
+	public String getResourcePath() {
 		return config
 				.getIntegrationProps()
 				.getOrDefault("wbpath", "src/test/resources/integration");
 	}
 
+	@Override
 	public String getAuditOutFullPath() {
 		return 
-			getITResourcePath() + 
+			getResourcePath() + 
 			"/" + 
 			config.getAuditOutWbName();				
 	}	

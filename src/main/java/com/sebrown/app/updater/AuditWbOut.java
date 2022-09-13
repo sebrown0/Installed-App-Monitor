@@ -11,13 +11,13 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Component;
 
+import com.sebrown.app.config.Config;
 import com.sebrown.app.error.ErrorHandler;
 import com.sebrown.app.error.ErrorToHandle;
 import com.sebrown.app.error.ErrorToHandle.ErrorSeverity;
 import com.sebrown.app.error.LogAndHandleError;
 import com.sebrown.app.error.RaisedError;
 import com.sebrown.app.service.ExistingSheetService;
-import com.sebrown.app.service.WorkbookService;
 import com.sebrown.app.worksheet.WorkbookCloser;
 
 /**
@@ -35,17 +35,19 @@ public class AuditWbOut implements AutoCloseable {
 	private List<XSSFSheet> existingWorksheets;
 		
 	private final ExistingSheetService shtServ;		
-	private final String wbOutPath;
 	
-	public AuditWbOut(ExistingSheetService shtServ, WorkbookService wbServ) {		
-		this.shtServ = shtServ;
-		this.wbOutPath = "./" + wbServ.getWbAuditOutFullPath();		
+	private String wbOutPath;
+	
+	public AuditWbOut(ExistingSheetService shtServ) {		
+		this.shtServ = shtServ;		
 	}
-
+	
 //	NOT WORKING !!!!
 //	@HandleErr
 //	@LogInfoMessage(msg = "Opening audit out WB") 
-	protected Optional<ErrorHandler> setOutputWorkbook() {		
+	protected Optional<ErrorHandler> setOutputWorkbook(Config props) {
+		this.wbOutPath = props.getAuditOutFullPath();		
+		
 		try {					
 			fis =	new FileInputStream(new File(wbOutPath));
 			wbAuditOut = new XSSFWorkbook(fis);			

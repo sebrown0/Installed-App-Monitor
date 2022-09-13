@@ -20,36 +20,17 @@ import com.sebrown.app.config.WorkbookProperties;
 public class WorkbookService {
 
 	private final WorkbookProperties wbProps;
-	private final ResourceService resServ;
 	
-	public WorkbookService(
-			WorkbookProperties wbProps, ResourceService resServ) {	
-		
-		this.wbProps = wbProps;
-		this.resServ = resServ;
+	public WorkbookService(WorkbookProperties wbProps) {	
+		this.wbProps = wbProps;		
 	}
 	
 	public Workbook getWbAuditIn() {
 		return getWorkbook("auditIn");
 	}
-	public String getWbAuditInPath() {		
-		return getResourcePath();
-	}
-	
-	public String getWbAuditOutFullPath() {
-		return getFullPathOfWb(getWbAuditOut().getName());
-	}
+
 	public Workbook getWbAuditOut() {
 		return getWorkbook("auditOut");
-	}
-	
-	private String getResourcePath() {
-		return String.format("%s/", resServ.getPath());		
-	}
-	
-	private String getFullPathOfWb(String wbName) {
-		return String.format("%s%s", 
-				getResourcePath(), wbName);
 	}
 	
 	@LogWorkbookComponent

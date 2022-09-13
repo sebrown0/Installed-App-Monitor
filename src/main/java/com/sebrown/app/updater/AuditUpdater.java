@@ -12,6 +12,7 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.sebrown.app.config.Config;
 import com.sebrown.app.dto.InstalledAppRowData;
 import com.sebrown.app.dto.RowData;
 import com.sebrown.app.file.FileRenamer;
@@ -67,10 +68,10 @@ public class AuditUpdater {
 			this.auditHeadings = auditHeadings;
 		}
 
-	public void updateWorkbook() {
-		auditWbOut.setOutputWorkbook();
+	public void updateWorkbook(Config props) {
+		auditWbOut.setOutputWorkbook(props);
 		
-		List<Path> paths = pathService.getPaths();
+		List<Path> paths = pathService.getPaths(props);
 
 		paths.forEach(wbPath -> {	
 			List<RowData> rowData = getAuditDataFromWb(wbPath); 
