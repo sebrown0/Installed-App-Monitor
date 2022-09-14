@@ -18,6 +18,7 @@ import com.sebrown.app.error.ErrorToHandle.ErrorSeverity;
 import com.sebrown.app.error.LogAndHandleError;
 import com.sebrown.app.error.RaisedError;
 import com.sebrown.app.service.ExistingSheetService;
+import com.sebrown.app.service.WorkbookReader;
 import com.sebrown.app.worksheet.WorkbookCloser;
 
 /**
@@ -37,6 +38,8 @@ public class AuditWbOut implements AutoCloseable {
 	private final ExistingSheetService shtServ;		
 	
 	private String wbOutPath;
+	private boolean outputWritten;
+	private WorkbookReader wbReader;
 	
 	public AuditWbOut(ExistingSheetService shtServ) {		
 		this.shtServ = shtServ;		
@@ -46,8 +49,9 @@ public class AuditWbOut implements AutoCloseable {
 //	@HandleErr
 //	@LogInfoMessage(msg = "Opening audit out WB") 
 	protected Optional<ErrorHandler> setOutputWorkbook(Config props) {
-		this.wbOutPath = props.getAuditOutFullPath();		
-		
+		wbOutPath = props.getAuditOutFullPath();
+		outputWritten = false;
+				
 		try {					
 			fis =	new FileInputStream(new File(wbOutPath));
 			wbAuditOut = new XSSFWorkbook(fis);			
@@ -81,15 +85,19 @@ public class AuditWbOut implements AutoCloseable {
 //	@HandleErr
 	private void closeWb() {
 		try {
+//			wbReader.close();
 			fis.close();
-			WorkbookCloser.writeAndCloseWb(wbAuditOut, wbOutPath);			
-		} catch (IOException e) { 
+			if(false == outputWritten) {
+				WorkbookCloser.writeAndCloseWb(wbAuditOut, wbOutPath);		
+				outputWritten = true;
+			}
+		} catch (Exception e) { 
 			//ErrorLoggingAspect			
 		}
 	}
 
 	@Override
-	public void close() throws Exception {
+	public void close() {		
 		closeWb();
 	}
 }

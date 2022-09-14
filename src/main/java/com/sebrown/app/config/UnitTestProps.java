@@ -38,5 +38,10 @@ public class UnitTestProps implements UTConfig {
 				.getUnitProps()
 				.getOrDefault("wbname", "ISO-Audit-Test-26-08-22_08-47-37.xlsm");
 	}
+
+	@Override
+	public String getWbInFullPath() {
+		return this.getResourcePath() + "/" + this.getWbInName();
+	}
 	
 }

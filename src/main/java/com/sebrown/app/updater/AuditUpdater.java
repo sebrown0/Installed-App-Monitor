@@ -69,6 +69,7 @@ public class AuditUpdater {
 		}
 
 	public void updateWorkbook(Config props) {
+		//Set the O/P WB, i.e., Installed Apps
 		auditWbOut.setOutputWorkbook(props);
 		
 		List<Path> paths = pathService.getPaths(props);
@@ -78,6 +79,9 @@ public class AuditUpdater {
 			updateEachRowInVendorSheet(rowData, wbPath);		
 //			markFileAsRead(wbPath);
 		});				
+		
+		//Close and save th O/P WB.
+		auditWbOut.close();
 	}  
 	
 	private List<RowData> getAuditDataFromWb(Path p)  {		

@@ -10,8 +10,6 @@ import org.springframework.context.annotation.Profile;
 
 import com.sebrown.app.config.MappingProperties;
 import com.sebrown.app.config.WorkbookProperties;
-import com.sebrown.app.service.ResourceService;
-import com.sebrown.app.service.SheetService;
 
 @SpringBootTest
 @Profile("TEST")
@@ -19,13 +17,7 @@ class AppConfigTests {
 
 	@Autowired
 	private MappingProperties mapProps;
-	
-//	@Autowired
-//	private SheetService shtServ;
-	
-//	@Autowired
-//	ResourceService resServ;
-	
+		
 	@Test
 	void getInstance() {
 		assertNotNull(mapProps);

@@ -10,5 +10,5 @@ package com.sebrown.app.config;
 public interface UTConfig extends Config {
 
 	String getWbInName();
-	
+	String getWbInFullPath();
 }
