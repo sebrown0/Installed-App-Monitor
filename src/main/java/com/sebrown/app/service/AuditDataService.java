@@ -12,7 +12,7 @@ import java.util.List;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 
-import com.sebrown.app.dto.RowData;
+import com.sebrown.app.dto.AppRowData;
 import com.sebrown.app.workbook.InstalledAppRowMapper;
 import com.sebrown.app.workbook.SheetParser;
 
@@ -23,8 +23,8 @@ import com.sebrown.app.workbook.SheetParser;
 @Service
 public class AuditDataService {
 		
-	public List<RowData> getAuditDataFromWb(Path p, String shtName)  {
-		List<RowData> rowData = null;
+	public List<AppRowData> getAuditDataFromWb(Path p, String shtName)  {
+		List<AppRowData> rowData = null;
 		
 		try (var fis = new FileInputStream(new File(p.toString()))){			
 			XSSFWorkbook wbDeviceAudit = new XSSFWorkbook(fis);	    

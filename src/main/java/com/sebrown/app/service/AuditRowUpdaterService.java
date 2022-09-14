@@ -12,7 +12,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.springframework.stereotype.Service;
 
 import com.sebrown.app.dto.InstalledAppRowData;
-import com.sebrown.app.dto.RowData;
+import com.sebrown.app.dto.AppRowData;
 import com.sebrown.app.utils.ExistingAsset;
 
 /**
@@ -29,7 +29,7 @@ public class AuditRowUpdaterService {
 		this.assetIdServ = assetIdServ;
 	}
 
-	public String updateRow(Row row, RowData rowData, Path wbAuditted) {
+	public String updateRow(Row row, AppRowData rowData, Path wbAuditted) {
 		var data = (InstalledAppRowData) rowData;
 		
 		String idNum = row.getCell(2).getStringCellValue();

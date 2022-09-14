@@ -10,7 +10,7 @@ import java.util.Objects;
 import org.apache.poi.ss.usermodel.Row;
 
 import com.sebrown.app.dto.InstalledAppRowData;
-import com.sebrown.app.dto.RowData;
+import com.sebrown.app.dto.AppRowData;
 
 /**
  * @author SteveBrown
@@ -19,8 +19,8 @@ import com.sebrown.app.dto.RowData;
 public class InstalledAppRowMapper implements RowMapper {
 	
 	@Override
-	public RowData mapRow(Row row) {
-		RowData data = null;
+	public AppRowData mapRow(Row row) {
+		AppRowData data = null;
 		
 		if(Objects.nonNull(row)) {
 			data = new InstalledAppRowData.Builder()

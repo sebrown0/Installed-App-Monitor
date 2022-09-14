@@ -12,9 +12,10 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.springframework.stereotype.Service;
 
+import com.sebrown.app.dto.AppRowData;
 import com.sebrown.app.dto.InstalledAppRowData;
-import com.sebrown.app.dto.RowData;
 import com.sebrown.app.row.RowCreator;
+import com.sebrown.app.utils.RowValidator;
 
 /**
  * @author SteveBrown
@@ -36,16 +37,21 @@ public class AuditRowCreatorService implements RowCreator {
 	}
 
 	@Override
-	public void createRow(XSSFSheet ws, RowData rowData, Path wbAuditted) {
-		var data = (InstalledAppRowData) rowData;
-		var row = ws.createRow(ws.getLastRowNum() + 1);
-		
-		createCell(shtServ.getColumnNumber("name"), row, data.getName());
-		createCell(shtServ.getColumnNumber("identifyingNumber"), row, data.getIdentifyingNumber());
-		createCell(shtServ.getColumnNumber("version"), row, data.getVersion());
-		
-		setSoftwareId(row, ws);
-		setAssetId(row, wbAuditted);
+	public boolean createRow(XSSFSheet ws, AppRowData rowData, Path wbAuditted) {		
+		if(RowValidator.isValidRow(rowData)) {
+			var row = ws.createRow(ws.getLastRowNum() + 1);
+			var data = (InstalledAppRowData) rowData;
+			
+			createCell(shtServ.getColumnNumber("name"), row, data.getName());
+			createCell(shtServ.getColumnNumber("identifyingNumber"), row, data.getIdentifyingNumber());
+			createCell(shtServ.getColumnNumber("version"), row, data.getVersion());
+			
+			setSoftwareId(row, ws);
+			setAssetId(row, wbAuditted);
+			
+			return true;
+		}
+		return false;
 	}
 	
 	private void createCell(Optional<Integer> colNum, XSSFRow rw, String val) {

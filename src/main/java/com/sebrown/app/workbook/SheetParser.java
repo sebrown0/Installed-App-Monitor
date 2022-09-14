@@ -9,7 +9,7 @@ import java.util.List;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 
-import com.sebrown.app.dto.RowData;
+import com.sebrown.app.dto.AppRowData;
 
 /**
  * @author SteveBrown
@@ -17,7 +17,7 @@ import com.sebrown.app.dto.RowData;
  */
 public final class SheetParser {
 	
-	private final List<RowData> dataRows = new ArrayList<>();		
+	private final List<AppRowData> dataRows = new ArrayList<>();		
 	
 	public SheetParser parseSheet(final XSSFSheet sheet, final RowMapper rowMapper) {
 		mapRows(sheet, rowMapper);		
@@ -32,7 +32,7 @@ public final class SheetParser {
 		}
 	}
 
-	public List<RowData> getRowData() {
+	public List<AppRowData> getRowData() {
 		return dataRows;
 	}
 	

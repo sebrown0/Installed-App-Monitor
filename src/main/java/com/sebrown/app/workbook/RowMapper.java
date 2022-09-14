@@ -5,7 +5,7 @@ package com.sebrown.app.workbook;
 
 import org.apache.poi.ss.usermodel.Row;
 
-import com.sebrown.app.dto.RowData;
+import com.sebrown.app.dto.AppRowData;
 
 /**
  * @author SteveBrown
@@ -14,6 +14,6 @@ import com.sebrown.app.dto.RowData;
  */
 public interface RowMapper {
 
-	RowData mapRow(Row row);
+	AppRowData mapRow(Row row);
 	
 }

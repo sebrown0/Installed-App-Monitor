@@ -1,5 +1,8 @@
 package com.sebrown.app.dto;
 
+import java.util.Arrays;
+import java.util.List;
+
 import com.sebrown.app.utils.DateFormatter;
 
 /**
@@ -8,7 +11,7 @@ import com.sebrown.app.utils.DateFormatter;
  * 
  * A row in the audit work book.
  */
-public final class InstalledAppRowData implements RowData {
+public final class InstalledAppRowData implements AppRowData {
 	
 	private final String description;
 	private final String identifyingNumber;
@@ -18,7 +21,12 @@ public final class InstalledAppRowData implements RowData {
 	private final String regCompany;
 	private final String regOwner;
 	private final String vendor;
-	private final String version;
+	private final String version;	
+
+	@Override
+	public List<String> validateData() {		
+		return Arrays.asList(name, identifyingNumber);
+	}
 	
 	private InstalledAppRowData(Builder builder) {
 		this.description = builder.description;
@@ -112,6 +120,13 @@ public final class InstalledAppRowData implements RowData {
 			return this;
 		}				
 				
+	}
+
+	@Override
+	public String toString() {
+		return "InstalledAppRowData [description=" + description + ", identifyingNumber=" + identifyingNumber
+				+ ", installDate=" + installDate + ", name=" + name + ", productID=" + productID + ", regCompany=" + regCompany
+				+ ", regOwner=" + regOwner + ", vendor=" + vendor + ", version=" + version + "]";
 	}
 
 }

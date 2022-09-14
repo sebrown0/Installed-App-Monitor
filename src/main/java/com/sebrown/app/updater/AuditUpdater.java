@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 
 import com.sebrown.app.config.Config;
 import com.sebrown.app.dto.InstalledAppRowData;
-import com.sebrown.app.dto.RowData;
+import com.sebrown.app.dto.AppRowData;
 import com.sebrown.app.file.FileRenamer;
 import com.sebrown.app.row.RowCreator;
 import com.sebrown.app.row.RowFinder;
@@ -75,7 +75,7 @@ public class AuditUpdater {
 		List<Path> paths = pathService.getPaths(props);
 
 		paths.forEach(wbPath -> {	
-			List<RowData> rowData = getAuditDataFromWb(wbPath); 
+			List<AppRowData> rowData = getAuditDataFromWb(wbPath); 
 			updateEachRowInVendorSheet(rowData, wbPath);		
 //			markFileAsRead(wbPath);
 		});				
@@ -84,7 +84,7 @@ public class AuditUpdater {
 		auditWbOut.close();
 	}  
 	
-	private List<RowData> getAuditDataFromWb(Path p)  {		
+	private List<AppRowData> getAuditDataFromWb(Path p)  {		
 		String shtName = 
 				wbInShtServ.getInstalledApps().getName();
 		
@@ -97,8 +97,8 @@ public class AuditUpdater {
 		fileRenamer.prependCharAndRename('x', fPath.toString());		
 	}
 
-	private void updateEachRowInVendorSheet(List<RowData> rowData, Path audittedWbPath) {		
-		for (RowData rd : rowData) {
+	private void updateEachRowInVendorSheet(List<AppRowData> rowData, Path audittedWbPath) {		
+		for (AppRowData rd : rowData) {
 			InstalledAppRowData appRowData = (InstalledAppRowData) rd;
 			
 			var wsCurr = getCurrentSheet(appRowData);

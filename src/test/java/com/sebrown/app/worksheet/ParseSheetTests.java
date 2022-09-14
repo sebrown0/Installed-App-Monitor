@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Profile;
 
 import com.sebrown.app.config.UnitTestProps;
 import com.sebrown.app.dto.InstalledAppRowData;
-import com.sebrown.app.dto.RowData;
+import com.sebrown.app.dto.AppRowData;
 import com.sebrown.app.service.WorksheetInService;
 import com.sebrown.app.workbook.InstalledAppRowMapper;
 import com.sebrown.app.workbook.SheetParser;
@@ -50,7 +50,7 @@ class ParseSheetTests {
 		XSSFWorkbook wb = wbGetter.getWorkbook(testPath + "/" + testWorkbook);
 		SheetParser sp = new SheetParser();
 		
-		List<RowData> rowData = sp
+		List<AppRowData> rowData = sp
 				.parseSheet(wb.getSheet(shtName), new InstalledAppRowMapper())
 				.getRowData();
 		

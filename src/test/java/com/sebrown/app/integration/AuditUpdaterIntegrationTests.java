@@ -30,7 +30,7 @@ class AuditUpdaterIntegrationTests {
 	@Autowired
 	private IntegrationTestProps props;
 		
-	FileInputStream fis;
+//	FileInputStream fis;
 	
 	@Test @Order(1)
 	void updateAuditOutWithDataFromAuditWBs() throws IOException {		
@@ -44,42 +44,39 @@ class AuditUpdaterIntegrationTests {
 		updater.updateWorkbook(props);		
 	}
 	
-	@Test @Order(2)
-	void test() {
+	@Test 
+	void nameIsNotNull() {						
+		assertEquals(
+				"Microsoft Visual C++ 2019 X86 Minimum Runtime - 14.24.28127", 
+				getValFromLoc("Microsoft", 2, 1));		
+	}
+	
+	
+	//*****************************  Helpers  *****************************
+	private String getValFromLoc(String fromSht, int rowNum, int cellNum) {
 		String val = null;
 		
 		try(FileInputStream fis =	
-				new FileInputStream(new File(props.getAuditOutFullPath()));) {
+				new FileInputStream(
+						new File(props.getAuditOutFullPath()));) {
 			
 			try (XSSFWorkbook wb = new XSSFWorkbook(fis)) {
-				XSSFSheet sht = wb.getSheet("Microsoft");
-				val = getStrVal(sht, 1, 1);
+				XSSFSheet sht = wb.getSheet(fromSht);
+				val = getStrVal(sht, rowNum, cellNum);
 				wb.close();
-			}
-			
+			}			
 			fis.close();
 			
 		} catch (IOException e) {}
-						
-		assertEquals("Microsoft Office Access database engine 2007 (English)", val);		
+		
+		return val;
 	}
 	
-	//Helpers
 	private String getStrVal(XSSFSheet fromSht, int rowNum, int cellNum) {
 		return fromSht
 				.getRow(rowNum).getCell(cellNum)
 				.getStringCellValue();
 	}
 	
-//	private XSSFWorkbook getWB() {		
-//		try (
-//			 fis =	
-//				new FileInputStream(new File(props.getAuditOutFullPath()));){
-//			
-//			return new XSSFWorkbook(fis);			
-//		} catch (Exception e) {	}
-//		
-//		return null;					
-//	}
 	
 }

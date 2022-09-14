@@ -7,7 +7,7 @@ import java.nio.file.Path;
 
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 
-import com.sebrown.app.dto.RowData;
+import com.sebrown.app.dto.AppRowData;
 
 /**
  * @author SteveBrown
@@ -15,5 +15,5 @@ import com.sebrown.app.dto.RowData;
  * Create a row in the WS.
  */
 public interface RowCreator {
-	void createRow(XSSFSheet ws, RowData rowData, Path wbAuditted);
+	boolean createRow(XSSFSheet ws, AppRowData rowData, Path wbAuditted);
 }
