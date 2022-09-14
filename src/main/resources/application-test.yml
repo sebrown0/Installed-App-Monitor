@@ -22,3 +22,4 @@ props:
             
     integration:
       wbpath: ${resource[path]}/integration
+      expectedpath: ${resource[path]}/integration/IntegrationTest-ExpectedResults.xlsx

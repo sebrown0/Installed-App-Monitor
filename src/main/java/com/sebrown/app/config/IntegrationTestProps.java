@@ -32,4 +32,11 @@ public class IntegrationTestProps implements Config {
 			config.getAuditOutWbName();				
 	}	
 	
+	public String getExpectedResultsFullPath() {
+		return config
+				.getIntegrationProps()
+				.getOrDefault(
+						"expectedpath", 
+						"src/test/resources/integration/IntegrationTest-ExpectedResults.xlsx");
+	}
 }

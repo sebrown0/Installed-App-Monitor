@@ -1,11 +1,15 @@
 package com.sebrown.app.integration;
 
+import static org.assertj.core.api.Assertions.fail;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
 
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -29,8 +33,6 @@ class AuditUpdaterIntegrationTests {
 	
 	@Autowired
 	private IntegrationTestProps props;
-		
-//	FileInputStream fis;
 	
 	@Test @Order(1)
 	void updateAuditOutWithDataFromAuditWBs() throws IOException {		
@@ -42,6 +44,58 @@ class AuditUpdaterIntegrationTests {
 				
 		//Update audit out.
 		updater.updateWorkbook(props);		
+	}
+	
+	@Test
+	void sheetsAlign() throws IOException {
+		//Open actual and expected WBs.
+		var fisActual =	
+				new FileInputStream(
+						new File(props.getAuditOutFullPath()));
+			
+		var wbAct = new XSSFWorkbook(fisActual);
+		
+		var fisExp =	
+				new FileInputStream(
+						new File(props.getExpectedResultsFullPath()));
+			
+		var wbExp = new XSSFWorkbook(fisExp);
+		
+		//Create list of actual & expected sheet names
+		var actListNames = new ArrayList<>();
+		var expListNames = new ArrayList<>();
+		int actNumShts = wbAct.getNumberOfSheets() - 1;
+		
+		for (var idx = 0; idx < actNumShts; idx++) {			
+			actListNames.add(wbAct.getSheetAt(idx).getSheetName());			
+			try {
+				var sht = wbExp.getSheetAt(idx);
+				expListNames.add(sht.getSheetName());	
+			} catch (IllegalArgumentException e) {	}			
+		}
+		
+		//Remove expected names from actual.
+		var diff = new HashSet<>();
+		diff.addAll(actListNames);
+		diff.removeAll(expListNames);		
+		
+		//If there's a difference there's an error
+		boolean err = (Objects.nonNull(diff) && diff.size() > 0);
+
+		//Clean up.
+		wbExp.close();			
+		fisExp.close();			
+		wbAct.close();			
+		fisActual.close();
+		
+		//Assert any error
+		if(err || expListNames.size() > 0) {
+			System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++");			
+			System.out.println(diff.toString());
+			System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++");
+			fail("Workbooks do not align" + diff.toString());
+		}
+			
 	}
 	
 	@Test 

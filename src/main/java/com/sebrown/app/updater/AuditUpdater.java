@@ -13,8 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.sebrown.app.config.Config;
-import com.sebrown.app.dto.InstalledAppRowData;
 import com.sebrown.app.dto.AppRowData;
+import com.sebrown.app.dto.InstalledAppRowData;
 import com.sebrown.app.file.FileRenamer;
 import com.sebrown.app.row.RowCreator;
 import com.sebrown.app.row.RowFinder;
@@ -100,9 +100,14 @@ public class AuditUpdater {
 	private void updateEachRowInVendorSheet(List<AppRowData> rowData, Path audittedWbPath) {		
 		for (AppRowData rd : rowData) {
 			InstalledAppRowData appRowData = (InstalledAppRowData) rd;
+
+//			Breakpoint for testing - REMOVE
+//			if(Objects.nonNull(appRowData.getVersion()) && appRowData.getVersion().equals("1.4.0")) {
+//				System.out.println(appRowData.toString());
+//			}
 			
 			var wsCurr = getCurrentSheet(appRowData);
-
+			
 			if(Objects.nonNull(wsCurr)) {
 				Row row = RowFinder
 						.findRowWithStringInCell(wsCurr, appRowData.getIdentifyingNumber(), 2);
@@ -113,11 +118,13 @@ public class AuditUpdater {
 	}
 	
 	private XSSFSheet getCurrentSheet(InstalledAppRowData data) {
-		String vendor = VendorChecker.checkVendor(data.getVendor());
+		String vendor = OldVendorChecker.checkVendor(data.getVendor());
 				
-		return wsCreator.addWs(
-				namingService.getSheetName(vendor), auditHeadings, auditWbOut);
-
+		if(Objects.nonNull(vendor) && vendor.length() >= 1) {
+			return wsCreator.addWs(
+					namingService.getSheetName(vendor), auditHeadings, auditWbOut);	
+		}
+		return null;
 	}
 	
 	private void updateOrInsertRow(Row row, XSSFSheet ws, InstalledAppRowData data, Path audittedWbPath) {

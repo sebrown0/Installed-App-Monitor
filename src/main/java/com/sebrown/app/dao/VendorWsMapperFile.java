@@ -14,6 +14,12 @@ import com.sebrown.app.config.MappingProperties;
  *
  */
 @Component
+/*
+ * 
+ * Have interface: VendorList -> List<vendor name>
+ * CLass VendorFile -> get from txt file
+ * 
+ */
 public class VendorWsMapperFile implements VendorWsMapping {
 
 	private final MappingProperties mappingProps;
