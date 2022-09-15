@@ -14,13 +14,13 @@ import org.springframework.boot.test.context.SpringBootTest;
  *
  */
 @SpringBootTest
-class VendorNameCreatorTests {
+class VendorNameSanitiserTests {
 
 	@Autowired
 	private VendorChecker checker;
 	
 	@Autowired
-	private VendorNameCreator creator;
+	private VendorNameSanitiser creator;
 	
 	@Test
 	void getInstances() {

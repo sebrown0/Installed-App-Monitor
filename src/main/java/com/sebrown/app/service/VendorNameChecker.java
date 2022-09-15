@@ -4,7 +4,6 @@
 package com.sebrown.app.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import com.sebrown.app.utils.OberverContinue;
 
@@ -13,10 +12,10 @@ import com.sebrown.app.utils.OberverContinue;
  *
  */
 public class VendorNameChecker {
-
-	private static final int MAX_SIZE = 22;
-	
+		
 	private boolean firstWord = true;
+	private String result;
+	private String currWord;
 	
 	private final List<String> invalidItems;	
 	private final OberverContinue observer;
@@ -27,51 +26,54 @@ public class VendorNameChecker {
 	}
 
 	public String checkWord(String word) {
-		String result = word + " ";
+		currWord = word;
+		result = currWord + " ";
 		
 		for(String item: invalidItems) {
-			if(word.toLowerCase().contains(item.toLowerCase())) {
-				
-				var getUpTo = word.indexOf(item);// + 1;
-				if(firstWord) {				
-					result = word.substring(0, getUpTo);
-					observer.setContinue(false);
-				}else {					
-					var wordLen = word.length();
-					if(getUpTo > 3 && getUpTo + 1 == wordLen && item.length() == 1) {
-						//keep the word & remove the invalid punctuation.
-						result = word.substring(0, getUpTo);						
-					}else {
-						result = "";
-						observer.setContinue(false);
-					}			
+			if(wordContainsInvalidItem(item)) {				
+				int getUpTo = currWord.indexOf(item);
 
+				if(firstWord) {				
+					resultIsEverythingUptoInvalid(getUpTo);
+				}else {					
+					checkSecondaryWords(item, getUpTo);
 				}				
 				break;
 			}
-			firstWord = false;		
-			
+			firstWord = false;					
 		}
 		return result;
 	}
-//private String checkWord(String word) {
-//for(String item: invalidItems) {
-//	if(word.toLowerCase().contains(item.toLowerCase())) {
-//		continueLookup = false;						
-//		var getUpTo = word.indexOf(item);// + 1;
-//		if(firstWord) {
-//			return word.substring(0, getUpTo);
-//		}else {					
-//			if(getUpTo + 1 == word.length() && item.length() == 1) {
-//				//keep the word & remove the invalid punctuation.
-//				return word.substring(0, getUpTo);
-//			}
-//			return "";	
-//		}				
-//	}
-//	firstWord = false;		
-//}
-//return word + " ";
-//}
+	
+	private boolean wordContainsInvalidItem(String item) {
+		return currWord.toLowerCase().contains(item.toLowerCase());
+	}
+		
+	private void resultIsEverythingUptoInvalid(int getUpTo) {
+		result = currWord.substring(0, getUpTo);
+		notifyStop();
+	}
+	
+	private void notifyStop() {
+		observer.setContinue(false);
+	}
+
+	private void checkSecondaryWords(String item, int getUpTo) {
+		int wordLen = currWord.length();
+		if(isValidWordWithInvalidEnding(wordLen, item, getUpTo)) {
+			resultIsEverythingUptoInvalid(getUpTo);		
+		}else {
+			wordInvalidResultEmpty();
+		}	
+	}
+	
+	private boolean isValidWordWithInvalidEnding(int wordLen, String item, int getUpTo) {
+		return (getUpTo > 3 && getUpTo + 1 == wordLen && item.length() == 1);
+	}
+	
+	private void wordInvalidResultEmpty() {
+		result = "";
+		notifyStop();
+	}
 	
 }

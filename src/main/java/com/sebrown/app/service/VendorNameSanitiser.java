@@ -8,7 +8,7 @@ package com.sebrown.app.service;
  *
  * Get (create) a name for a vendor from the string.
  */
-public interface VendorNameCreator {
+public interface VendorNameSanitiser {
 	
 	String generateName(String fromString);
 	
