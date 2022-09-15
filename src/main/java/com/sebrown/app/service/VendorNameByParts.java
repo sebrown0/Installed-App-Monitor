@@ -3,10 +3,9 @@
  */
 package com.sebrown.app.service;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.Objects;
 
+import org.springframework.beans.factory.annotation.Lookup;
 import org.springframework.stereotype.Service;
 
 import com.sebrown.app.utils.OberverContinue;
@@ -24,7 +23,6 @@ public class VendorNameByParts implements VendorNameSanitiser, OberverContinue {
 		
 	/*
 	 * TODO
-	 * Pass MAX_SIZE & INVALID_ITEMS
 	 * 
 	 * Create 'name getter/creator that will take the result of this
 	 * and apply rules to get final name, i.e. if null, what? or if 1 char?.
@@ -34,29 +32,28 @@ public class VendorNameByParts implements VendorNameSanitiser, OberverContinue {
 	 */
 	private static final int MAX_SIZE = 22;
 	
-	private static final List<String> INVALID_ITEMS = Arrays.asList(
-			".", ",", "Ltd", "LLC", "Corporate", "Inc", "Incorporated");
-	
-	private VendorNameChecker nameChecker;
 	private String name;
-	
 	private boolean continueLookup;
 	
-	private void init() {
-		nameChecker = new VendorNameChecker(INVALID_ITEMS, this);
+	private void init() {		
 		continueLookup = true;
 		name = "";
 	}
+	
+	@Lookup	
+	public WordChecker wordChecker() { return null; }
 	
 	@Override
 	public String generateName(String fromString) {
 		init();
 		
+		var wordChecker = wordChecker().setObserver(this);
+		
 		if(Objects.nonNull(fromString)) {
 			String[] parts = fromString.split(" ");
 			
 			for(String word: parts) {
-				name += nameChecker.checkWord(word);
+				name += wordChecker.checkWord(word);
 				if(false == continueLookup) { break;	}
 			}
 			

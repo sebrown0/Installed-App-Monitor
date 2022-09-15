@@ -3,33 +3,38 @@
  */
 package com.sebrown.app.service;
 
-import java.util.List;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Service;
 
 import com.sebrown.app.utils.OberverContinue;
 
 /**
  * @author SteveBrown
  *
+ * Get the vendor's name from the given words.
+ * 
+ * For example, CISCO, INC may become CISCO.
  */
-public class VendorNameChecker {
+@Service
+@Scope("prototype")
+public class VendorNameByWords implements WordChecker {
 		
 	private boolean firstWord = true;
 	private String result;
-	private String currWord;
+	private String currWord;	
+	private OberverContinue observer;
 	
-	private final List<String> invalidItems;	
-	private final OberverContinue observer;
+	private final InvalidVendorItems invalidItems;	
 	
-	public VendorNameChecker(List<String> invalidItems, OberverContinue observer) {		
+	public VendorNameByWords(InvalidVendorItems invalidItems) {		
 		this.invalidItems = invalidItems;
-		this.observer = observer;
 	}
 
 	public String checkWord(String word) {
 		currWord = word;
 		result = currWord + " ";
 		
-		for(String item: invalidItems) {
+		for(String item: invalidItems.getItems()) {
 			if(wordContainsInvalidItem(item)) {				
 				int getUpTo = currWord.indexOf(item);
 
@@ -74,6 +79,12 @@ public class VendorNameChecker {
 	private void wordInvalidResultEmpty() {
 		result = "";
 		notifyStop();
+	}
+
+	@Override
+	public WordChecker setObserver(OberverContinue observer) {
+		this.observer = observer;
+		return this;
 	}
 	
 }
