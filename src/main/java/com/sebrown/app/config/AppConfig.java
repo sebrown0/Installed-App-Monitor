@@ -4,6 +4,7 @@
 package com.sebrown.app.config;
 
 import java.util.Map;
+import java.util.Objects;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.ComponentScan;
@@ -21,10 +22,20 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 @ConfigurationProperties(prefix = "app")
 @EnableAspectJAutoProxy
 public class AppConfig implements 
-	AppProperties, MappingProperties,	WorkbookProperties {
+	AppProperties, MappingProperties,	WorkbookProperties, DefaultVendor {
 	
 	private Map<String, String> mappings;
 	private Map<String, Workbook> workbooks;
+	private String maxSheetNameLen;
+	private String minSheetNameLen;
+	
+	public void setMaxSheetNameLen(String maxSheetNameLen) {
+		this.maxSheetNameLen = maxSheetNameLen;
+	}
+	
+	public void setMinSheetNameLen(String minSheetNameLen) {
+		this.minSheetNameLen = minSheetNameLen;
+	}
 
 	public void setWorkbooks(Map<String, Workbook> workbooks) {
 		this.workbooks = workbooks;
@@ -92,6 +103,31 @@ public class AppConfig implements
 		public Map<String, String> getColumnMappings() {
 			return columnMappings;
 		}		
+	}
+
+	@Override //DefaultVendor
+	public String getName() {
+		var wb = workbooks.get("auditOut");
+		if(Objects.nonNull(wb)) {
+			var sht = wb.getSheets().get("vendorNotFound");
+			if(Objects.nonNull(sht)) {
+				var name = sht.getName();
+				if(Objects.nonNull(name)) {
+					return name;
+				}
+			}
+		}
+		return "Vendor Not Found";
+	}
+
+	@Override //AppProperties
+	public int getMaxSheetNameLen() {
+		return Integer.parseInt(maxSheetNameLen);
+	}
+
+	@Override //AppProperties
+	public int getMinSheetNameLen() {
+		return Integer.parseInt(minSheetNameLen);
 	}
 		
 }

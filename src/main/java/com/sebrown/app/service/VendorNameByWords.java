@@ -39,7 +39,7 @@ public class VendorNameByWords implements WordChecker {
 				int getUpTo = currWord.indexOf(item);
 
 				if(firstWord) {				
-					resultIsEverythingUptoInvalid(getUpTo);
+					checkFirstWord(getUpTo);
 				}else {					
 					checkSecondaryWords(item, getUpTo);
 				}				
@@ -54,6 +54,18 @@ public class VendorNameByWords implements WordChecker {
 		return currWord.toLowerCase().contains(item.toLowerCase());
 	}
 		
+	private void checkFirstWord(int getUpTo) {
+		if(getUpTo == 0) {
+			resultIsEverythingAfterInvalid(getUpTo);
+		}else {
+			resultIsEverythingUptoInvalid(getUpTo);	
+		}		
+	}
+	
+	private void resultIsEverythingAfterInvalid(int getUpTo) {
+		result = currWord.substring(getUpTo + 1, currWord.length()) + " ";
+	}
+	
 	private void resultIsEverythingUptoInvalid(int getUpTo) {
 		result = currWord.substring(0, getUpTo);
 		notifyStop();

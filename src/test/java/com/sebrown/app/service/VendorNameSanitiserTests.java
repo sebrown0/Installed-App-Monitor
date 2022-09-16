@@ -30,31 +30,37 @@ class VendorNameSanitiserTests {
 	
 	@Test
 	void limitToMaxSize() {
-		String name = creator.generateName("0123456789 0123456789 0123456789");
+		String name = creator.getName("0123456789 0123456789 0123456789");
 		assertEquals("0123456789 0123456789", name);
 	}
 
 	@Test
 	void excludeAfterPeriod_forSecondWord() {
-		String name = creator.generateName("0123456789 0.123456789 0123456789");
+		String name = creator.getName("0123456789 0.123456789 0123456789");
 		assertEquals("0123456789", name);
 	}
 	
 	@Test
 	void excludeAfterPeriod_forFirstWord() {
-		String name = creator.generateName("0123.456789 0123456789 0123456789");
+		String name = creator.getName("0123.456789 0123456789 0123456789");
 		assertEquals("0123", name);
 	}
 	
 	@Test
 	void excludeWordsAfterPunctuation_butKeepAllB4() {
-		String name = creator.generateName("My Company, Inc");
+		String name = creator.getName("My Company, Inc");
 		assertEquals("My Company", name);
 	}
 	
 	@Test
-	void excludeWordsAfterPunctuation_() {
-		String name = creator.generateName("My CompanyInc");
+	void includeWordsAfterPunctuation_inFirstWord() {
+		String name = creator.getName(".My Company, Inc");
+		assertEquals("My Company", name);
+	}
+	
+	@Test
+	void excludeWordsWithInvalid_afterFirstWord() {
+		String name = creator.getName("My CompanyInc");
 		assertEquals("My", name);
 	}
 	

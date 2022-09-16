@@ -10,6 +10,6 @@ package com.sebrown.app.service;
  */
 public interface VendorNameSanitiser {
 	
-	String generateName(String fromString);
+	String getName(String fromString);
 	
 }

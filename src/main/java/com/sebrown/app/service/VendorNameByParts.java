@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Lookup;
 import org.springframework.stereotype.Service;
 
 import com.sebrown.app.utils.OberverContinue;
+import com.sebrown.app.utils.WorksheetName;
 
 /**
  * @author SteveBrown
@@ -30,11 +31,16 @@ public class VendorNameByParts implements VendorNameSanitiser, OberverContinue {
 	 * Update the file, DAO.
 	 * 
 	 */
-	private static final int MAX_SIZE = 22;
 	
 	private String name;
 	private boolean continueLookup;
-	
+		
+	private final WorksheetName sentenceOfMaxLen;
+		
+	public VendorNameByParts(WorksheetName sentenceOfMaxLen) {	
+		this.sentenceOfMaxLen = sentenceOfMaxLen;
+	}
+
 	private void init() {		
 		continueLookup = true;
 		name = "";
@@ -44,7 +50,7 @@ public class VendorNameByParts implements VendorNameSanitiser, OberverContinue {
 	public WordChecker wordChecker() { return null; }
 	
 	@Override
-	public String generateName(String fromString) {
+	public String getName(String fromString) {
 		init();
 		
 		var wordChecker = wordChecker().setObserver(this);
@@ -62,21 +68,8 @@ public class VendorNameByParts implements VendorNameSanitiser, OberverContinue {
 	}
 
 	private String getWholeWordsUnderMaxSize(String name) {
-		if(Objects.nonNull(name) && name.length() >= 1) {
-			
-			String[] parts = name.split(" ");		
-			String temp = "";
-			
-			for(String w: parts) {
-				if(temp.length() + w.length() > MAX_SIZE) {
-					break;
-				}else {
-					temp += w + " ";
-				}
-			}
-			return temp;
-		}
-		return name;
+		return 
+			sentenceOfMaxLen.getSentenceWithWholeWords(name);
 	}
 	
 	@Override

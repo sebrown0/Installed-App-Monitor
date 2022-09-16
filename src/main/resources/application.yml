@@ -12,10 +12,9 @@ resource:
     path: .
     
 app:
-
-#  resource: 
-#    path: .
     
+  maxsheetnamelen: 22
+  minsheetnamelen: 3
   mappings:
     vendor: vendor-mapping-ws.txt
     
