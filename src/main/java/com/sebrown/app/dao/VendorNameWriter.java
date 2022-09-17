@@ -9,9 +9,8 @@ import java.util.List;
  * @author SteveBrown
  *
  */
-public interface VendorList {
-
-	List<String> getList();
-	void updateList(List<String> lst);
+public interface VendorNameWriter {
+	
+	void writeNames(List<String> names);
 	
 }

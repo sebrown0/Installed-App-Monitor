@@ -1,22 +1,24 @@
-package com.sebrown.app;
+package com.sebrown.app.config;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Profile;
-
-import com.sebrown.app.config.AppProperties;
-import com.sebrown.app.config.DefaultVendor;
-import com.sebrown.app.config.MappingProperties;
-import com.sebrown.app.config.WorkbookProperties;
+import org.springframework.test.context.ActiveProfiles;
 
 @SpringBootTest
-@Profile("TEST")
+@ActiveProfiles("test")
 class AppConfigTests {
 
+	@Autowired
+	private ResourceConfig resource;
+	
+	@Autowired
+	private VendorConfig vendor;
+	
 	@Autowired
 	private MappingProperties mapProps;
 		
@@ -31,6 +33,18 @@ class AppConfigTests {
 		assertNotNull(mapProps);
 		assertNotNull(defaultVendor);
 		assertNotNull(appProps);
+		assertNotNull(resource);
+		assertNotNull(vendor);
+	}
+	
+	@Test
+	void resourcePath() {
+		assertEquals("src/test/resources", resource.getPath());
+	}
+	
+	@Test
+	void vendorFile() {
+		assertEquals("VendorNames.txt", vendor.getVendorFileName());
 	}
 	
 	@Test

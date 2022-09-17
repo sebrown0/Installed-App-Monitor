@@ -15,8 +15,10 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
  * @author SteveBrown
  *
  * The config properties from application.yml
+ * 
+ * TODO - Re-Factor
+ * 
  */
-
 @Configuration
 @ComponentScan(basePackages = "com.sebrown.app")
 @ConfigurationProperties(prefix = "app")
@@ -28,6 +30,7 @@ public class AppConfig implements
 	private Map<String, Workbook> workbooks;
 	private String maxSheetNameLen;
 	private String minSheetNameLen;
+
 	
 	public void setMaxSheetNameLen(String maxSheetNameLen) {
 		this.maxSheetNameLen = maxSheetNameLen;

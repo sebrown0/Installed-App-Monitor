@@ -10,8 +10,16 @@ logging:
 
 resource: 
     path: .
-    
-app:
+
+vendor:
+    namesfile:  VendorNames.txt
+ 
+app:    
+#  resource: 
+#    path: .
+
+#  vendor:
+#    namesfile:  VendorNames.txt
     
   maxsheetnamelen: 22
   minsheetnamelen: 3

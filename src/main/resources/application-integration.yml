@@ -1,0 +1,25 @@
+logging:
+  file:
+    name: test.log
+  pattern:
+    dateformat: dd-MM-yyyy hh:mm:ss    
+  level:
+    root: INFO
+    com.sebrown.app: DEBUG
+   
+resource: 
+    path: src/test/resources/integration
+     
+props:
+    
+  test:
+    
+    auditOutWb: Installed Software.xlsx
+      
+    unit:
+      wbpath: ${resource[path]} 
+      wbname: ISO-Audit-Test-26-08-22_08-47-37.xlsm
+            
+    integration:
+      wbpath: ${resource[path]}/integration
+      expectedpath: ${resource[path]}/integration/IntegrationTest-ExpectedResults.xlsx
