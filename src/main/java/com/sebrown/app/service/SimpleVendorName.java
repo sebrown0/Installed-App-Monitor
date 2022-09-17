@@ -25,14 +25,14 @@ public class SimpleVendorName implements VendorNameRules {
 		
 	private final DefaultVendor defaultVendor;
 	private final VendorNameSanitiser sanitiser;
-	private final VendorChecker lookup;
+//	private final VendorChecker lookup;
 	
 	public SimpleVendorName(
-		VendorNameSanitiser sanitiser, VendorChecker lookup, 
+		VendorNameSanitiser sanitiser, 
 		DefaultVendor defaultVendor) {
 		
 		this.sanitiser = sanitiser;
-		this.lookup = lookup;
+//		this.lookup = lookup;
 		this.defaultVendor = defaultVendor;
 	}
 

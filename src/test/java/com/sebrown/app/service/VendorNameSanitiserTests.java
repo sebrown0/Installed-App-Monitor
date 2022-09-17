@@ -64,4 +64,11 @@ class VendorNameSanitiserTests {
 		assertEquals("My", name);
 	}
 	
+
+	@Test
+	void excludeWordsWithInvalid_() {
+		String name = creator.getName("SAP, INC");
+		assertEquals("SAP", name);
+	}
+	
 }

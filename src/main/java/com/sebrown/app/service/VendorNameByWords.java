@@ -44,9 +44,9 @@ public class VendorNameByWords implements WordChecker {
 					checkSecondaryWords(item, getUpTo);
 				}				
 				break;
-			}
-			firstWord = false;					
+			}					
 		}
+		firstWord = false;			
 		return result;
 	}
 	
