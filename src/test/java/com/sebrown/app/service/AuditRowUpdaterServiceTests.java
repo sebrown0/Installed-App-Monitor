@@ -109,7 +109,6 @@ class AuditRowUpdaterServiceTests {
 		assertTrue(id.startsWith("NO-ID"));
 		assertEquals("Some Software", actName);
 		
-		
 	}
 	
 }

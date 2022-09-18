@@ -3,7 +3,15 @@ package com.sebrown.app.dto;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
+/**
+ * @author SteveBrown
+ *
+ */
+@SpringBootTest
+@ActiveProfiles("test")
 class InstalledAppRowDataTests {
 
 	@Test

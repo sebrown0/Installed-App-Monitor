@@ -69,7 +69,7 @@ class AppConfigTests {
 	@Test
 	void workbookSheetAuditIn() {
 		WorkbookProperties wbProps = (WorkbookProperties) mapProps;
-		assertEquals("4", 
+		assertEquals("3", 
 				wbProps.getWorkbooks().get("auditIn")
 				.getSheets().get("installedApps").getColumnMappings().get("name"));
 	}
@@ -77,7 +77,7 @@ class AppConfigTests {
 	@Test
 	void workbookSheetAuditOut() {
 		WorkbookProperties wbProps = (WorkbookProperties) mapProps;
-		assertEquals("4", 
+		assertEquals("3", 
 				wbProps.getWorkbooks().get("auditOut")
 				.getSheets().get("vendorNotFound").getColumnMappings().get("version"));
 	}
