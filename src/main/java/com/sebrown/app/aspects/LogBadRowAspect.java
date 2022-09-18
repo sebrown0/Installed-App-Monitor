@@ -27,7 +27,7 @@ public class LogBadRowAspect {
 	private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 	
 	@Pointcut("execution("
-			+ "* com.sebrown.app.service.AuditRowCreatorService.createRow(..)) && "
+			+ "* com.sebrown.app.unit.service.AuditRowCreatorService.createRow(..)) && "
 			+ "args(ws, rowData, wbAuditted))")
 	private void createRow(XSSFSheet ws, AppRowData rowData, Path wbAuditted) {}
 	
