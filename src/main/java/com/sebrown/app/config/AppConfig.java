@@ -20,7 +20,8 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
  * 
  */
 @Configuration
-@ComponentScan(basePackages = "com.sebrown.app")
+@ComponentScan(basePackages = { 
+		"com.sebrown.app", "com.sebrown.app.integration"} )
 @ConfigurationProperties(prefix = "app")
 @EnableAspectJAutoProxy
 public class AppConfig implements 

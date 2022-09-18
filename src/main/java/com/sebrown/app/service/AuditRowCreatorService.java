@@ -20,6 +20,8 @@ import com.sebrown.app.utils.RowValidator;
 /**
  * @author SteveBrown
  *
+ * Create a row in a work sheet in the
+ * Installed Software WB.
  */
 @Service
 public class AuditRowCreatorService implements RowCreator {
@@ -29,7 +31,8 @@ public class AuditRowCreatorService implements RowCreator {
 	private final WorksheetOutService shtServ;
 	
 	public AuditRowCreatorService(
-		AssetIdService assetIdServ, SoftwareIdService softIdServ, WorksheetOutService shtServ) {
+		AssetIdService assetIdServ, 
+		SoftwareIdService softIdServ, WorksheetOutService shtServ) {
 		
 		this.assetIdServ = assetIdServ;
 		this.softIdServ = softIdServ;
@@ -56,9 +59,8 @@ public class AuditRowCreatorService implements RowCreator {
 	
 	private void createCell(Optional<Integer> colNum, XSSFRow rw, String val) {
 		colNum.ifPresent(n -> {
-			//Column nums are zero based so when getting the value 
-			//from the config file we subtract 1.
-			rw.createCell(n - 1, STRING).setCellValue(val);			
+			//18-09-2022 REMOVED TAKING 1 FROM CELL NUMBER (SEE app.yml)
+			rw.createCell(n, STRING).setCellValue(val);	
 		});
 	}
 	

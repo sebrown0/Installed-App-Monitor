@@ -4,6 +4,7 @@
 package com.sebrown.app.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 /**
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Component;
  *
  */
 @Component
+@Profile("test")
 public class UnitTestProps implements UTConfig {
 	
 	@Autowired

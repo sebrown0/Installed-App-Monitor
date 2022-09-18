@@ -53,7 +53,9 @@ public class VendorName {
 	
 	public void addName(String name) {
 		if(isNull(newNames)) { newNames = new ArrayList<>(); }
-		newNames.add(name);		
+		if(false == newNames.contains(name)) {
+			newNames.add(name);			
+		}		
 	}
 	
 	public void flush() {

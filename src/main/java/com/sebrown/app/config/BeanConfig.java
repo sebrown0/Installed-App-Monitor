@@ -8,8 +8,10 @@ import org.springframework.context.annotation.Configuration;
 
 import com.sebrown.app.dao.VendorNameFileIn;
 import com.sebrown.app.dao.VendorNameFileOut;
+import com.sebrown.app.file.AuditOutFileGetter;
 import com.sebrown.app.file.FileReader;
 import com.sebrown.app.file.FileWriter;
+import com.sebrown.app.row.RowCreator;
 
 /**
  * 
@@ -20,11 +22,17 @@ import com.sebrown.app.file.FileWriter;
 public class BeanConfig {
 	
 	@Autowired
-	private ResourceConfig resource;
+	private Config config;
 	
 	@Autowired
-	private VendorConfig vendor;
+	private RowCreator rowServ;
 	
+	@Autowired
+	private ResourceConfig resource;
+		
+	@Autowired
+	private VendorConfig vendorCnfg;
+		
 	@Autowired
 	private FileReader<List<String>> fileLineReader;
 	
@@ -34,7 +42,7 @@ public class BeanConfig {
 	@Bean
 	VendorNameFileIn vendorNameFileIn() {
 		String path = resource.getPath();
-		String fName = vendor.getVendorFileName();
+		String fName = vendorCnfg.getVendorFileName();
 		
 		return new VendorNameFileIn(path + "/" + fName, fileLineReader);
 	}
@@ -42,9 +50,14 @@ public class BeanConfig {
 	@Bean
 	VendorNameFileOut vendorNameFileOut() {
 		String path = resource.getPath();
-		String fName = vendor.getVendorFileName();
+		String fName = vendorCnfg.getVendorFileName();
 		
 		return new VendorNameFileOut(path + "/" + fName, fileLineWriter);
 	}
 
+	@Bean
+	AuditOutFileGetter auditOutFileGetter() {
+		return new AuditOutFileGetter(
+				config, "Vendor Not Found", rowServ);
+	}
 }

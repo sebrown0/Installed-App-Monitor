@@ -4,6 +4,7 @@
 package com.sebrown.app.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 /**
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Component;
  * Properties for integration tests.
  */
 @Component
+@Profile("integration")
 public class IntegrationTestProps implements Config {
 
 	@Autowired

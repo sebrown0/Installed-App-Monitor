@@ -22,6 +22,7 @@ import com.sebrown.app.service.AuditDataService;
 import com.sebrown.app.service.AuditInPathService;
 import com.sebrown.app.service.AuditRowUpdaterService;
 import com.sebrown.app.service.SheetNamingService;
+import com.sebrown.app.service.VendorName;
 import com.sebrown.app.service.WorksheetInService;
 import com.sebrown.app.worksheet.ColumnHeading;
 import com.sebrown.app.worksheet.WorksheetCreator;
@@ -53,6 +54,9 @@ public class AuditUpdater {
 	private FileRenamer fileRenamer;
 	
 	@Autowired
+	private VendorName vendorName;
+	
+	@Autowired
 	AuditWbOut auditWbOut;
 	
 	private final AuditRowUpdaterService updaterServ;
@@ -79,6 +83,9 @@ public class AuditUpdater {
 			updateEachRowInVendorSheet(rowData, wbPath);		
 //			markFileAsRead(wbPath);
 		});				
+		
+		//Persist any new vendors.
+		vendorName.flush();
 		
 		//Close and save th O/P WB.
 		auditWbOut.close();
@@ -121,8 +128,9 @@ public class AuditUpdater {
 		String vendor = OldVendorChecker.checkVendor(data.getVendor());
 				
 		if(Objects.nonNull(vendor) && vendor.length() >= 1) {
-			return wsCreator.addWs(
-					namingService.getSheetName(vendor), auditHeadings, auditWbOut);	
+			var name = vendorName.getVendor(vendor);
+			var shtName = namingService.getSheetName(name);
+			return wsCreator.addWs(shtName, auditHeadings, auditWbOut);	
 		}
 		return null;
 	}

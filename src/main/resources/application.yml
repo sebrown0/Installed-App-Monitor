@@ -26,6 +26,7 @@ app:
   mappings:
     vendor: vendor-mapping-ws.txt
     
+  #CHANGE COLUMN MAPPING TO ACTUAL, I.E. 0 NOT 1
   workbooks:
     auditIn:
       name: Audit In
@@ -34,15 +35,15 @@ app:
         installedApps:
           name: Installed Apps      
           columnMappings:
-            description: 1
-            identifyingNumber: 2
-            installDate: 3
-            name: 4
-            productId: 5
-            regCompany: 6
-            regOwner: 7
-            vendor: 8
-            version: 9
+            description: 0
+            identifyingNumber: 1
+            installDate: 2
+            name: 3
+            productId: 4
+            regCompany: 5
+            regOwner: 6
+            vendor: 7
+            version: 8
         systemInfo:
           name: System Info
     
@@ -53,9 +54,9 @@ app:
         vendorNotFound:
           name: Vendor Not Found      
           columnMappings:
-            id: 1
-            name: 2
-            identifyingNumber: 3
-            version: 4
-            installedAssetIDs: 5
+            id: 0
+            name: 1
+            identifyingNumber: 2
+            version: 3
+            installedAssetIDs: 4
                   
