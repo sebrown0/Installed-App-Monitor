@@ -20,12 +20,12 @@ import com.sebrown.app.file.FileWriter;
  * CONSTRUCTOR ARGS. 
  */
 
-public class VendorNameFileOut implements VendorNameWriter {
+public class VendorFileOut implements VendorNameWriter {
 	
 	private final String fullPathToFile;
 	private final FileWriter<List<String>> writer;
 			
-	public VendorNameFileOut(String fullPathToFile, FileWriter<List<String>> writer) {	
+	public VendorFileOut(String fullPathToFile, FileWriter<List<String>> writer) {	
 		this.fullPathToFile = fullPathToFile;
 		this.writer = writer;
 	}

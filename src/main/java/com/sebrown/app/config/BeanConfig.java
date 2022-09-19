@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.sebrown.app.dao.VendorNameFileIn;
-import com.sebrown.app.dao.VendorNameFileOut;
+import com.sebrown.app.dao.VendorFileIn;
+import com.sebrown.app.dao.VendorFileOut;
 import com.sebrown.app.file.AuditOutFileGetter;
 import com.sebrown.app.file.FileReader;
 import com.sebrown.app.file.FileWriter;
@@ -40,19 +40,19 @@ public class BeanConfig {
 	private FileWriter<List<String>> fileLineWriter;
 	
 	@Bean
-	VendorNameFileIn vendorNameFileIn() {
+	VendorFileIn vendorNameFileIn() {
 		String path = resource.getPath();
 		String fName = vendorCnfg.getVendorFileName();
 		
-		return new VendorNameFileIn(path + "/" + fName, fileLineReader);
+		return new VendorFileIn(path + "/" + fName, fileLineReader);
 	}
 	
 	@Bean
-	VendorNameFileOut vendorNameFileOut() {
+	VendorFileOut vendorNameFileOut() {
 		String path = resource.getPath();
 		String fName = vendorCnfg.getVendorFileName();
 		
-		return new VendorNameFileOut(path + "/" + fName, fileLineWriter);
+		return new VendorFileOut(path + "/" + fName, fileLineWriter);
 	}
 
 	@Bean
