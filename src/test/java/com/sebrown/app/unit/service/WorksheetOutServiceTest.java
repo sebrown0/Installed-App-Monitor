@@ -10,6 +10,7 @@ import java.util.Map;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import com.sebrown.app.config.AppConfig.Sheet;
 import com.sebrown.app.service.WorksheetOutService;
@@ -19,6 +20,7 @@ import com.sebrown.app.service.WorksheetOutService;
  *
  */
 @SpringBootTest
+@ActiveProfiles("test")
 class WorksheetOutServiceTest {
 
 	@Autowired

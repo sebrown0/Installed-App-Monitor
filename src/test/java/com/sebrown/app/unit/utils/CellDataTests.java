@@ -7,10 +7,14 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.xssf.streaming.SXSSFCell;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import com.sebrown.app.utils.CellValueGetter;
 import com.sebrown.app.utils.IntegerType;
 
+@SpringBootTest
+@ActiveProfiles("test")
 class CellDataTests {
 
 	@Test

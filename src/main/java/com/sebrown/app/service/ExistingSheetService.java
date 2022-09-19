@@ -5,6 +5,7 @@ package com.sebrown.app.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -26,10 +27,12 @@ public class ExistingSheetService {
 	public List<XSSFSheet> getExistingSheets(XSSFWorkbook wb) {		
 		List<XSSFSheet> existingWorksheets = new ArrayList<>();
 		
-		wb
+		if(Objects.nonNull(wb)) {
+			wb
 			.sheetIterator()
 			.forEachRemaining(s -> 
-				existingWorksheets.add((XSSFSheet) s));
+				existingWorksheets.add((XSSFSheet) s));	
+		}		
 		
 		return existingWorksheets;
 	}	

@@ -41,7 +41,7 @@ class VendorNameFileTests {
 	
 	@Autowired
 	private VendorConfig vendor;
-	
+		
 	@Test 
 	void getInstance() {
 		assertNotNull(repo);

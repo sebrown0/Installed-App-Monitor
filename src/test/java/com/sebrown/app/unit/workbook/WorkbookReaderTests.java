@@ -8,10 +8,10 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.fail;
 
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import com.sebrown.app.config.UnitTestProps;
 import com.sebrown.app.service.WorkbookReader;
@@ -21,6 +21,7 @@ import com.sebrown.app.service.WorkbookReader;
  *
  */
 @SpringBootTest
+@ActiveProfiles("test")
 class WorkbookReaderTests {
 
 	@Autowired
@@ -106,9 +107,4 @@ class WorkbookReaderTests {
 		}
 	}
 	
-	@AfterAll
-	public static void end() {
-		System.out.println("FINISHED");
-	}
-
 }

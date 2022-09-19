@@ -10,18 +10,18 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Profile;
+import org.springframework.test.context.ActiveProfiles;
 
 import com.sebrown.app.config.UnitTestProps;
-import com.sebrown.app.dto.InstalledAppRowData;
 import com.sebrown.app.dto.AppRowData;
+import com.sebrown.app.dto.InstalledAppRowData;
 import com.sebrown.app.service.WorksheetInService;
 import com.sebrown.app.workbook.InstalledAppRowMapper;
 import com.sebrown.app.workbook.SheetParser;
 import com.sebrown.app.workbook.WorkbookGetter;
 
 @SpringBootTest
-@Profile("TEST")
+@ActiveProfiles("test")
 class ParseSheetTests {
 	
 	@Autowired

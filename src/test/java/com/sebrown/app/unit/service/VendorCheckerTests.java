@@ -12,6 +12,7 @@ import java.util.Arrays;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import com.sebrown.app.service.VendorChecker;
 
@@ -20,6 +21,7 @@ import com.sebrown.app.service.VendorChecker;
  *
  */
 @SpringBootTest
+@ActiveProfiles("test")
 class VendorCheckerTests {
 
 	//DO WE NEED?????????????????????

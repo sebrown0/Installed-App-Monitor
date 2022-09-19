@@ -6,6 +6,8 @@ package com.sebrown.app.unit.utils;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import com.sebrown.app.dto.InstalledAppRowData;
 import com.sebrown.app.utils.RowValidator;
@@ -15,6 +17,8 @@ import com.sebrown.app.dto.AppRowData;
  * @author SteveBrown
  *
  */
+@SpringBootTest
+@ActiveProfiles("test")
 class RowValidatorTests {
 
 	@Test

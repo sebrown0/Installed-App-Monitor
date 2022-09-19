@@ -10,6 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import com.sebrown.app.config.AppConfig.Workbook;
 import com.sebrown.app.service.WorkbookService;
@@ -19,6 +20,7 @@ import com.sebrown.app.service.WorkbookService;
  *
  */
 @SpringBootTest
+@ActiveProfiles("test")
 class WorkbookServiceTests {
 
 	@Autowired

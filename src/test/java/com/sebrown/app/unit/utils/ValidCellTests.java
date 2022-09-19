@@ -15,10 +15,12 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import com.sebrown.app.utils.ValidCell;
 
 @SpringBootTest
+@ActiveProfiles("test")
 class ValidCellTests {
 
 	private static final String WB_TEMP_PATH = "./src/test/resources/temp.xlsx";

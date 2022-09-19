@@ -71,7 +71,6 @@ public class WorkbookReader implements AutoCloseable {
 
 	@Override
 	public void close() throws Exception {
-		System.out.println("CLOSING WORKBOOK");
 		wb.close();
 		fis.close();
 	}

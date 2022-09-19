@@ -15,6 +15,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import com.sebrown.app.config.UnitTestProps;
 import com.sebrown.app.service.AuditInPathService;
@@ -26,6 +27,7 @@ import com.sebrown.app.service.XSSFWorkbookService;
  *
  */
 @SpringBootTest
+@ActiveProfiles("test")
 class ExistingSheetServiceTests {
 
 	@Autowired

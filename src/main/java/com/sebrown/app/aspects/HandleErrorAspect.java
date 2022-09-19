@@ -29,7 +29,9 @@ public class HandleErrorAspect {
 	private final Logger LOG = 
 			LoggerFactory.getLogger(this.getClass());
 		
-	@AfterReturning(pointcut = "@annotation(com.sebrown.app.annotations.HandleErr)", returning = "error")
+	@AfterReturning(
+			pointcut = 
+			"@annotation(com.sebrown.app.annotations.HandleErr)", returning = "error")
 	public void logError(JoinPoint jp, Optional<ErrorHandler> error) {
 			
 		error.ifPresent(e -> {
