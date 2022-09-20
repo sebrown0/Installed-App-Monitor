@@ -19,9 +19,6 @@ import com.sebrown.app.config.VendorFiles;
  */
 @Component
 public final class VendorFile implements VendorRepo {
-
-//	private final VendorNameReader reader;
-//	private final VendorNameWriter writer; TODO - check & remove!!!!
 	
 	@Autowired
 	private ResourcePath resPath;

@@ -1,20 +1,10 @@
 package com.sebrown.app.config;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.sebrown.app.dao.VendorFile;
-import com.sebrown.app.dao.VendorFileIn;
-import com.sebrown.app.dao.VendorFileOut;
-import com.sebrown.app.dao.VendorNameReader;
-import com.sebrown.app.dao.VendorNameWriter;
-import com.sebrown.app.dao.VendorRepo;
 import com.sebrown.app.file.AuditOutFileGetter;
-import com.sebrown.app.file.FileReader;
-import com.sebrown.app.file.FileWriter;
 import com.sebrown.app.row.RowCreator;
 
 /**
