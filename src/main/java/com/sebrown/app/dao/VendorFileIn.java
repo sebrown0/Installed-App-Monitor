@@ -6,30 +6,27 @@ package com.sebrown.app.dao;
 import java.nio.file.Paths;
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 import com.sebrown.app.file.FileReader;
 
 /**
  * @author SteveBrown
  *
- * Get vendor names from text file.
+ * Read from vendor file.
  * 
  */
 
-/* NOT USING COMPONENT SCAN AS WE WANT TO 
-   INJECT CONSTRUCTOR ARGS.  */
-
-public class VendorFileIn implements VendorNameReader {
+@Component
+public class VendorFileIn {
 	
-	private final String fullPathToFile;
 	private final FileReader<List<String>> reader;
 	
-	public VendorFileIn(String fullPathToFile, FileReader<List<String>> reader) {	
-		this.fullPathToFile = fullPathToFile;
+	public VendorFileIn(FileReader<List<String>> reader) {
 		this.reader = reader;
 	}
 	
-	@Override
-	public List<String> getNames() {
+	public List<String> getNames(String fullPathToFile) {
 		return (List<String>) reader.readFile(Paths.get(fullPathToFile));
 	}
 	

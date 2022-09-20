@@ -1,5 +1,7 @@
 package com.sebrown.app.integration;
 
+import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
+import static java.nio.file.StandardOpenOption.WRITE;
 import static org.assertj.core.api.Assertions.fail;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -9,11 +11,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import static java.nio.file.StandardOpenOption.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Objects;
 
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -29,7 +29,6 @@ import org.springframework.test.context.ActiveProfiles;
 import com.sebrown.app.config.IntegrationTestProps;
 import com.sebrown.app.config.ResourceConfig;
 import com.sebrown.app.config.VendorConfig;
-import com.sebrown.app.dao.VendorRepo;
 import com.sebrown.app.file.AuditOutFileGetter;
 import com.sebrown.app.updater.AuditUpdater;
 

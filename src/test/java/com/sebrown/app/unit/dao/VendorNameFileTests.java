@@ -51,17 +51,17 @@ class VendorNameFileTests {
 	
 	@Test
 	void getFirstName_shouldBeMicrosoft() {
-		assertEquals("Microsoft", repo.getVendorNames().get(0));
+		assertEquals("Microsoft", repo.getList().get(0));
 	}
 	
 	@Test
 	void appendNames() throws IOException {		
-		List<String> names = repo.getVendorNames();
+		List<String> names = repo.getList();
 		List<String> original = new ArrayList<>(names);
 
 		names.addAll(Arrays.asList("SAP", "CISCO"));
 		names.sort(String::compareToIgnoreCase);
-		repo.writeVendorNames(names);
+		repo.writeList(names);
 		
 		//Put it back to what it was
 		Path fPath = Paths.get(

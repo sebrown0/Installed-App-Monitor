@@ -13,20 +13,15 @@ resource:
 
 vendor:
     namesfile:  VendorNames.txt
+    accronymfile:  VendorAccronyms.txt
  
 app:    
-#  resource: 
-#    path: .
-
-#  vendor:
-#    namesfile:  VendorNames.txt
     
   maxsheetnamelen: 22
   minsheetnamelen: 3
   mappings:
-    vendor: vendor-mapping-ws.txt
+    vendor: vendor-mapping-ws.txt #TODO - NOT USING THIS? CHECK & REMOVE
     
-  #CHANGE COLUMN MAPPING TO ACTUAL, I.E. 0 NOT 1
   workbooks:
     auditIn:
       name: Audit In

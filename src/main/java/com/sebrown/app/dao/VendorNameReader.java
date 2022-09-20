@@ -11,6 +11,6 @@ import java.util.List;
  */
 public interface VendorNameReader {
 
-	List<String> getNames();
+	List<String> getNames(String fullPathToFile);
 	
 }

@@ -6,32 +6,27 @@ package com.sebrown.app.dao;
 import java.nio.file.Paths;
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 import com.sebrown.app.file.FileWriter;
 
 /**
  * @author SteveBrown
  *
- * Append new vendor names to file.
+ * Write list to vendor file.
  * 
  */
 
-/*
- * NOT USING COMPONENT SCAN AS WE WANT TO INJECT
- * CONSTRUCTOR ARGS. 
- */
-
-public class VendorFileOut implements VendorNameWriter {
+@Component
+public class VendorFileOut {
 	
-	private final String fullPathToFile;
 	private final FileWriter<List<String>> writer;
 			
-	public VendorFileOut(String fullPathToFile, FileWriter<List<String>> writer) {	
-		this.fullPathToFile = fullPathToFile;
+	public VendorFileOut(FileWriter<List<String>> writer) {		
 		this.writer = writer;
 	}
 
-	@Override
-	public void writeNames(List<String> names) {
+	public void writeList(List<String> names, String fullPathToFile) {
 		writer.truncateExistingAndWrite(Paths.get(fullPathToFile), names);
 	}
 	

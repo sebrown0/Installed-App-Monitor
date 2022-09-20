@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @ConfigurationProperties(prefix = "resource")
-public class ResourceConfig {
+public class ResourceConfig implements ResourcePath {
 	
 	private String path;
 	
@@ -20,6 +20,7 @@ public class ResourceConfig {
 		this.path = path;
 	}
 	
+	@Override
 	public String getPath() {
 		return path;
 	}

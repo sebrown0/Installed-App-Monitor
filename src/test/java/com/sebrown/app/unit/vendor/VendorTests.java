@@ -16,9 +16,8 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 
+import com.sebrown.app.annotations.UnitTest;
 import com.sebrown.app.config.ResourceConfig;
 import com.sebrown.app.config.VendorConfig;
 import com.sebrown.app.dao.VendorRepo;
@@ -28,8 +27,7 @@ import com.sebrown.app.service.VendorName;
  * @author SteveBrown
  *
  */
-@SpringBootTest
-@ActiveProfiles("test")
+@UnitTest
 class VendorTests {
 
 	@Autowired
@@ -52,14 +50,14 @@ class VendorTests {
 	@Test
 	void getVendorThatIsNotInFile_shouldAddNameToFile	() throws IOException {		
 		//Get the original so we can restore
-		List<String> original = repo.getVendorNames();
+		List<String> original = repo.getList();
 		
 		//Get a vendor name that's not in the file.
 		vendor.getVendor("Citrix, INC");
 		vendor.flush();
 		
 		//Get the updated list from file
-		List<String> names = repo.getVendorNames();
+		List<String> names = repo.getList();
 		
 		//Put it back to what it was		
 		Path fPath = Paths.get(

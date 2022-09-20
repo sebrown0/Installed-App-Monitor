@@ -11,7 +11,7 @@ import java.util.List;
  */
 public interface VendorRepo {
 
-	List<String> getVendorNames();
-	void writeVendorNames(List<String> lst);
+	List<String> getList();
+	void writeList(List<String> lst);
 	
 }

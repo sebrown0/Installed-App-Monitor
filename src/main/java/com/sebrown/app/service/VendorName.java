@@ -46,7 +46,7 @@ public class VendorName {
 	
 	private List<String> getExisting(){
 		if(isNull(existingNames)) {
-			existingNames = repo.getVendorNames();
+			existingNames = repo.getList();
 		}
 		return existingNames;
 	}
@@ -62,7 +62,7 @@ public class VendorName {
 		if(nonNull(newNames)) {
 			existingNames.addAll(newNames);
 			existingNames.sort(String::compareToIgnoreCase);
-			repo.writeVendorNames(existingNames);	
+			repo.writeList(existingNames);	
 		}		
 	}
 	
