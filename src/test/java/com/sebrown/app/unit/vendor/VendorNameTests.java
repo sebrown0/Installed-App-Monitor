@@ -16,6 +16,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import com.sebrown.app.annotations.UnitTest;
 import com.sebrown.app.config.ResourceConfig;
@@ -28,12 +29,12 @@ import com.sebrown.app.service.VendorName;
  *
  */
 @UnitTest
-class VendorTests {
+class VendorNameTests {
 
 	@Autowired
 	private VendorName vendor;
 	
-	@Autowired
+	@Autowired @Qualifier("vendorNameFile")
 	private VendorRepo repo;	
 	
 	@Autowired

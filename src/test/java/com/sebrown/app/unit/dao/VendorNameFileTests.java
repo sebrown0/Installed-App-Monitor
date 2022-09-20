@@ -18,9 +18,9 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
+import org.springframework.beans.factory.annotation.Qualifier;
 
+import com.sebrown.app.annotations.UnitTest;
 import com.sebrown.app.config.ResourceConfig;
 import com.sebrown.app.config.VendorConfig;
 import com.sebrown.app.dao.VendorRepo;
@@ -29,11 +29,10 @@ import com.sebrown.app.dao.VendorRepo;
  * @author SteveBrown
  *
  */
-@SpringBootTest
-@ActiveProfiles("test")
+@UnitTest
 class VendorNameFileTests {
 
-	@Autowired
+	@Autowired @Qualifier("vendorNameFile")
 	private VendorRepo repo;	
 	
 	@Autowired

@@ -8,6 +8,7 @@ import java.util.List;
 /**
  * @author SteveBrown
  *
+ * Read or write to vendor persistence object.
  */
 public interface VendorRepo {
 

@@ -3,13 +3,11 @@
  */
 package com.sebrown.app.service;
 
-import static java.util.Objects.*;
+import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Service;
 
 import com.sebrown.app.dao.VendorRepo;
 
@@ -17,8 +15,10 @@ import com.sebrown.app.dao.VendorRepo;
  * @author SteveBrown
  *
  */
-@Service
-@Scope("prototype")
+
+/*
+ * Not using component scan. In config file.
+ */
 public class VendorName {
 
 	private List<String> existingNames;

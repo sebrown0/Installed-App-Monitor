@@ -10,7 +10,7 @@ package com.sebrown.app.config;
  */
 public interface Config {
 	
-	String getResourcePath(); 	//Location of all resources	
+	String getResourcePath(); 	  //Location of all resources	
 	String getAuditOutFullPath(); //The destination WB, i.e., Installed Software
-		
+//	String getPersistanceType();	//TODO - return actual interface?
 }

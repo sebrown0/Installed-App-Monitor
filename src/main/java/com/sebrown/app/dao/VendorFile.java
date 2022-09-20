@@ -8,40 +8,35 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.sebrown.app.config.ResourcePath;
-import com.sebrown.app.config.VendorFiles;
-
 /**
  * @author SteveBrown
  *
- * Get or write the vendor names from/to text file.
+ * Get or write the vendor files.
  * 
  */
 @Component
-public final class VendorFile implements VendorRepo {
+public abstract class VendorFile implements VendorRepo {
 	
 	@Autowired
-	private ResourcePath resPath;
-		
+	private VendorFileIn reader;
+	
 	@Autowired
-	private VendorFiles fileNames;
-	
-	private final VendorFileIn reader;
-	private final VendorFileOut writer;
-	
-	public VendorFile(VendorFileIn reader, VendorFileOut writer) {
-		this.reader = reader;
-		this.writer = writer;
-	}
+	private VendorFileOut writer;
 
+	protected abstract FilePath getFilePath(); 
+	
 	@Override
 	public List<String> getList() {
-		return reader.getNames(resPath + fileNames.getVendorFileName());
+		return reader.getNames(getPathAndFileName());	
 	}
 
 	@Override
-	public void writeList(List<String> names) {		
-		writer.writeList(names, resPath + fileNames.getVendorFileName());
+	public void writeList(List<String> names) {
+		writer.writeList(names, getPathAndFileName());
 	}	
+	
+	private String getPathAndFileName() {
+		return this.getFilePath().getPathAndFileName();
+	}
 	
 }

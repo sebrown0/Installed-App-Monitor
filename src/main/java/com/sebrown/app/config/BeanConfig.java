@@ -3,9 +3,14 @@ package com.sebrown.app.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
 
+import com.sebrown.app.dao.VendorNameFile;
+import com.sebrown.app.dao.VendorRepo;
 import com.sebrown.app.file.AuditOutFileGetter;
 import com.sebrown.app.row.RowCreator;
+import com.sebrown.app.service.VendorName;
+import com.sebrown.app.service.VendorNameRules;
 
 /**
  * 
@@ -19,54 +24,34 @@ public class BeanConfig {
 	private Config config;
 	
 	@Autowired
+	private PersistanceConfig persistanceCnfg;
+	
+	@Autowired
 	private RowCreator rowServ;
 	
-//	@Autowired
-//	private ResourceConfig resource;
-//		
-//	@Autowired
-//	private VendorConfig vendorCnfg;
+	@Autowired
+	private VendorNameRules venNameRules;
+	
+	@Autowired
+	private VendorNameFile vendorNameFile;
+	
+	@Bean @Scope("prototype")
+	VendorName vendorName() {
+		String type = persistanceCnfg.getType();
 		
-//	@Autowired
-//	private FileReader<List<String>> fileLineReader;
-//	
-//	@Autowired
-//	private FileWriter<List<String>> fileLineWriter;
-	
-//	@Autowired
-//	private VendorNameReader reader;
-//	@Autowired
-//	private VendorNameWriter writer;
-	
-	/*
-	 * vendor repo is file or db
-	 * set the repo to one of them and configure
-	 *   file path or db conn etc...
-	 */
-//	@Bean
-//	VendorFileIn vendorNameFileIn() {
-//		String path = resource.getPath();
-//		String fName = vendorCnfg.getVendorFileName();
-//		
-//		return new VendorFileIn(path + "/" + fName, fileLineReader);
-//	}
-//	
-//	@Bean
-//	VendorFileOut vendorNameFileOut() {
-//		String path = resource.getPath();
-//		String fName = vendorCnfg.getVendorFileName();
-//		
-//		return new VendorFileOut(path + "/" + fName, fileLineWriter);
-//	}
-
-//	@Bean
-//	VendorRepo vendorRepo() {
-//		return new VendorFile(reader, writer);
-//	}
+		VendorRepo repo = null;
+		if(type.toLowerCase().equals("file")) {
+			repo = vendorNameFile;
+		}else {
+			//will be DB repo.
+		}
+		return new VendorName(repo, venNameRules);
+	}
 	
 	@Bean
 	AuditOutFileGetter auditOutFileGetter() {
 		return new AuditOutFileGetter(
 				config, "Vendor Not Found", rowServ);
 	}
+
 }

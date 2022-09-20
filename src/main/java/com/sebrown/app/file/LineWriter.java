@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
 /**
  * @author SteveBrown
  *
- * Append lines to given file.
+ * Write given file.
  */
 @Component
 public class LineWriter implements FileWriter<List<String>>{

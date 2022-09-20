@@ -9,8 +9,11 @@ logging:
     com.sebrown.app: INFO
 
 resource: 
-    path: .
+  path: .
 
+persistance:
+  type: file
+  
 vendor:
     namesfile:  VendorNames.txt
     accronymfile:  VendorAccronyms.txt
