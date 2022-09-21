@@ -17,6 +17,8 @@ persistance:
 vendor:
     namesfile:  VendorNames.txt
     accronymfile:  VendorAccronyms.txt
+    minAcnymLen: 2
+    maxAcnymLen: 5
  
 app:    
     

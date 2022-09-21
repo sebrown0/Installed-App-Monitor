@@ -5,10 +5,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 
+import com.sebrown.app.dao.VendorAccronymFile;
 import com.sebrown.app.dao.VendorNameFile;
 import com.sebrown.app.dao.VendorRepo;
 import com.sebrown.app.file.AuditOutFileGetter;
 import com.sebrown.app.row.RowCreator;
+import com.sebrown.app.service.VendorAccronymService;
 import com.sebrown.app.service.VendorName;
 import com.sebrown.app.service.VendorNameRules;
 
@@ -35,6 +37,9 @@ public class BeanConfig {
 	@Autowired
 	private VendorNameFile vendorNameFile;
 	
+	@Autowired
+	private VendorAccronymFile vendorAccFile;
+	
 	@Bean @Scope("prototype")
 	VendorName vendorName() {
 		String type = persistanceCnfg.getType();
@@ -46,6 +51,21 @@ public class BeanConfig {
 			//will be DB repo.
 		}
 		return new VendorName(repo, venNameRules);
+	}
+	
+	//TODO - HAVE CLASS TO DO ABOVE & BELOW BOILER PLATE
+	
+	@Bean //@Scope("prototype")
+	VendorAccronymService vendorAccronymService() {
+		String type = persistanceCnfg.getType();
+		
+		VendorRepo repo = null;
+		if(type.toLowerCase().equals("file")) {
+			repo = vendorAccFile;
+		}else {
+			//will be DB repo.
+		}
+		return new VendorAccronymService(repo);
 	}
 	
 	@Bean
