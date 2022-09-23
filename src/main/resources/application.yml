@@ -15,8 +15,8 @@ persistance:
   type: file
   
 vendor:
-    namesfile:  VendorNames.txt
-    accronymfile:  VendorAccronyms.txt
+    #change to vendor file
+    namesfile:  VendorNames.txt 
     minAcnymLen: 2
     maxAcnymLen: 5
  

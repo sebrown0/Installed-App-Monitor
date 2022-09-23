@@ -21,18 +21,18 @@ import com.sebrown.app.dao.VendorRepo;
 /*
  * Not on component scan. In configuration file.
  */
-public class AcronymList implements AcronymKeys{
+public class VendorList implements VendorNames {
 
 	private List<String> list;
 	private Map<String, String> map;
 	
 	private final VendorRepo repo;	
 
-	public AcronymList(VendorRepo repo) {	
+	public VendorList(VendorRepo repo) {	
 		this.repo = repo;
 	}
 	
-	public AcronymList setList() throws IllegalStateException {
+	public VendorList setList() throws IllegalStateException {
 		if(Objects.nonNull(repo) ){
 			list = repo.getList();
 		}
@@ -52,8 +52,9 @@ public class AcronymList implements AcronymKeys{
 						a -> a[0], a -> a.length > 1 ? a[1] : "" ));
 	}
 	
+	
 	@Override
-	public List<String> getKeys() {
+	public List<String> getNames() {
 		// TODO Auto-generated method stub
 		return null;
 	}

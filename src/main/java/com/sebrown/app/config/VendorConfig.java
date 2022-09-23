@@ -15,7 +15,6 @@ import org.springframework.context.annotation.Configuration;
 public class VendorConfig implements VendorFiles, VendorAcronym {
 	
 	private String namesFile;
-	private String accronymFile;
 	private String minAcnymLen;
 	private String maxAcnymLen;
 			
@@ -29,10 +28,7 @@ public class VendorConfig implements VendorFiles, VendorAcronym {
 	public void setNamesfile(String namesFile) {
 		this.namesFile = namesFile;
 	}
-	public void setAccronymFile(String accronymFile) {
-		this.accronymFile = accronymFile;
-	}
-	
+		
 	@Override
 	public int getMinAcronymLen() {
 		try {
@@ -55,10 +51,6 @@ public class VendorConfig implements VendorFiles, VendorAcronym {
 	@Override
 	public String getVendorFileName() {
 		return namesFile;
-	}
-	@Override
-	public String getAccronymFileName() {
-		return accronymFile;
 	}
 		
 }

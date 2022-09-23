@@ -6,7 +6,7 @@ package com.sebrown.app.dao;
 /**
  * @author SteveBrown
  *
- * Path to file based on profile & properties.
+ * Path to file properties.
  */
 public interface FilePath {
 	

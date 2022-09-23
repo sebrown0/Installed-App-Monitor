@@ -6,6 +6,7 @@ package com.sebrown.app.dao;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 /**
@@ -15,15 +16,16 @@ import org.springframework.stereotype.Component;
  * 
  */
 @Component
-public abstract class VendorFile implements VendorRepo {
+public class VendorFile implements VendorRepo {
 	
 	@Autowired
 	private VendorFileIn reader;
 	
 	@Autowired
 	private VendorFileOut writer;
-
-	protected abstract FilePath getFilePath(); 
+	
+	@Autowired @Qualifier("vendorFilePath")
+	private FilePath vendorPath;
 	
 	@Override
 	public List<String> getList() {
@@ -36,7 +38,7 @@ public abstract class VendorFile implements VendorRepo {
 	}	
 	
 	private String getPathAndFileName() {
-		return this.getFilePath().getPathAndFileName();
+		return vendorPath.getPathAndFileName();
 	}
 	
 }

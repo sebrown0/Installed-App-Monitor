@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 
 import com.sebrown.app.file.AuditOutFileGetter;
-import com.sebrown.app.model.AcronymList;
+import com.sebrown.app.model.VendorList;
 import com.sebrown.app.row.RowCreator;
 import com.sebrown.app.service.VendorAcronymService;
 import com.sebrown.app.service.VendorName;
@@ -24,10 +24,7 @@ public class BeanConfig {
 	private Config config;
 	
 	@Autowired
-	private VendorNameRepo nameRepo;
-	
-	@Autowired
-	private VendorAcronymRepo acronymRepo;
+	private VendorRepoGetter vendorRepo;
 	
 	@Autowired
 	private RowCreator rowServ;
@@ -37,12 +34,12 @@ public class BeanConfig {
 			
 	@Bean @Scope("prototype")
 	VendorName vendorName() {
-		return new VendorName(nameRepo.getRepo(), venNameRules);
+		return new VendorName(vendorRepo.getRepo(), venNameRules);
 	}
 		
 	@Bean //@Scope("prototype")
 	VendorAcronymService vendorAccronymService() {
-		return new VendorAcronymService(acronymRepo.getRepo());
+		return new VendorAcronymService(vendorRepo.getRepo());
 	}
 	
 	@Bean
@@ -52,9 +49,9 @@ public class BeanConfig {
 	}
 	
 	@Bean
-	AcronymList acronymList() {		
+	VendorList acronymList() {		
 		return 
-			new AcronymList(acronymRepo.getRepo())
+			new VendorList(vendorRepo.getRepo())
 				.setList();
 	}
 

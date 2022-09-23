@@ -8,8 +8,11 @@ import java.util.List;
 /**
  * @author SteveBrown
  *
+ * Get a list of Vendor names.
+ * 
  */
-public interface AcronymKeys {
+public interface VendorNames {
 
-	List<String> getKeys();
+	List<String> getNames();
+	
 }

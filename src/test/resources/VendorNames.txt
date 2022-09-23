@@ -1,2 +1,2 @@
-Microsoft
-Adobe
+Microsoft:MS
+Adobe:ADOBE

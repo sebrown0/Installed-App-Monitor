@@ -10,6 +10,5 @@ package com.sebrown.app.config;
 public interface VendorFiles {
 	
 	String getVendorFileName();
-	String getAccronymFileName();
 	
 }
