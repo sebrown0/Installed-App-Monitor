@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
  * the repo if it exists.
  */
 @Component
-public class ExistingVendorAcronym {
+public class ExistingAcronymForVendor {
 	
 	public Optional<String> getExisting(
 			List<String> acrInRepo, String forName) {

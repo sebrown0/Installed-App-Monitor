@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 
 import com.sebrown.app.annotations.UnitTest;
 import com.sebrown.app.dao.VendorRepo;
-import com.sebrown.app.model.ExistingVendorAcronym;
+import com.sebrown.app.model.ExistingAcronymForVendor;
 
 /**
  * @author SteveBrown
@@ -21,7 +21,7 @@ import com.sebrown.app.model.ExistingVendorAcronym;
 class ExistingVendorAccronymTests {
 
 	@Autowired
-	private ExistingVendorAcronym eva;
+	private ExistingAcronymForVendor eva;
 	
 	@Autowired @Qualifier("vendorAccronymFile")
 	private VendorRepo repo;

@@ -41,3 +41,5 @@ build/
 # src/test/resources/*.xlsm
 src/test/resources/Installed Software.xlsx
 src/test/resources/integration/Installed Software.xlsx
+src/test/resources/integration/Installed Software_*
+src/test/resources/Installed Software_*

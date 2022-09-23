@@ -9,7 +9,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.sebrown.app.dao.VendorRepo;
-import com.sebrown.app.model.ExistingVendorAcronym;
+import com.sebrown.app.model.ExistingAcronymForVendor;
 
 /**
  * @author SteveBrown
@@ -21,7 +21,7 @@ import com.sebrown.app.model.ExistingVendorAcronym;
 public class VendorAcronymService {
 
 	@Autowired
-	private ExistingVendorAcronym existingAcc;
+	private ExistingAcronymForVendor existingAcc;
 	
 	@Autowired
 	private VendorAcronymCreator creator;

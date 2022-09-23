@@ -5,10 +5,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 
-import com.sebrown.app.dao.VendorAccronymFile;
-import com.sebrown.app.dao.VendorNameFile;
-import com.sebrown.app.dao.VendorRepo;
 import com.sebrown.app.file.AuditOutFileGetter;
+import com.sebrown.app.model.AcronymList;
 import com.sebrown.app.row.RowCreator;
 import com.sebrown.app.service.VendorAcronymService;
 import com.sebrown.app.service.VendorName;
@@ -26,52 +24,33 @@ public class BeanConfig {
 	private Config config;
 	
 	@Autowired
-	private PersistanceConfig persistanceCnfg;
+	private VendorRepoGetter repoGetter;
 	
 	@Autowired
 	private RowCreator rowServ;
 	
 	@Autowired
 	private VendorNameRules venNameRules;
-	
-	@Autowired
-	private VendorNameFile vendorNameFile;
-	
-	@Autowired
-	private VendorAccronymFile vendorAccFile;
-	
+			
 	@Bean @Scope("prototype")
 	VendorName vendorName() {
-		String type = persistanceCnfg.getType();
-		
-		VendorRepo repo = null;
-		if(type.toLowerCase().equals("file")) {
-			repo = vendorNameFile;
-		}else {
-			//will be DB repo.
-		}
-		return new VendorName(repo, venNameRules);
+		return new VendorName(repoGetter.getRepo(), venNameRules);
 	}
-	
-	//TODO - HAVE CLASS TO DO ABOVE & BELOW BOILER PLATE
-	
+		
 	@Bean //@Scope("prototype")
 	VendorAcronymService vendorAccronymService() {
-		String type = persistanceCnfg.getType();
-		
-		VendorRepo repo = null;
-		if(type.toLowerCase().equals("file")) {
-			repo = vendorAccFile;
-		}else {
-			//will be DB repo.
-		}
-		return new VendorAcronymService(repo);
+		return new VendorAcronymService(repoGetter.getRepo());
 	}
 	
 	@Bean
 	AuditOutFileGetter auditOutFileGetter() {
 		return new AuditOutFileGetter(
 				config, "Vendor Not Found", rowServ);
+	}
+	
+	@Bean
+	AcronymList acronymList() {		
+		return new AcronymList(repoGetter.getRepo());
 	}
 
 }
