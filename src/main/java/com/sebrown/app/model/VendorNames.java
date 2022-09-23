@@ -14,5 +14,6 @@ import java.util.List;
 public interface VendorNames {
 
 	List<String> getNames();
+	void addNames(List<String> names);
 	
 }
