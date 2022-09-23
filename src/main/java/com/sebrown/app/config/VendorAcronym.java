@@ -7,9 +7,9 @@ package com.sebrown.app.config;
  * @author SteveBrown
  *
  */
-public interface VendorAccronym {
+public interface VendorAcronym {
 	
-	int getMinAcnymLen(); 
-	int getMaxAcnymLen();
+	int getMinAcronymLen(); 
+	int getMaxAcronymLen();
 	
 }

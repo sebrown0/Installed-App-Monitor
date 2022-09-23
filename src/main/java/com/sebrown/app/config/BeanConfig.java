@@ -10,7 +10,7 @@ import com.sebrown.app.dao.VendorNameFile;
 import com.sebrown.app.dao.VendorRepo;
 import com.sebrown.app.file.AuditOutFileGetter;
 import com.sebrown.app.row.RowCreator;
-import com.sebrown.app.service.VendorAccronymService;
+import com.sebrown.app.service.VendorAcronymService;
 import com.sebrown.app.service.VendorName;
 import com.sebrown.app.service.VendorNameRules;
 
@@ -56,7 +56,7 @@ public class BeanConfig {
 	//TODO - HAVE CLASS TO DO ABOVE & BELOW BOILER PLATE
 	
 	@Bean //@Scope("prototype")
-	VendorAccronymService vendorAccronymService() {
+	VendorAcronymService vendorAccronymService() {
 		String type = persistanceCnfg.getType();
 		
 		VendorRepo repo = null;
@@ -65,7 +65,7 @@ public class BeanConfig {
 		}else {
 			//will be DB repo.
 		}
-		return new VendorAccronymService(repo);
+		return new VendorAcronymService(repo);
 	}
 	
 	@Bean

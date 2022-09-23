@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @ConfigurationProperties(prefix = "vendor")
-public class VendorConfig implements VendorFiles, VendorAccronym {
+public class VendorConfig implements VendorFiles, VendorAcronym {
 	
 	private String namesFile;
 	private String accronymFile;
@@ -34,7 +34,7 @@ public class VendorConfig implements VendorFiles, VendorAccronym {
 	}
 	
 	@Override
-	public int getMinAcnymLen() {
+	public int getMinAcronymLen() {
 		try {
 			return Integer.parseInt(minAcnymLen);	
 		} catch (NumberFormatException e) {
@@ -43,7 +43,7 @@ public class VendorConfig implements VendorFiles, VendorAccronym {
 		return 2;
 	}
 	@Override
-	public int getMaxAcnymLen() {
+	public int getMaxAcronymLen() {
 		try {
 			return Integer.parseInt(maxAcnymLen);	
 		} catch (NumberFormatException e) {
