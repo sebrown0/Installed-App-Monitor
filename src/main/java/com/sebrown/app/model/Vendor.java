@@ -21,6 +21,8 @@ public interface Vendor {
 	
 	Map<String, String> getCurrentVendorMap();
 	List<String> getCurrentAsList();
+	void addVendor(String vendor);
 	void persistCurrent(); 
+	Vendor rollback();
 	
 }

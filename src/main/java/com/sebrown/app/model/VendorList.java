@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -27,9 +28,10 @@ public class VendorList implements Vendor, VendorNames, VendorAcronyms {
 
 	private List<String> list;
 	private Map<String, String> map;
+	private Map<String, String> original;
 	
 	private final VendorRepo repo;	
-
+	
 	public VendorList(VendorRepo repo) {	
 		this.repo = repo;
 	}
@@ -58,6 +60,8 @@ public class VendorList implements Vendor, VendorNames, VendorAcronyms {
 				.collect(Collectors.toMap(
 						a -> a[0], a -> a.length > 1 ? a[1] : null, 
 								(a,b) -> a, TreeMap::new ));
+		
+		original = new TreeMap<>(map);
 	}
 	
 	private Stream<Entry<String, String>> getStreamOfEntries(){
@@ -92,6 +96,16 @@ public class VendorList implements Vendor, VendorNames, VendorAcronyms {
 		map.putIfAbsent(venName, acronym);
 	}
 
+	@Override // VendorAcronyms
+	public Optional<String> getAcronymForName(String name) {		
+		return Optional.ofNullable(map.getOrDefault(name, null));
+	}
+	
+	@Override
+	public boolean isExisting(String acronym) {
+		return map.containsValue(acronym);
+	}
+	
 	@Override // Vendor
 	public Map<String, String> getCurrentVendorMap() {
 		return map;
@@ -105,9 +119,27 @@ public class VendorList implements Vendor, VendorNames, VendorAcronyms {
 				.toList();
 	}
 
+	@Override // Vendor
+	public void addVendor(String vendor) {
+		String[] parts = vendor.split(":");
+		if(Objects.nonNull(parts) && parts.length == 2) {
+			if(false == isExisting(parts[1])) {
+				map.putIfAbsent(parts[0], parts[1]);	
+			}			
+		}
+	}
+	
 	@Override
 	public void persistCurrent() {
 		repo.writeList(getCurrentAsList());
 	}
-	
+
+	@Override
+	public Vendor rollback() {
+		map.clear();
+		map.putAll(original);
+		
+		return this;
+	}
+		
 }

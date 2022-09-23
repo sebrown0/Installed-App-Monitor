@@ -3,55 +3,72 @@
  */
 package com.sebrown.app.model;
 
-import java.util.List;
-import java.util.Objects;
+import java.util.Optional;
 
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
+
+import com.sebrown.app.config.VendorConfig;
 
 /**
  * @author SteveBrown
  *
- * Check if an acronym exists in list.
+ * Check if an acronym exists in current vendors.
  */
 @Component
 public class ExistingAcronymChecker {
 	
-	private List<String> acrInRepo;
-	private String acronym;
+	private final VendorAcronyms venAcr;
+	private final VendorConfig config;
+		
+	public ExistingAcronymChecker(VendorAcronyms venAcr, VendorConfig config) {	
+		this.venAcr = venAcr;
+		this.config = config;
+	}
+
+	public Optional<String> getAcronymForName(String name) {		
+		return venAcr.getAcronymForName(name);
+	}	
 	
-	private void init(List<String> acrInRepo, String acronym) throws IllegalArgumentException {
-		if(Objects.nonNull(acrInRepo) && Objects.nonNull(acronym)) {
-			this.acrInRepo = acrInRepo;
-			this.acronym = acronym;		
-		}else {
-			throw new IllegalArgumentException(
-					String.format(
-							"Neither acronym:[%s] or list of existing: [%s] can be null", 
-							acronym,  acrInRepo));
-		}		
+	public boolean isExisting(String acronym) {		
+		return venAcr.isExisting(acronym);
+	}	
+	
+	public String checkAcronym(String acronym) {
+		if(isExisting(acronym)) {
+			if(isNumbered(acronym)) {
+				return incrementSequence(acronym);
+			}else {
+				return startSequence(acronym);
+			}
+		}
+		return acronym;
 	}
 	
-	public boolean checkAcronym(
-		List<String> acrInRepo, String acronym) {
-			
-		init(acrInRepo, acronym);
-		
-//			return acrInRepo.stream()
-//				.map(ln -> ln.split(":"))
-//				.filter(parts -> parts.length == 2)
-//				.filter(parts -> {
-//					var key = parts[0];
-//					return key.equals(forName);
-//				})
-//				.map(parts -> Optional.ofNullable(parts[1]))
-//				.findFirst()
-//				.orElseGet(Optional::empty);
-			return false;
-		}
+	private boolean isNumbered(String acronym) {
+		return acronym.contains("_");
+	}
 	
-	private boolean isExisting() {
-		return false;
+	private String startSequence(String acronym) {
+		int max = config.getMaxAcronymLen();
+		int acrLen = acronym.length();
+		int diff = 2 - (max - acrLen);
+		boolean reduce = diff > 0;
+		
+		if(reduce) {
+			var acr = acronym.substring(0, max - (diff + 1)) + "_1"; 
+			return this.checkAcronym(acr);
+		}else {
+			return acronym + "_1";
+		}
+		
+	}
+	
+	private String incrementSequence(String acronym) {
+		int pos = acronym.indexOf("_");
+		int num = Integer.parseInt(acronym.substring(pos+1, pos+2)) + 1;
+		String res = acronym.substring(0, pos+1) + num;
+		
+		return res;
 	}
 	
 }

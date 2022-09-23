@@ -3,43 +3,33 @@
  */
 package com.sebrown.app.service;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import com.sebrown.app.dao.VendorRepo;
-import com.sebrown.app.model.ExistingAcronymForVendor;
+import com.sebrown.app.model.ExistingAcronymChecker;
 
 /**
  * @author SteveBrown
  *
  */
-/*
- * Not on component scan. In configuration file.
- */
+
+@Service
 public class VendorAcronymService {
 
 	@Autowired
-	private ExistingAcronymForVendor existingAcc;
+	private ExistingAcronymChecker existingAcr;
 	
 	@Autowired
 	private VendorAcronymCreator creator;
 	
-	private List<String> acronymsInRepo;
-	private String acronymForName;
-	
-	private final VendorRepo repo;		
-	
-	public VendorAcronymService(VendorRepo repo) {	
-		this.repo = repo;	
-	}
+	private String acronymForName;	
 	
 	public Optional<String> getAcronym(String forName) {
-		acronymsInRepo = repo.getList();
-		
-		existingAcc
-			.getExisting(acronymsInRepo, forName)
+
+		existingAcr
+			.getAcronymForName(forName)
 			.ifPresentOrElse(
 					acc -> acronymForName = acc, 
 					() -> { 
