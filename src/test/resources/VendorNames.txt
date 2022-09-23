@@ -1,20 +1,2 @@
-Adobe
-Advanced Micro Devices
-ConnectWise
-CyberLink Corp
-Integral Technologies
-Intel
-Micro-Star Int'l
 Microsoft
-Milestone
-MySQL
-MySQL AB
-Paxton Access Limited
-Sagem Securite
-Sagem Sécurité
-SAP
-Seagate Software
-SheepShare
-Simon Tatham
-Sun Microsystems
-Vendor Not Found
+Adobe

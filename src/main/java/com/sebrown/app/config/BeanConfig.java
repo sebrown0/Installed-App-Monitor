@@ -24,7 +24,10 @@ public class BeanConfig {
 	private Config config;
 	
 	@Autowired
-	private VendorRepoGetter repoGetter;
+	private VendorNameRepo nameRepo;
+	
+	@Autowired
+	private VendorAcronymRepo acronymRepo;
 	
 	@Autowired
 	private RowCreator rowServ;
@@ -34,12 +37,12 @@ public class BeanConfig {
 			
 	@Bean @Scope("prototype")
 	VendorName vendorName() {
-		return new VendorName(repoGetter.getRepo(), venNameRules);
+		return new VendorName(nameRepo.getRepo(), venNameRules);
 	}
 		
 	@Bean //@Scope("prototype")
 	VendorAcronymService vendorAccronymService() {
-		return new VendorAcronymService(repoGetter.getRepo());
+		return new VendorAcronymService(acronymRepo.getRepo());
 	}
 	
 	@Bean
@@ -50,7 +53,9 @@ public class BeanConfig {
 	
 	@Bean
 	AcronymList acronymList() {		
-		return new AcronymList(repoGetter.getRepo());
+		return 
+			new AcronymList(acronymRepo.getRepo())
+				.setList();
 	}
 
 }
