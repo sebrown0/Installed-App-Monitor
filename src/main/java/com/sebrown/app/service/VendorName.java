@@ -3,34 +3,29 @@
  */
 package com.sebrown.app.service;
 
-import static java.util.Objects.isNull;
-import static java.util.Objects.nonNull;
-
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-import com.sebrown.app.dao.VendorRepo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.sebrown.app.model.Vendor;
+import com.sebrown.app.model.VendorNames;
 
 /**
  * @author SteveBrown
  *
+ * Get vendor name from string, 
+ * using the rules given.
  */
-
-/*
- * Not using component scan. In config file.
- */
+@Service
 public class VendorName {
-
-	private List<String> existingNames;
-	private List<String> newNames;
 	
-	private final VendorRepo repo;
-	private final VendorNameRules vendorNameRules;
-		
-	public VendorName(VendorRepo repo, VendorNameRules vendorNameRules) {	
-		this.repo = repo;
-		this.vendorNameRules = vendorNameRules;
-	}
+	@Autowired
+	private VendorNameRules vendorNameRules;
+	
+	@Autowired
+	private VendorNames vendor;
 
 	public String getVendor(String fromString) {
 		String name = vendorNameRules.applyRulesTo(fromString);
@@ -45,25 +40,15 @@ public class VendorName {
 	}
 	
 	private List<String> getExisting(){
-		if(isNull(existingNames)) {
-			existingNames = repo.getList();
-		}
-		return existingNames;
+		return ((VendorNames) vendor).getNames();
 	}
 	
 	public void addName(String name) {
-		if(isNull(newNames)) { newNames = new ArrayList<>(); }
-		if(false == newNames.contains(name)) {
-			newNames.add(name);			
-		}		
+		vendor.addNames(Arrays.asList(name));
 	}
 	
-	public void flush() {
-		if(nonNull(newNames)) {
-			existingNames.addAll(newNames);
-			existingNames.sort(String::compareToIgnoreCase);
-			repo.writeList(existingNames);	
-		}		
+	public void flush() {		
+		((Vendor) vendor).persistCurrent();				
 	}
 	
 }

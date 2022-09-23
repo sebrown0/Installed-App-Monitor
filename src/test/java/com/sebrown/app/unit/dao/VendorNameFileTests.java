@@ -12,18 +12,17 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 
 import com.sebrown.app.annotations.UnitTest;
 import com.sebrown.app.config.ResourceConfig;
 import com.sebrown.app.config.VendorConfig;
 import com.sebrown.app.dao.VendorRepo;
+import com.sebrown.app.model.VendorNames;
 
 /**
  * @author SteveBrown
@@ -32,35 +31,34 @@ import com.sebrown.app.dao.VendorRepo;
 @UnitTest
 class VendorNameFileTests {
 
-	@Autowired @Qualifier("vendorNameFile")
+	@Autowired 	
 	private VendorRepo repo;	
 	
 	@Autowired
 	private ResourceConfig resource;
 	
 	@Autowired
+	private VendorNames vendorNames;
+	
+	@Autowired
 	private VendorConfig vendor;
-		
+	
 	@Test 
 	void getInstance() {
-		assertNotNull(repo);
-		assertNotNull(resource);
-		assertNotNull(vendor);
+		assertNotNull(vendorNames);
 	}
 	
 	@Test
-	void getFirstName_shouldBeMicrosoft() {
-		assertEquals("Microsoft", repo.getList().get(0));
+	void getSecondName_shouldBeMicrosoft() {
+		assertEquals("Microsoft", vendorNames.getNames().get(1));
 	}
 	
 	@Test
-	void appendNames() throws IOException {		
-		List<String> names = repo.getList();
-		List<String> original = new ArrayList<>(names);
+	void appendNames() throws IOException {
+		List<String> original = vendorNames.getNames();
 
-		names.addAll(Arrays.asList("SAP", "CISCO"));
-		names.sort(String::compareToIgnoreCase);
-		repo.writeList(names);
+		vendorNames.addNames(Arrays.asList("SAP", "CISCO"));
+		repo.writeList(vendorNames.getNames());
 		
 		//Put it back to what it was
 		Path fPath = Paths.get(
@@ -68,10 +66,10 @@ class VendorNameFileTests {
 		
 		Files.write(fPath, original, TRUNCATE_EXISTING, WRITE);
 				
-		assertEquals("Adobe", names.get(0));
-		assertEquals("CISCO", names.get(1));
-		assertEquals("Microsoft", names.get(2));
-		assertEquals("SAP", names.get(3));
+		assertEquals("Adobe", vendorNames.getNames().get(0));
+		assertEquals("CISCO", vendorNames.getNames().get(1));
+		assertEquals("Microsoft", vendorNames.getNames().get(2));
+		assertEquals("SAP", vendorNames.getNames().get(3));
 	}
 
 }

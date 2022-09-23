@@ -16,7 +16,6 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 
 import com.sebrown.app.annotations.UnitTest;
 import com.sebrown.app.config.ResourceConfig;
@@ -34,7 +33,7 @@ class VendorNameTests {
 	@Autowired
 	private VendorName vendor;
 	
-	@Autowired @Qualifier("vendorNameFile")
+	@Autowired
 	private VendorRepo repo;	
 	
 	@Autowired
@@ -66,7 +65,7 @@ class VendorNameTests {
 		
 		Files.write(fPath, original, TRUNCATE_EXISTING, WRITE);
 				
-		assertEquals("Citrix", names.get(1));
+		assertEquals("Citrix:null", names.get(1));
 	}
 
 }

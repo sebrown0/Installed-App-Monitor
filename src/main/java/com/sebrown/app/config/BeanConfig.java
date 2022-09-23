@@ -32,10 +32,10 @@ public class BeanConfig {
 	@Autowired
 	private VendorNameRules venNameRules;
 			
-	@Bean @Scope("prototype")
-	VendorName vendorName() {
-		return new VendorName(vendorRepo.getRepo(), venNameRules);
-	}
+//	@Bean @Scope("prototype")
+//	VendorName vendorName() {
+//		return new VendorName(vendorRepo.getRepo(), venNameRules);
+//	}
 		
 	@Bean //@Scope("prototype")
 	VendorAcronymService vendorAccronymService() {

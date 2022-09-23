@@ -104,5 +104,10 @@ public class VendorList implements Vendor, VendorNames, VendorAcronyms {
 				.map(e -> String.format("%s:%s", e.getKey(), e.getValue()))
 				.toList();
 	}
+
+	@Override
+	public void persistCurrent() {
+		repo.writeList(getCurrentAsList());
+	}
 	
 }
