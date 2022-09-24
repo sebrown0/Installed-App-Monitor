@@ -7,13 +7,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.sebrown.app.annotations.UnitTest;
 import com.sebrown.app.model.ExistingAcronymChecker;
 import com.sebrown.app.model.Vendor;
-import com.sebrown.app.model.VendorNames;
 
 /**
  * @author SteveBrown
@@ -67,12 +65,58 @@ class ExistingAccronymTests {
 		
 		assertEquals("MST_2", acr);
 	}
+	
 	@Test
 	void incrementSequence() {
-		vendor.addVendor("Micro Services:MS_1");
+		vendor.rollback().addVendor("Micro Services:MS_1");
 		String acr = acrChecker.checkAcronym("MS_1");
 		
 		assertEquals("MS_2", acr);
+	}
+	
+	@Test
+	void incrementInvalidSequence() {
+		vendor.rollback().addVendor("Micro Services:MS_1");
+		String acr = acrChecker.checkAcronym("MS_*");
+		
+		assertEquals(null, acr);
+	}
+	
+	@Test
+	void incrementSequence_toDoubleDigits() {
+		vendor.rollback();
+		vendor.addVendor("Micro Services:MS_1");
+		vendor.addVendor("Micro Service:MS_2");
+		vendor.addVendor("Micro Servic:MS_3");
+		vendor.addVendor("Micro Servi:MS_4");
+		vendor.addVendor("Micro Serv:MS_5");
+		vendor.addVendor("Micro Ser:MS_6");
+		vendor.addVendor("Micro Se:MS_7");
+		vendor.addVendor("Micro S:MS_8");
+		vendor.addVendor("Micro :MS_9");
+		
+		String acr = acrChecker.checkAcronym("MS_1");
+		
+		assertEquals("MS_a", acr);
+	}
+	
+	@Test
+	void incrementSequence_toDoubleDigits_withChar() {
+		vendor.rollback();
+		vendor.addVendor("Micro Services:MS_1");
+		vendor.addVendor("Micro Service:MS_2");
+		vendor.addVendor("Micro Servic:MS_3");
+		vendor.addVendor("Micro Servi:MS_4");
+		vendor.addVendor("Micro Serv:MS_5");
+		vendor.addVendor("Micro Ser:MS_6");
+		vendor.addVendor("Micro Se:MS_7");
+		vendor.addVendor("Micro S:MS_8");
+		vendor.addVendor("Micro :MS_9");
+		vendor.addVendor("Micro:MS_a");
+		
+		String acr = acrChecker.checkAcronym("MS_9");
+		
+		assertEquals("MS_b", acr);
 	}
 
 }
