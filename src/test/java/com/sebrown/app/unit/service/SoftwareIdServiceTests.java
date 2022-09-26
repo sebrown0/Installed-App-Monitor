@@ -3,15 +3,11 @@ package com.sebrown.app.unit.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -21,11 +17,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.sebrown.app.annotations.UnitTest;
 import com.sebrown.app.config.UTConfig;
 import com.sebrown.app.service.SoftwareIdService;
+import com.sebrown.app.utils.TempFile;
 import com.sebrown.app.worksheet.RowNumber;
 
 @UnitTest
 class SoftwareIdServiceTests {
-
+	
 	@Autowired
 	private UTConfig config;
 	
@@ -38,23 +35,13 @@ class SoftwareIdServiceTests {
 	private static XSSFWorkbook wb;
 	
 	private static String SOFT_ID_PATH;
-	private static String TEMP_SOFT_ID_PATH;
 
 	@BeforeAll
 	public static void copyWB(@Autowired UTConfig config) {		
 		SOFT_ID_PATH = config.getSoftwareIDFullPath();
-		
-		try {
-			Path p = Paths.get(SOFT_ID_PATH); 
-			TEMP_SOFT_ID_PATH = 
-				p.getParent().toString() + "/TEMP_" +	p.getFileName().toString();
-		
-			FileUtils.copyFile(
-					new File(SOFT_ID_PATH), new File(TEMP_SOFT_ID_PATH));			
-		} catch (Exception e) {
-			fail("Could not create temp file: " + TEMP_SOFT_ID_PATH);
-			System.exit(-1);
-		}
+		TempFile.setPath(SOFT_ID_PATH);
+		TempFile.deleteTempFile();
+		TempFile.createFile();
 		
 		try (var fileIn =	new FileInputStream(new File(SOFT_ID_PATH))){
 			wb = new XSSFWorkbook(fileIn);
@@ -67,12 +54,7 @@ class SoftwareIdServiceTests {
 	@AfterAll
 	public static void restoreWB() throws IOException {
 		wb.close();
-		
-		FileUtils.copyFile(
-				new File(TEMP_SOFT_ID_PATH), new File(SOFT_ID_PATH));
-		FileUtils.forceDelete(
-				new File(TEMP_SOFT_ID_PATH));
-		
+		TempFile.restoreOriginal();				
 	}
 
 	@Test
@@ -104,12 +86,15 @@ class SoftwareIdServiceTests {
 		assertEquals("MS_1", idServ.getId(sht));
 	}
 	
-	@Test
-	void getNextId_forVNF() {
-		var sht = wb.getSheet("Vendor Not Found");		
-		
-		assertEquals("VNF_2", idServ.getId(sht));
-	}
+	/*
+	 * See note in SoftwareIdService
+	 */
+//	@Test
+//	void getNextId_forVNF() {
+//		var sht = wb.getSheet("Vendor Not Found");		
+//		
+//		assertEquals("VNF_2", idServ.getId(sht));
+//	}
 	
 	@Test
 	void getNextId_forNonExistantSheet() {

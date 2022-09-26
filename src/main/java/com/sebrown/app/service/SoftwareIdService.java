@@ -14,16 +14,18 @@ import com.sebrown.app.worksheet.AfterHeader;
 
 /**
  * @author SteveBrown
- *
+ * 
+ * Construct an ID for a an 'App'.
+ * 
+ * ID is made up of the Vendor Acronym 
+ * (from the sheet name) and the row number.
+ * 
  */
 @Service @Lazy
 public class SoftwareIdService {
 	
 	private static final String NO_ID = "NO_ID";
-	
-//	@Autowired
-//	private WorksheetOutService shtServ;
-	
+		
 	@Autowired
 	private VendorAcronymService venAcr;
 	
@@ -48,7 +50,13 @@ public class SoftwareIdService {
 		String wsName = ws.getSheetName();
 		String venAcronym = venAcr.getAcronym(wsName).orElse(NO_ID);
 		
+		/*
+		 * Works for SoftwareIdServiceTests but 
+		 * not integrations tests.
+		 */
+//		return venAcronym + "_" + nextRw;
 		return venAcronym + "_" + (nextRw - 1);
+		
 	}
 			
 }

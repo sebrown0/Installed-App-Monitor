@@ -13,6 +13,8 @@ import java.util.Objects;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
@@ -22,9 +24,11 @@ import org.springframework.test.context.ActiveProfiles;
 
 import com.sebrown.app.config.IntegrationTestProps;
 import com.sebrown.app.config.ResourceConfig;
+import com.sebrown.app.config.UTConfig;
 import com.sebrown.app.config.VendorConfig;
 import com.sebrown.app.file.AuditOutFileGetter;
 import com.sebrown.app.updater.AuditUpdater;
+import com.sebrown.app.utils.TempFile;
 
 @SpringBootTest
 @TestMethodOrder(OrderAnnotation.class)
@@ -37,12 +41,30 @@ class AuditUpdaterIntegrationTests {
 	@Autowired
 	private IntegrationTestProps props;
 	
-	@Autowired
-	private VendorConfig venCnfg;
+//	@Autowired
+//	private VendorConfig venCnfg;
+//	
+//	@Autowired
+//	private ResourceConfig resource;
 	
-	@Autowired
-	private ResourceConfig resource;
+	private static String VEN_NAME_PATH;
+	
+	@BeforeAll
+	public static void copyVendorNames(
+		@Autowired VendorConfig venCnfg, 
+		@Autowired IntegrationTestProps props) {
 		
+		VEN_NAME_PATH = props.getResourcePath() + "/" + venCnfg.getVendorFileName();
+		TempFile.setPath(VEN_NAME_PATH);
+//		TempFile.deleteTempFile();
+		TempFile.createFile();				
+	}
+	
+	@AfterAll
+	public static void restoreVendorNames() {
+		TempFile.restoreOriginal();
+	}
+	
 	/*
 	 * Create the Installed Software WB 
 	 * from the 2 input WBs.
