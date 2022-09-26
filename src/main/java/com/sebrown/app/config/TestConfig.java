@@ -26,7 +26,12 @@ public class TestConfig {
 
 	public String getAuditOutWbName() { 
 		String name = testProps.auditOutWb; 
-		return (Objects.nonNull(name)) ? name : "Installed Software.xlxs";
+		return (Objects.nonNull(name)) ? name : "Installed Software.xlsx";
+	}
+	
+	public String getSoftwareIdWb() {
+		String name = testProps.softwareIdWb; 
+		return (Objects.nonNull(name)) ? name : "SoftwareID.xlsx";
 	}
 	
 	public Map<String, String> getUnitProps() {
@@ -38,12 +43,17 @@ public class TestConfig {
 	}
 	
 	public static class TestProps {
-		private String auditOutWb;		
+		private String auditOutWb;
+		private String softwareIdWb;
+		
 		private Map<String, String> unit;
 		private Map<String, String> integration;		
 		
 		public void setAuditOutWb(String auditOutWb) {
 			this.auditOutWb = auditOutWb;
+		}
+		public void setSoftwareIdWb(String softwareIdWb) {
+			this.softwareIdWb = softwareIdWb;
 		}
 		public void setIntegration(Map<String, String> integration) {
 			this.integration = integration;

@@ -56,6 +56,7 @@ public class VendorList implements Vendor, VendorNames, VendorAcronyms {
 	 */
 	private void constructMap() {
 		map = list.stream()
+				.filter(line -> line.contains(":"))
 				.map(line -> line.split(":"))
 				.collect(Collectors.toMap(
 						a -> a[0], a -> a.length > 1 ? a[1] : null, 
@@ -93,6 +94,9 @@ public class VendorList implements Vendor, VendorNames, VendorAcronyms {
 	
 	@Override // VendorAcronyms
 	public void addAcronym(String venName, String acronym) {
+		if(acronym == null) {
+			System.out.println("dsjjdkjhsdhsdjksdhjkdh");
+		}
 		map.putIfAbsent(venName, acronym);
 	}
 

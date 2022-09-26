@@ -11,4 +11,6 @@ public interface UTConfig extends Config {
 
 	String getWbInName();
 	String getWbInFullPath();
+	String getSoftwareIDFullPath();
+	
 }

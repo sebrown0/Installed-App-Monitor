@@ -16,7 +16,7 @@ import com.sebrown.app.config.VendorAcronym;
  *
  */
 @Service
-public class VendorAcronymCreator implements Runnable{
+public class VendorAcronymCreator implements Runnable {
 
 	@Autowired
 	private VendorAcronym venAcr;

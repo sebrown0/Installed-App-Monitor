@@ -62,5 +62,11 @@ class AcronymCreatorTests {
 		String acc = creator.getAcronym("V");
 		assertTrue(acc.length() > 1);
 	}
+	
+	@Test
+	void test() {
+		String acc = creator.getAcronym("MySql");
+		assertEquals("MYSQL", acc);
+	}
 		
 }

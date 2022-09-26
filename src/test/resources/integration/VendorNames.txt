@@ -1,2 +1,35 @@
+AMD:AMD
 Adobe:ADOBE
+Advanced Micro Devices:AMD
+Business Objects:BO
+CISCO:CISCO
+Check Point Software:null
+CheckPoint:CHECK
+Cisco Systems:null
+Cisco Webex:null
+Citrix:CITRI
+Citrix Systems:null
+ConnectWise:CONNE
+CyberLink Corp:CC
+Fortinet Technologies:FT
+Integral Technologies:IT
+Intel:INTEL
+Micro-Star Int'l:MI
 Microsoft:MS
+Milestone:MILES
+MySQL:null
+MySQL AB:null
+MySql:MYSQL
+Oracle:ORACL
+Paxton Access Limited:PAL
+SAP:SAP
+Sagem Securite:SS_1
+Sagem Sécurité:SS_1
+Seagate Software:SS
+SheepShare:SHEEP
+Simon Tatham:ST
+Sun Microsystems:SM
+Test Vendor 1:TV1
+Test Vendor 2:TV2
+Vendor Not Found:VNF
+Waves Audio:WA

@@ -10,6 +10,7 @@ import java.util.Optional;
 
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import com.sebrown.app.dto.AppRowData;
@@ -23,7 +24,7 @@ import com.sebrown.app.utils.RowValidator;
  * Create a row in a work sheet in the
  * Installed Software WB.
  */
-@Service
+@Service @Lazy
 public class AuditRowCreatorService implements RowCreator {
 	
 	private final AssetIdService assetIdServ;
@@ -59,7 +60,6 @@ public class AuditRowCreatorService implements RowCreator {
 	
 	private void createCell(Optional<Integer> colNum, XSSFRow rw, String val) {
 		colNum.ifPresent(n -> {
-			//18-09-2022 REMOVED TAKING 1 FROM CELL NUMBER (SEE app.yml)
 			rw.createCell(n, STRING).setCellValue(val);	
 		});
 	}

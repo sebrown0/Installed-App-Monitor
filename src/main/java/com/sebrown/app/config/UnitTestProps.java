@@ -25,6 +25,15 @@ public class UnitTestProps implements UTConfig {
 				.getOrDefault("wbpath", "src/test/resources");
 	}
 
+
+	@Override
+	public String getSoftwareIDFullPath() {
+		return 
+				getResourcePath() + 
+				"/" + 
+				config.getSoftwareIdWb();				
+	}
+	
 	@Override
 	public String getAuditOutFullPath() {
 		return 

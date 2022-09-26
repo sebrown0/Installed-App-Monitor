@@ -46,8 +46,7 @@ public class WorksheetOutService {
 			col = Optional.of(
 					Integer.parseInt(
 							getVendorNotFoundMappings().get(forName)));
-		} catch (NumberFormatException e) {			
-		}		
+		} catch (NumberFormatException e) {	}		
 		return col;
 	}
 	

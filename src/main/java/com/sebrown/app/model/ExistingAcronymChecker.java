@@ -5,6 +5,7 @@ package com.sebrown.app.model;
 
 import java.util.Optional;
 
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import com.sebrown.app.config.VendorConfig;
@@ -19,21 +20,21 @@ import com.sebrown.app.config.VendorConfig;
  *   This goes to max 9. After this it becomes a,b, c etc.
  *   This keeps the length of the sequence to MAX_SEQ_LEN.
  */
-@Component
+@Component @Lazy
 public class ExistingAcronymChecker {
 	
 	private static final int MAX_SEQ_LEN = 2;
 	
-	private String checkedAcronym;
+	private String checkedAcronym;	
 	
-	private final VendorAcronyms venAcr;
+	private final VendorAcronyms venAcr;	
 	private final VendorConfig config;
-		
-	public ExistingAcronymChecker(VendorAcronyms venAcr, VendorConfig config) {	
+	
+	public ExistingAcronymChecker(VendorAcronyms venAcr, VendorConfig config) {
 		this.venAcr = venAcr;
 		this.config = config;
 	}
-
+	
 	public Optional<String> getAcronymForName(String name) {		
 		return venAcr.getAcronymForName(name);
 	}	
@@ -43,7 +44,7 @@ public class ExistingAcronymChecker {
 	}	
 	
 	public String checkAcronym(String acronym) {
-		checkedAcronym = null;
+		checkedAcronym = acronym;
 		if(isExisting(acronym)) {
 			if(isNumbered(acronym)) {
 				incrementSequence(acronym);

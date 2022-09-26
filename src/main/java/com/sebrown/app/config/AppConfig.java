@@ -25,13 +25,14 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 @ConfigurationProperties(prefix = "app")
 @EnableAspectJAutoProxy
 public class AppConfig implements 
-	AppProperties, MappingProperties,	WorkbookProperties, DefaultVendor {
+	AppProperties, MappingProperties,	
+	WorkbookProperties, DefaultVendor,
+	ColumnMapping {
 	
 	private Map<String, String> mappings;
 	private Map<String, Workbook> workbooks;
 	private String maxSheetNameLen;
 	private String minSheetNameLen;
-
 	
 	public void setMaxSheetNameLen(String maxSheetNameLen) {
 		this.maxSheetNameLen = maxSheetNameLen;
@@ -88,6 +89,20 @@ public class AppConfig implements
 			return sheets;
 		}
 						
+	}
+
+	@Override
+	public int getColNumFor(String wb, String sheet, String colName) {
+		String num = 
+			workbooks.get(wb)
+				.getSheets().get(sheet)
+				.columnMappings.get(colName);
+		
+		return Integer.parseInt(num);		
+	}
+	@Override
+	public int getColNumForAuditOut(String sheet, String colName) {
+		return getColNumFor("auditOut", sheet, colName);
 	}
 	
 	//Sheets

@@ -2,15 +2,13 @@ package com.sebrown.app;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 
+import com.sebrown.app.annotations.UnitTest;
 import com.sebrown.app.config.UnitTestProps;
 import com.sebrown.app.file.AuditOutFileGetter;
 import com.sebrown.app.updater.AuditUpdater;
 
-@SpringBootTest
-@ActiveProfiles("test")
+@UnitTest
 class AuditUpdaterTests {
 	
 	@Autowired
@@ -38,8 +36,7 @@ class AuditUpdaterTests {
 				
 		//Update audit out.
 		updater.updateWorkbook(props);	
-				
-				
+								
 	}		
 
 }

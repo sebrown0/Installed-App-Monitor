@@ -15,6 +15,7 @@ props:
   test:
     
     auditOutWb: Installed Software.xlsx
+    softwareID: SoftwareID.xlsx
       
     unit:
       wbpath: ${resource[path]} 

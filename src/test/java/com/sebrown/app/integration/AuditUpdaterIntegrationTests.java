@@ -1,18 +1,12 @@
 package com.sebrown.app.integration;
 
-import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
-import static java.nio.file.StandardOpenOption.WRITE;
 import static org.assertj.core.api.Assertions.fail;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Objects;
 
@@ -144,9 +138,7 @@ class AuditUpdaterIntegrationTests {
 		return fromSht
 				.getRow(rowNum).getCell(cellNum)
 				.getStringCellValue();
-	}
-	
-	
+	}	
 	
 	private void cleanUpSheetsAlign(
 		XSSFWorkbook wbExp, 
@@ -158,18 +150,21 @@ class AuditUpdaterIntegrationTests {
 		fisExp.close();			
 		wbAct.close();			
 		fisActual.close();
-		restoreVenNameFile();
+		/*
+		 * COPY original and REPLACE
+		 */
+//		restoreVenNameFile();
 	}
 	
-	void restoreVenNameFile() throws IOException {
-		Path fPath = Paths.get(
-				resource.getPath() + "/" + 
-				venCnfg.getVendorFileName());
-		
-		Files.write(
-				fPath, 
-				Arrays.asList("Microsoft", "Adobe"), 
-				TRUNCATE_EXISTING, WRITE);		
-	}
+//	void restoreVenNameFile() throws IOException {
+//		Path fPath = Paths.get(
+//				resource.getPath() + "/" + 
+//				venCnfg.getVendorFileName());
+//		
+//		Files.write(
+//				fPath, 
+//				Arrays.asList("Microsoft", "Adobe"), 
+//				TRUNCATE_EXISTING, WRITE);		
+//	}
 	
 }

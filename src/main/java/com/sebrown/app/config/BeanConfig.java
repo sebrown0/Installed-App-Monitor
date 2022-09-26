@@ -3,6 +3,7 @@ package com.sebrown.app.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 
 import com.sebrown.app.file.AuditOutFileGetter;
 import com.sebrown.app.model.VendorList;
@@ -31,7 +32,7 @@ public class BeanConfig {
 				config, "Vendor Not Found", rowServ);
 	}
 	
-	@Bean
+	@Bean @Lazy
 	VendorList acronymList() {		
 		return 
 			new VendorList(vendorRepo.getRepo())
