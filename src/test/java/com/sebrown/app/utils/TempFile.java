@@ -11,20 +11,23 @@ import java.nio.file.Paths;
 import java.util.Objects;
 
 import org.apache.commons.io.FileUtils;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 /**
  * @author SteveBrown
  *
  */
+@Component @Scope("prototype")
 public class TempFile {
 
 	public static final String TEMP_ID = "TEMP_";
 	
-	private static String filePath;
-	private static String tempFilePath;
-	private static boolean pathsOk;
+	private String filePath;
+	private String tempFilePath;
+	private boolean pathsOk;
 	
-	public static void setPath(String fp) {		
+	public void setPath(String fp) {		
 		if(Objects.nonNull(fp)) {
 			filePath = fp;
 			Path p = Paths.get(filePath); 
@@ -39,7 +42,7 @@ public class TempFile {
 		pathsOk = true;
 	}
 	
-	public static void deleteTempFile() {
+	public void deleteTempFile() {
 		var tempExists = Files.exists(
 				Paths.get(tempFilePath));
 		
@@ -53,7 +56,7 @@ public class TempFile {
 		}	
 	}
 	
-	public static boolean createFile() {
+	public boolean createFile() {
 		if(pathsOk) {
 			try {
 				FileUtils.copyFile(
@@ -68,7 +71,7 @@ public class TempFile {
 		}			
 	}
 	
-	public static void restoreOriginal() {		
+	public void restoreOriginal() {		
 		try {
 			FileUtils.copyFile(
 					new File(tempFilePath), new File(filePath));
@@ -80,11 +83,11 @@ public class TempFile {
 		}
 	}
 	
-	public static String getFilePath() {
+	public String getFilePath() {
 		return filePath;
 	}
 
-	public static String getTempFilePath() {
+	public String getTempFilePath() {
 		return tempFilePath;
 	}
 	

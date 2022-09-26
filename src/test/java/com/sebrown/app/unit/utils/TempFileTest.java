@@ -31,32 +31,37 @@ class TempFileTest {
 			
 	private static String FILE_PATH;
 	private static String TEMP_FILE = "temp.xlsx";
-
+	private static TempFile tempFile;
+	
 	@BeforeAll
-	public static void setFilePath(@Autowired UTConfig config) throws IOException {
+	public static void setFilePath(
+		@Autowired TempFile tf,
+		@Autowired UTConfig config) throws IOException {
+		
 		FILE_PATH = 
 				config.getResourcePath() + "/" + TEMP_FILE;
 				
-		TempFile.setPath(FILE_PATH);
-		TempFile.deleteTempFile();
+		tempFile = tf;
+		tempFile.setPath(FILE_PATH);
+		tempFile.deleteTempFile();
 	}
 		
 	@Test @Order(1)
 	void createTempFile() {				
-		TempFile.createFile();
+		tempFile.createFile();
 		
 		var tempCreated = Files.exists(
-				Paths.get(TempFile.getTempFilePath()));
+				Paths.get(tempFile.getTempFilePath()));
 		
 		assertTrue(tempCreated);
 	}
 
 	@Test @Order(2)	
 	void restoreOriginalFile() {
-		TempFile.restoreOriginal();
+		tempFile.restoreOriginal();
 		
 		var tempExists = Files.exists(
-				Paths.get(TempFile.getTempFilePath()));
+				Paths.get(tempFile.getTempFilePath()));
 		
 		assertFalse(tempExists);
 	}

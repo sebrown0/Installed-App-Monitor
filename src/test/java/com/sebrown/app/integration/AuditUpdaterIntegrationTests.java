@@ -12,27 +12,23 @@ import java.util.Objects;
 
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 
+import com.sebrown.app.annotations.IntegrationTest;
 import com.sebrown.app.config.IntegrationTestProps;
-import com.sebrown.app.config.ResourceConfig;
-import com.sebrown.app.config.UTConfig;
 import com.sebrown.app.config.VendorConfig;
 import com.sebrown.app.file.AuditOutFileGetter;
 import com.sebrown.app.updater.AuditUpdater;
 import com.sebrown.app.utils.TempFile;
 
-@SpringBootTest
+@IntegrationTest
 @TestMethodOrder(OrderAnnotation.class)
-@ActiveProfiles("integration")
 class AuditUpdaterIntegrationTests {
 	
 	@Autowired
@@ -41,28 +37,25 @@ class AuditUpdaterIntegrationTests {
 	@Autowired
 	private IntegrationTestProps props;
 	
-//	@Autowired
-//	private VendorConfig venCnfg;
-//	
-//	@Autowired
-//	private ResourceConfig resource;
-	
-	private static String VEN_NAME_PATH;
+	private static String VEN_NAME_PATH;	
+	private static TempFile tempFile;
 	
 	@BeforeAll
 	public static void copyVendorNames(
 		@Autowired VendorConfig venCnfg, 
-		@Autowired IntegrationTestProps props) {
+		@Autowired IntegrationTestProps props, 
+		@Autowired TempFile tf) {
+		
+		tempFile = tf;
 		
 		VEN_NAME_PATH = props.getResourcePath() + "/" + venCnfg.getVendorFileName();
-		TempFile.setPath(VEN_NAME_PATH);
-//		TempFile.deleteTempFile();
-		TempFile.createFile();				
+		tempFile.setPath(VEN_NAME_PATH);
+		tempFile.createFile();				
 	}
 	
 	@AfterAll
 	public static void restoreVendorNames() {
-		TempFile.restoreOriginal();
+		tempFile.restoreOriginal();
 	}
 	
 	/*
@@ -171,22 +164,7 @@ class AuditUpdaterIntegrationTests {
 		wbExp.close();			
 		fisExp.close();			
 		wbAct.close();			
-		fisActual.close();
-		/*
-		 * COPY original and REPLACE
-		 */
-//		restoreVenNameFile();
+		fisActual.close();		
 	}
-	
-//	void restoreVenNameFile() throws IOException {
-//		Path fPath = Paths.get(
-//				resource.getPath() + "/" + 
-//				venCnfg.getVendorFileName());
-//		
-//		Files.write(
-//				fPath, 
-//				Arrays.asList("Microsoft", "Adobe"), 
-//				TRUNCATE_EXISTING, WRITE);		
-//	}
 	
 }

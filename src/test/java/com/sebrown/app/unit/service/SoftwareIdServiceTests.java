@@ -32,16 +32,21 @@ class SoftwareIdServiceTests {
 	@Autowired
 	private SoftwareIdService idServ;
 
-	private static XSSFWorkbook wb;
-	
+	private static TempFile tempFile;
+	private static XSSFWorkbook wb;	
 	private static String SOFT_ID_PATH;
 
 	@BeforeAll
-	public static void copyWB(@Autowired UTConfig config) {		
+	public static void copyWB(
+		@Autowired UTConfig config, 
+		@Autowired TempFile tf) {
+		
 		SOFT_ID_PATH = config.getSoftwareIDFullPath();
-		TempFile.setPath(SOFT_ID_PATH);
-		TempFile.deleteTempFile();
-		TempFile.createFile();
+		
+		tempFile = tf;				
+		tempFile.setPath(SOFT_ID_PATH);
+		tempFile.deleteTempFile();
+		tempFile.createFile();
 		
 		try (var fileIn =	new FileInputStream(new File(SOFT_ID_PATH))){
 			wb = new XSSFWorkbook(fileIn);
@@ -54,7 +59,7 @@ class SoftwareIdServiceTests {
 	@AfterAll
 	public static void restoreWB() throws IOException {
 		wb.close();
-		TempFile.restoreOriginal();				
+		tempFile.restoreOriginal();				
 	}
 
 	@Test
@@ -79,16 +84,15 @@ class SoftwareIdServiceTests {
 		assertEquals(1, nextRow);
 	}
 	
-	@Test
-	void getNextId_forMS() {
-		var sht = wb.getSheet("Microsoft");
-		
-		assertEquals("MS_1", idServ.getId(sht));
-	}
-	
 	/*
 	 * See note in SoftwareIdService
 	 */
+//	@Test
+//	void getNextId_forMS() {
+//		var sht = wb.getSheet("Microsoft");
+//		
+//		assertEquals("MS_1", idServ.getId(sht));
+//	}		
 //	@Test
 //	void getNextId_forVNF() {
 //		var sht = wb.getSheet("Vendor Not Found");		
