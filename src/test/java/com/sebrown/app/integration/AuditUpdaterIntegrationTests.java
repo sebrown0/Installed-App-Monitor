@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -15,7 +16,6 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
-import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,40 +30,34 @@ import com.sebrown.app.utils.TempFile;
 @IntegrationTest
 @TestMethodOrder(OrderAnnotation.class)
 class AuditUpdaterIntegrationTests {
-	
-	@Autowired
-	private AuditUpdater updater;
-	
+		
 	@Autowired
 	private IntegrationTestProps props;
 	
 	private static String VEN_NAME_PATH;	
 	private static TempFile tempFile;
+	private static FileInputStream fisAct;
+	private static FileInputStream fisExp;
+	private static XSSFWorkbook wbAct;
+	private static XSSFWorkbook wbExp;
 	
 	@BeforeAll
 	public static void copyVendorNames(
 		@Autowired VendorConfig venCnfg, 
 		@Autowired IntegrationTestProps props, 
-		@Autowired TempFile tf) {
+		@Autowired TempFile tf,
+		@Autowired AuditUpdater updater) throws Exception {
 		
 		tempFile = tf;
 		
 		VEN_NAME_PATH = props.getResourcePath() + "/" + venCnfg.getVendorFileName();
 		tempFile.setPath(VEN_NAME_PATH);
 		tempFile.createFile();				
-	}
-	
-	@AfterAll
-	public static void restoreVendorNames() {
-		tempFile.restoreOriginal();
-	}
-	
-	/*
-	 * Create the Installed Software WB 
-	 * from the 2 input WBs.
-	 */
-	@Test @Order(1)
-	void updateAuditOutWithDataFromAuditWBs_noErrorIsImplicitPass() throws IOException {	
+
+		/*
+		 * Create the Installed Software WB 
+		 * from the 2 input WBs.
+		 */
 		AuditOutFileGetter fileGetter = 
 				new AuditOutFileGetter(
 						props,"Vendor Not Found");
@@ -72,8 +66,37 @@ class AuditUpdaterIntegrationTests {
 				
 		//Update audit out.
 		updater.updateWorkbook(props);		
+		
+		openFileStreams(props);
+		openWorkbooks();
 	}
 	
+	private static void openFileStreams(
+		IntegrationTestProps props) throws FileNotFoundException {
+		
+		fisAct =	
+				new FileInputStream(
+						new File(props.getAuditOutFullPath()));
+			
+		fisExp =	
+				new FileInputStream(
+						new File(props.getExpectedResultsFullPath()));			
+	}
+	
+	private static void openWorkbooks() throws IOException {
+		wbAct = new XSSFWorkbook(fisAct);
+		wbExp = new XSSFWorkbook(fisExp);
+	}
+				
+	@AfterAll
+	public static void restoreVendorNames() throws IOException {
+		wbAct.close();
+		wbExp.close();
+		fisAct.close();
+		fisExp.close();		
+		tempFile.restoreOriginal();
+	}
+		
 	@Test
 	void sheetsAlign() throws IOException {
 		
@@ -112,7 +135,7 @@ class AuditUpdaterIntegrationTests {
 		boolean err = (Objects.nonNull(diff) && diff.size() > 0);
 
 		//Clean up.
-		cleanUpSheetsAlign(wbExp, fisExp, wbAct, fisActual);
+//		cleanUpSheetsAlign(wbExp, fisExp, wbAct, fisActual);
 		
 		//Assert any error
 		if(err) {
@@ -122,29 +145,32 @@ class AuditUpdaterIntegrationTests {
 	}
 	
 	@Test 
-	void nameIsNotNull() {						
+	void nameIsNotNull() {
 		assertEquals(
-				"Microsoft Visual C++ 2019 X86 Minimum Runtime - 14.24.28127", 
-				getValFromLoc("Microsoft", 2, 1));		
+				getValFromExp("Microsoft", 2, 1), 
+				getValFromAct("Microsoft", 2, 1));			
 	}
 	
+	@Test
+	void assetIDsAreCorrect() {
+		assertEquals(
+				getValFromExp("Citrix", 4, 0), 
+				getValFromAct("Citrix", 4, 0));
+	}
 	
 	//**************************  Helpers Below **************************//
-	private String getValFromLoc(String fromSht, int rowNum, int cellNum) {
-		String val = null;
-		
-		try(FileInputStream fis =	
-				new FileInputStream(
-						new File(props.getAuditOutFullPath()));) {
-			
-			try (XSSFWorkbook wb = new XSSFWorkbook(fis)) {
-				XSSFSheet sht = wb.getSheet(fromSht);
-				val = getStrVal(sht, rowNum, cellNum);
-				wb.close();
-			}			
-			fis.close();
-			
-		} catch (IOException e) {}
+	private String getValFromExp(String fromSht, int rowNum, int cellNum) {
+		return getValFromLoc(wbExp, fromSht, rowNum, cellNum);
+	}
+	
+	private String getValFromAct(String fromSht, int rowNum, int cellNum) {
+		return getValFromLoc(wbAct, fromSht, rowNum, cellNum);
+	}
+	
+	private String getValFromLoc(XSSFWorkbook wb, String fromSht, int rowNum, int cellNum) {
+		String val = null;		
+		XSSFSheet sht = wb.getSheet(fromSht);
+		val = getStrVal(sht, rowNum, cellNum);			
 		
 		return val;
 	}
@@ -155,16 +181,16 @@ class AuditUpdaterIntegrationTests {
 				.getStringCellValue();
 	}	
 	
-	private void cleanUpSheetsAlign(
-		XSSFWorkbook wbExp, 
-		FileInputStream fisExp,
-		XSSFWorkbook wbAct, 
-		FileInputStream fisActual) throws IOException{
-		
-		wbExp.close();			
-		fisExp.close();			
-		wbAct.close();			
-		fisActual.close();		
-	}
+//	private void cleanUpSheetsAlign(
+//		XSSFWorkbook wbExp, 
+//		FileInputStream fisExp,
+//		XSSFWorkbook wbAct, 
+//		FileInputStream fisActual) throws IOException{
+//		
+//		wbExp.close();			
+//		fisExp.close();			
+//		wbAct.close();			
+//		fisActual.close();		
+//	}
 	
 }

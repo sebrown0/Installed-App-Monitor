@@ -3,12 +3,12 @@ Adobe:ADOBE
 Advanced Micro Devices:AMD
 Business Objects:BO
 CISCO:CISCO
-Check Point Software:null
+Check Point Software:CHECK
 CheckPoint:CHECK
-Cisco Systems:null
-Cisco Webex:null
-Citrix:CITRI
-Citrix Systems:null
+Cisco Systems:CISCO
+Cisco Webex:CISCO
+Citrix:CTRX
+Citrix Systems:CTRX
 ConnectWise:CONNE
 CyberLink Corp:CC
 Fortinet Technologies:FT
@@ -17,8 +17,8 @@ Intel:INTEL
 Micro-Star Int'l:MI
 Microsoft:MS
 Milestone:MILES
-MySQL:null
-MySQL AB:null
+MySQL:MYSQL
+MySQL AB:MYSQL
 MySql:MYSQL
 Oracle:ORACL
 Paxton Access Limited:PAL
