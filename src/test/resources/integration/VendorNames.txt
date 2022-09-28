@@ -3,13 +3,13 @@ Adobe:ADOBE
 Advanced Micro Devices:AMD
 Business Objects:BO
 CISCO:CISCO
-Check Point Software:CHECK
-CheckPoint:CHECK
+Check Point Software:CP
+CheckPoint:CP
 Cisco Systems:CISCO
 Cisco Webex:CISCO
 Citrix:CTRX
 Citrix Systems:CTRX
-ConnectWise:CONNE
+ConnectWise:CW
 CyberLink Corp:CC
 Fortinet Technologies:FT
 Integral Technologies:IT
@@ -20,7 +20,7 @@ Milestone:MILES
 MySQL:MYSQL
 MySQL AB:MYSQL
 MySql:MYSQL
-Oracle:ORACL
+Oracle:ORC
 Paxton Access Limited:PAL
 SAP:SAP
 Sagem Securite:SS_1
@@ -32,4 +32,4 @@ Sun Microsystems:SM
 Test Vendor 1:TV1
 Test Vendor 2:TV2
 Vendor Not Found:VNF
-Waves Audio:WA
+Waves Audio:WAVES

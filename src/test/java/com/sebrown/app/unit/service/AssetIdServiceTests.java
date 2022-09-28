@@ -41,7 +41,7 @@ class AssetIdServiceTests {
 				Path.of(
 						testProps.getResourcePath() + "/" +
 						testProps.getWbInName() ));	
-		assertEquals("Test-BOARDROOM-4TH", id);
+		assertEquals("BOARDROOM-4TH;", id);
 	}
 	
 }

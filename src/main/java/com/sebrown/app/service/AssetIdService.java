@@ -30,7 +30,6 @@ public class AssetIdService {
 	
 	private XSSFSheet shtSystem;
 	private XSSFWorkbook wb;
-	private String wbName;
 		
 	public AssetIdService(SheetService shtServ) {		
 		this.shtServ = shtServ;
@@ -38,22 +37,15 @@ public class AssetIdService {
 
 	public String getAssetId(Path wbPath) {		
 		if(Objects.nonNull(wbPath)) {			
-			setSheetAndName(wbPath);
+			setSheet(wbPath);
 			if(Objects.nonNull(shtSystem)) {				
-				return String.format(
-						"%s-%s", 
-						getUserName(wbName), getHostName());	
+				return String.format("%s;",	getHostName());	
 			}			
 		}
 		closeWb();		
 		return getNoId();		
 	}	
-	
-	private void setSheetAndName(Path wbPath) {
-		setSheet(wbPath);		
-		setName(wbPath);
-	}
-	
+			
 	private void setSheet(Path wbPath) {
 		try (var fileIn =	new FileInputStream(new File(wbPath.toString()))){
 			wb = new XSSFWorkbook(fileIn);
@@ -63,11 +55,7 @@ public class AssetIdService {
 			//DO NOTHING - NO ID WILL BE RETURNED
 		}
 	}
-	
-	private void setName(Path wbPath) {
-		wbName = wbPath.getFileName().toString();
-	}
-		
+			
 	private String getNoId() {
 		return "NO-ID-" + Instant.now().getEpochSecond();
 	}
@@ -85,15 +73,6 @@ public class AssetIdService {
 		return hostName; 
 	}
 	
-	private String getUserName(String wbName) {
-		String name = "NAME_NOT_FOUND";
-		String[] parts = wbName.split("-");
-		if(parts.length >= 6) {
-			name = parts[2];
-		}
-		return name;
-	}
-
 	private void closeWb() {
 		if(Objects.nonNull(wb)) {
 			try {

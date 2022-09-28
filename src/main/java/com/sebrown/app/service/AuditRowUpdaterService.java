@@ -48,8 +48,8 @@ public class AuditRowUpdaterService {
 		String assetId = assetIdServ.getAssetId(wbAuditted);
 		allIds = existingIds;
 		if(false == ExistingAsset.isExistingAssetId(existingIds, assetId)){
-			allIds = allIds + assetId;
-			row.createCell(4, STRING).setCellValue(allIds + ";");	
+			allIds = allIds + assetId;	
+			row.createCell(4, STRING).setCellValue(allIds);
 		}	
 	}
 	

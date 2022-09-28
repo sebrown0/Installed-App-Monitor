@@ -31,9 +31,6 @@ import com.sebrown.app.utils.TempFile;
 @TestMethodOrder(OrderAnnotation.class)
 class AuditUpdaterIntegrationTests {
 		
-	@Autowired
-	private IntegrationTestProps props;
-	
 	private static String VEN_NAME_PATH;	
 	private static TempFile tempFile;
 	private static FileInputStream fisAct;
@@ -47,17 +44,24 @@ class AuditUpdaterIntegrationTests {
 		@Autowired IntegrationTestProps props, 
 		@Autowired TempFile tf,
 		@Autowired AuditUpdater updater) throws Exception {
+
+		copyVendorNamesFile(venCnfg, props, tf);
+		auditTestWorkbooks(updater, props);
+		openFileStreams(props);
+		openWorkbooks();
+	}
+	
+	private static void copyVendorNamesFile(
+		VendorConfig venCnfg, IntegrationTestProps props, TempFile tf) {
 		
-		tempFile = tf;
-		
+		tempFile = tf;		
 		VEN_NAME_PATH = props.getResourcePath() + "/" + venCnfg.getVendorFileName();
 		tempFile.setPath(VEN_NAME_PATH);
 		tempFile.createFile();				
-
-		/*
-		 * Create the Installed Software WB 
-		 * from the 2 input WBs.
-		 */
+	}
+	
+	//Create the Installed Software WB from the 2 input WBs.
+	private static void auditTestWorkbooks(AuditUpdater updater, IntegrationTestProps props) {
 		AuditOutFileGetter fileGetter = 
 				new AuditOutFileGetter(
 						props,"Vendor Not Found");
@@ -66,9 +70,6 @@ class AuditUpdaterIntegrationTests {
 				
 		//Update audit out.
 		updater.updateWorkbook(props);		
-		
-		openFileStreams(props);
-		openWorkbooks();
 	}
 	
 	private static void openFileStreams(
@@ -98,21 +99,34 @@ class AuditUpdaterIntegrationTests {
 	}
 		
 	@Test
-	void sheetsAlign() throws IOException {
-		
-		//Open actual and expected WBs.
-		var fisActual =	
-				new FileInputStream(
-						new File(props.getAuditOutFullPath()));
+	void allCellsInAllSheets() {
+		int expNumShts = wbExp.getNumberOfSheets() - 1;
+				
+		for (var idx = 0; idx <= expNumShts; idx++) {			
+			var shtExp = wbExp.getSheetAt(idx);
+			var shtAct = wbAct.getSheet(shtExp.getSheetName());
 			
-		var wbAct = new XSSFWorkbook(fisActual);
-		
-		var fisExp =	
-				new FileInputStream(
-						new File(props.getExpectedResultsFullPath()));
-			
-		var wbExp = new XSSFWorkbook(fisExp);
-		
+			shtExp.iterator().forEachRemaining(rwExp -> {
+				var rwIdx = rwExp.getRowNum();
+				var rwAct = shtAct.getRow(rwIdx);
+				
+				rwExp.forEach(
+						cellExp -> {
+							var expVal = cellExp.getStringCellValue();
+							var actVal = rwAct.getCell(cellExp.getColumnIndex()).getStringCellValue();
+							
+							assertEquals(
+								expVal, actVal, String.format("Sheet[%s], Row[%s], Col[%s]", 
+									shtExp.getSheetName(), rwIdx, cellExp.getColumnIndex()));
+						}					
+					); 
+				}
+			);						
+		}
+	}
+	
+	@Test
+	void sheetsAlign() throws IOException {				
 		//Create list of actual & expected sheet names
 		var actListNames = new ArrayList<>();
 		var expListNames = new ArrayList<>();
@@ -133,9 +147,6 @@ class AuditUpdaterIntegrationTests {
 		
 		//If there's a difference there's an error
 		boolean err = (Objects.nonNull(diff) && diff.size() > 0);
-
-		//Clean up.
-//		cleanUpSheetsAlign(wbExp, fisExp, wbAct, fisActual);
 		
 		//Assert any error
 		if(err) {
@@ -158,7 +169,7 @@ class AuditUpdaterIntegrationTests {
 				getValFromAct("Citrix", 4, 0));
 	}
 	
-	//**************************  Helpers Below **************************//
+	//**************************  Helpers Below **************************//	
 	private String getValFromExp(String fromSht, int rowNum, int cellNum) {
 		return getValFromLoc(wbExp, fromSht, rowNum, cellNum);
 	}
@@ -180,17 +191,5 @@ class AuditUpdaterIntegrationTests {
 				.getRow(rowNum).getCell(cellNum)
 				.getStringCellValue();
 	}	
-	
-//	private void cleanUpSheetsAlign(
-//		XSSFWorkbook wbExp, 
-//		FileInputStream fisExp,
-//		XSSFWorkbook wbAct, 
-//		FileInputStream fisActual) throws IOException{
-//		
-//		wbExp.close();			
-//		fisExp.close();			
-//		wbAct.close();			
-//		fisActual.close();		
-//	}
-	
+		
 }
