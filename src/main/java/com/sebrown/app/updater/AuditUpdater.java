@@ -81,7 +81,7 @@ public class AuditUpdater {
 		paths.forEach(wbPath -> {	
 			List<AppRowData> rowData = getAuditDataFromWb(wbPath); 
 			updateEachRowInVendorSheet(rowData, wbPath);		
-//			markFileAsRead(wbPath);
+			markFileAsRead(wbPath);
 		});				
 		
 		//Persist any new vendors.
@@ -107,11 +107,6 @@ public class AuditUpdater {
 	private void updateEachRowInVendorSheet(List<AppRowData> rowData, Path audittedWbPath) {		
 		for (AppRowData rd : rowData) {
 			InstalledAppRowData appRowData = (InstalledAppRowData) rd;
-
-//			Breakpoint for testing - REMOVE
-//			if(Objects.nonNull(appRowData.getVersion()) && appRowData.getVersion().equals("1.4.0")) {
-//				System.out.println(appRowData.toString());
-//			}
 			
 			var wsCurr = getCurrentSheet(appRowData);
 			

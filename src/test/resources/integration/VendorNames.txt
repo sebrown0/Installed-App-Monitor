@@ -1,6 +1,12 @@
 AMD:AMD
 Adobe:ADOBE
+Adobe System:ADOBE
+Adobe Systems:ADOBE
 Advanced Micro Devices:AMD
+Alcor Micro Corp:AMC
+Apache Software:APCHE
+Apple:APPLE
+AssistMyTeam:ASSIS
 Business Objects:BO
 CISCO:CISCO
 Check Point Software:CP
@@ -9,27 +15,76 @@ Cisco Systems:CISCO
 Cisco Webex:CISCO
 Citrix:CTRX
 Citrix Systems:CTRX
+CommuCams Limited:CL
 ConnectWise:CW
+Corel:COREL
 CyberLink Corp:CC
-Fortinet Technologies:FT
+DMSoft Technologies:DT
+Default Company Name:DCN
+Dell:DELL
+Dell Products:DELL
+Dropbox:DROPB
+Emmet Gray:EG
+Eyeo GmbH:EYEO
+Fortinet:FORTI
+Fortinet Technologies:FORTI
+Frank Heindörfer:FH
+Google:GOOGL
+ITknowledge24:ITKNO
 Integral Technologies:IT
 Intel:INTEL
+LeXtudio:LEXTU
+Liquid Technologies:LT
+MITA:MITA
 Micro-Star Int'l:MI
 Microsoft:MS
 Milestone:MILES
+MongoDB:MONGO
 MySQL:MYSQL
 MySQL AB:MYSQL
 MySql:MYSQL
+NVIDIA:NVIDI
+Node:NODE
+Oki Data:OD
 Oracle:ORC
+Oracle and or its:OAOI
+PC-Doctor:PCDOC
+Palo Alto Networks:PAN
 Paxton Access Limited:PAL
+Piriform Software:PIRI
+PreEmptive Solutions:PSOL
+Progress Software:PROGS
+Pulse Secure:PULSE
+Python Software:PYTHON
+Qualcomm:QUALC
+Qualcomm Atheros:QUALC
+Realtek Semiconductor:RS
+Rivet Networks:RN
 SAP:SAP
+SDTtelecom:SDTTE
+Sage (UK):SAGE
 Sagem Securite:SS_1
 Sagem Sécurité:SS_1
+Screenovate:SCRVT
 Seagate Software:SS
 SheepShare:SHEEP
 Simon Tatham:ST
-Sun Microsystems:SM
+Sonos:SONOS
+Sun Microsystems:SUN
+TechSmith:TECHS
+Telerik AD:TA
 Test Vendor 1:TV1
 Test Vendor 2:TV2
+TortoiseSVN:TORTO
+UnrealStreaming:UNREA
+VMware:VMWAR
 Vendor Not Found:VNF
 Waves Audio:WAVES
+WinZip Computing:WZIP
+Xamarin:XAMAR
+crosoft:CROSO
+dotPDN:DOTPD
+iSpring Solutions:ISPR
+jklSoft:JKLSO
+osoft:OSOFT
+

@@ -42,13 +42,18 @@ public class InstalledAppRowMapper implements RowMapper {
 		var val = getValueFromCell(row, cellNum);
 		if(Objects.nonNull(val)) {
 			if(val instanceof String) {
-				return Integer.parseInt((String) val);
+				try {
+					var str = Integer.parseInt((String) val);
+					return str;
+				} catch (Exception e) {
+					//TODO - LOG aspect
+				}
+				
 			}else {
 				return (int) val;
 			}
-		}else {
-			return 0;
-		}		
+		}
+		return 0;		
 	}
 	
 	private String getStrVal(Row row, int cellNum) {

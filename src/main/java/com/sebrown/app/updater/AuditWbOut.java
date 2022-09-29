@@ -18,7 +18,6 @@ import com.sebrown.app.error.ErrorToHandle.ErrorSeverity;
 import com.sebrown.app.error.LogAndHandleError;
 import com.sebrown.app.error.RaisedError;
 import com.sebrown.app.service.ExistingSheetService;
-import com.sebrown.app.service.WorkbookReader;
 import com.sebrown.app.worksheet.WorkbookCloser;
 
 /**
@@ -39,7 +38,7 @@ public class AuditWbOut implements AutoCloseable {
 	
 	private String wbOutPath;
 	private boolean outputWritten;
-	private WorkbookReader wbReader;
+//	private WorkbookReader wbReader;
 	
 	public AuditWbOut(ExistingSheetService shtServ) {		
 		this.shtServ = shtServ;		
